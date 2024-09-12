@@ -50,3 +50,4 @@ Voici plusieurs alternatives gratuites à ChemSketch, couramment utilisées dans
 ## Conclusion
 
 Pour une intégration via API, **MarvinSketch** et **Avogadro** sont des solutions plus adaptées, car ChemSketch n'a pas de véritable API publique pour une utilisation dans des applications externes. Si tu as besoin d'un logiciel de dessin chimique de base sans nécessiter d'API, ChemSketch reste une option robuste et simple à utiliser, surtout pour les structures en 2D.
+Ces logiciels peuvent exporter en PNG JPEG SVG EPS ET PDF
