@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script type="text/javascript" language="javascript" src="jsme/jsme.nocache.js"></script>
+    <script>
+        var jsmeApplet;
+
+        // Cette fonction sera appelée après que le code JavaScriptApplet ait été chargé.
+        function jsmeOnLoad() {
+            jsmeApplet = new JSApplet.JSME("jsme_container", "380px", "340px");
+        }
+
+        // Fonction pour mettre à jour le nom de la molécule
+        async function updateMoleculeName() {
+            // Récupérer la structure SMILES
+            var smiles = jsmeApplet.getSmiles();
+            // Vérifier si le SMILES n'est pas vide
+            if (!smiles) {
+                document.getElementById("molecule_name").innerText = "Veuillez dessiner une molécule.";
+                return;
+            }
+            // URL de l'API PubChem pour obtenir le nom
+            var url = `https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/smiles/${encodeURIComponent(smiles)}/property/IUPACName/JSON`;
+
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                const name = data.PropertyTable.Properties[0]?.IUPACName || "Nom inconnu";
+                document.getElementById("molecule_name").innerText = "Nom de la molécule : " + name;
+            } catch (error) {
+                console.error('Error fetching the molecule name:', error);
+                document.getElementById("molecule_name").innerText = "Erreur lors de la récupération du nom.";
+            }
+        }
+    </script>
+</head>
+
+<body onload="jsmeOnLoad()">
+    <div id="jsme_container"></div>
+    <h1 id="molecule_name">Nom de la molécule : </h1>
+    
+    <!-- Ajoute un bouton pour récupérer le nom -->
+    <button onclick="updateMoleculeName()">Obtenir le nom de la molécule</button>
+</body>
+
+</html>
