@@ -77,3 +77,39 @@ Il nous faut pour ce calcul :
 
 Informations tirées du site : [CultureSciences Chimie](https://culturesciences.chimie.ens.fr/thematiques/chimie-organique/methodes-et-outils/les-concepts-de-la-chimie-verte-utilisation)
 
+### Indice de rendement environnemental (Environmental Factor, EF) :
+
+Il évalue l'efficacité des matériaux dans un processus chimique.
+
+![Image 5](energie-reaction.png)
+
+Il évalue l'efficacité des matériaux dans un processus chimique.
+
+
+
+### Énergie de réaction et Enthalpie :
+
+![Image 6](indice-RE.png)
+
+
+L'objectif est de minimiser l'énergie requise ou libérée lors des réactions, favorisant les réactions à faible consommation énergétique.
+
+
+### Paramètre de récupération de matière (PRM) :
+
+Le PRM mesure la capacité à recycler ou réutiliser les matériaux utilisés dans un processus chimique.
+
+![Image 7](prm.png)
+
+Un PRM élevé indique une meilleure recyclabilité, ce qui est un objectif important en chimie verte.
+
+
+### Efficacité massique de la réaction (ERM) :
+
+L'ERM évalue la proportion de la masse des réactifs qui se retrouve dans le produit final, en minimisant les pertes.
+
+![Image 8](erm.png)
+
+
+Cette formule aide à maximiser la conversion des réactifs en produit final, réduisant ainsi les déchets et l'impact environnemental.
+
