@@ -49,7 +49,7 @@ A-F : A=Bien, F=Moins Bien
 | utilisation d'une base de données | D | D | A | C |
 | calcul à la main | F | F | A | F | F | 
 | feuille de calcul | C | B | A | D | D | 
-| Green Chemistry Assistant | | | | | |
+| Green Chemistry Assistant | B | B | A | D | C |
 
 ### Analyser les résultats
 
