@@ -8,4 +8,5 @@
 - 20% ~ Amyr : Sur les architectures logicielles possibles,
 - Alex | Floriant : Les notions de sécurité, d'autentification, les solutions d'hebergement,  les ressources matérielles,
 - 75% ~ Romain : Normes et standards dans le dev pour la recherche scientifique (open source etc... )
+- Charte graphique JUNIA
 
