@@ -1,6 +1,6 @@
 ## Référence bibliographique
 
-Marie FERRAZZINI, « L'ergonomie des sites web  », *Bulletin des bibliothèques de France* (BBF), 2005, n° 3, p. 76-77.  
+Marie FERRAZZINI, « L'ergonomie des sites web  » => « Ergonomie des sites web  » il n'y a pas de L', *Bulletin des bibliothèques de France* (BBF), 2005, n° 3, p. 76-77.  
 En ligne : [https://bbf.enssib.fr/consulter/bbf-2005-03-0076-004](https://bbf.enssib.fr/consulter/bbf-2005-03-0076-004)  
 ISSN 1292-8399.
 

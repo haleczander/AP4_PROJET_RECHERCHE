@@ -1,7 +1,7 @@
 
 ### 1. **Règlementation légale : Accessibilité**
 En fonction du pays dans lequel vous opérez, il existe des normes légales à respecter concernant l'accessibilité des applications web. Par exemple :
-- **Directive européenne sur l'accessibilité numérique** (2016) impose aux sites web et applications des organismes publics d'être accessibles aux personnes handicapées. Cette directive est traduite dans les législations nationales des pays membres de l'UE.
+- **Directive européenne sur l'accessibilité numérique** {Directive (UE) 2016/2102} IMPORTANT NOM OFFICIEL DE LA NORME (2016) impose aux sites web et applications des organismes publics d'être accessibles aux personnes handicapées. Cette directive est traduite dans les législations nationales des pays membres de l'UE.
 - **Loi pour une République numérique** (France, 2016), impose également des règles strictes d’accessibilité pour les sites publics.
 - **Web Content Accessibility Guidelines (WCAG)** sont des lignes directrices internationales largement adoptées qui assurent l’accessibilité des sites web aux personnes handicapées (problèmes visuels, auditifs, moteurs, cognitifs). Les WCAG 2.1 sont actuellement les recommandations les plus récentes.
 
@@ -42,6 +42,10 @@ Aujourd’hui, une application web doit absolument être **responsive**, c’est
 ### En résumé :
 Pour développer une application web ergonomique, vous devez non seulement suivre les directives légales (accessibilité, RGPD), mais également vous appuyer sur des principes et normes ergonomiques reconnues (ISO, heuristiques de Nielsen, principes de Fitts et Hick) pour maximiser l’expérience utilisateur. Assurez-vous également que votre application soit accessible à tous et compatible avec différents appareils et tailles d’écran (mobile, tablette, desktop).
 
-Source :
+Sources :
 - W3C - Web Content Accessibility Guidelines (WCAG) : https://www.w3.org/WAI/standards-guidelines/wcag/
 - ISO 9241-11:2018 Ergonomics of human-system interaction - Usability : https://www.iso.org/standard/63500.html
+- Hick, W.E. (1952). "On the rate of gain of information". Quarterly Journal of Experimental Psychology.
+- Fitts, P.M. (1954). "The information capacity of the human motor system in controlling the amplitude of movement". Journal of Experimental Psychology.
+- Nielsen, J. (1994). "Enhancing the explanatory power of usability heuristics". Proceedings of the SIGCHI Conference on Human Factors in Computing Systems.
+
