@@ -1,4 +1,4 @@
-# Note de cadrage : `Outil Automatisé de Calcul et Représentation Graphique des Paramètres de Chimie Verte`
+# Note de cadrage : Outil Automatisé de Calcul et Représentation Graphique des Paramètres de Chimie Verte
 
 ## Introduction
 
@@ -37,7 +37,7 @@ Le service de calcul ne pourra pas être accessible à des personnes extérieure
 
 En fonction des possibilités techniques, les données des molécules pourront être complétées automatiquement à partir des identifiants CAS ou de leur schéma.
 
-Les résultats pourront pas la suite être sauvegardés localement ce qui permettra leur recoupage et comparaison dans des graphiques idéalement en trois dimensions.
+Les résultats pourront par la suite être sauvegardés localement ce qui permettra leur recoupage et comparaison dans des graphiques idéalement en trois dimensions.
 
 Les livrables seront les suivants:
 ### Assurés
@@ -45,7 +45,7 @@ Les livrables seront les suivants:
 - Un moteur de calcul qui fournira les résultats sans les conserver et qui pourra être enrichi
 
 ### En fonction des possibilités techniques
-- Un module de remplissage automatique des molécules à partir de leur identifiant CAS
+- Un module de remplissage automatique des molécules à partir de leur identifiant CAS 
 - Un module de remplissage automatique des molécules à partir de leur schéma
 - Une base de donnée pour l'indexation des molécules et de leurs paramètres nécessaires aux calculs.
 - Un système de sauvegarde des résultats
@@ -64,6 +64,37 @@ Une autre contrainte concerne la confidentialité des données. L'accès au mote
 Concernant les hypothèses, il est prévu que les utilisateurs possèdent une compréhension de base des principes de la chimie verte, ce qui facilitera l'adoption de l'outil. Il est également hypothétique que des ressources humaines et techniques suffisantes seront disponibles pour assurer le développement, le test et le déploiement de l'application dans le respect des délais établis. Enfin, le projet repose sur l'idée que l'outil pourra évoluer avec le temps, intégrant de nouvelles fonctionnalités et paramètres pour répondre aux besoins futurs des chercheurs dans le domaine de la chimie verte.
 
 ## Approche du projet : méthodologie d’exécution, organigramme 
+
+La méthodologie d'exécution du projet suivra une approche Kanban, privilégiant un flux de travail continu et flexible. Chaque fonctionnalité sera développée de manière itérative en fonction de sa priorité, définie dans un backlog évolutif, facilitant le suivi de leur progression, de la collecte des données à leur implémentation finale. Cette méthode permettra d'intégrer les retours des parties prenantes en temps réel, tout en assurant une amélioration progressive de l'outil avec des livrables incrémentaux. Par ailleurs, une approche de développement piloté par les tests (TDD) sera envisagée pour le développement du module de calcul, garantissant ainsi une validation rigoureuse des fonctionnalités tout au long du processus.
+
+### Organigramme
+
+Responsable de projet: Muriel BILLAMBOZ
+Gestion de projet, référent technique: Alexandre HERSSENS
+Responsable data, infrastructure: Amyr HAMAD
+Responsable UX-UI: Floriant DECROIX
+Responsable développement: Fabien SACEPE
+Tests fonctionnels: Clément GREZ, Romain LANNOY
+
+
 ## Risques principaux et stratégies pour les restreindre
+### Risques principaux
+
+Le projet présente plusieurs risques majeurs. Tout d'abord, un risque technique lié à l'intégration des données via des APIs externes (ex : bases INRS, PubChem) pourrait ralentir le projet si ces sources ne sont pas stables, accessibles ou facilement exploitables. Ensuite, un risque fonctionnel concerne l'ergonomie et la simplicité d'utilisation de l'interface, cruciale pour des utilisateurs non experts en informatique, comme les chercheurs et étudiants en chimie. Il existe également un risque de délais comme des ressources limitées en temps ou en moyens pourraient affecter le planning. Enfin, des risques sécuritaires sont liés à la confidentialité résultats des calculs ou de l'accès à l'outil.
+
+### Stratégies pour les restreindre
+
+Pour minimiser ces risques, plusieurs stratégies seront mises en place. Le risque technique sera réduit en réalisant une étude approfondie des APIs dès les phases initiales du projet, tout en prévoyant des solutions alternatives, comme des bases de données locales en cas d'indisponibilité ou de limitations des sources externes. Le risque fonctionnel sera traité en adoptant une démarche itérative de tests utilisateurs réguliers, impliquant des chercheurs et étudiants pour valider l'ergonomie et garantir la simplicité d'utilisation. Pour éviter les retards, une gestion proactive du planning sera mise en œuvre, avec des points de suivi fréquents et des marges de temps prévues pour les imprévus. Quant à la sécurité, l'outil ne sera dans un premier accessible qu'aux enseignants. 
+
 ## Gestion des parties prenantes : identification et cartographie des parties prenantes du projet et leurs rôles
+
+Les chercheurs et scientifiques constituent des utilisateurs clés, car ils tireront parti de l'outil pour évaluer l'impact environnemental de leurs travaux. Les enseignants jouent également un rôle crucial en intégrant cet outil dans leurs cours, facilitant ainsi l'apprentissage des concepts de chimie verte. Les étudiants sont des utilisateurs finaux qui bénéficieront de l'accessibilité et de la convivialité de l'interface. Du côté technique, l'équipe de développement est responsable de la conception et de l'implémentation de l'outil. Enfin, les acteurs environnementaux, les industriels de la chimie et les agences de régulation représentent des parties prenantes externes, dont les attentes en matière de conformité réglementaire et d'impact environnemental influenceront les choix de conception et les fonctionnalités de l'outil. Une communication régulière avec ces parties prenantes sera essentielle pour s'assurer que le projet répond à leurs besoins et attentes.
+
+
 ## Budget et calendrier : grandes catégories de dépenses, calendrier (grandes étapes et principales dates)
+
+Le budget disponible pour le projet s'élève à 100 €, à priori réservés pour l'acquisition de matériel nécessaire à la mise en œuvre de l'outil automatisé de calcul et de représentation graphique des paramètres de chimie verte. Ces fonds seront alloués à l'achat de composants essentiels, tels que des équipements informatiques, des licences de logiciels, ou éventuellement des outils de prototypage.
+
+Le calendrier du projet débutera par la validation des besoins, où les utilisateurs et parties prenantes seront consultés pour s'assurer que toutes les exigences fonctionnelles et techniques sont bien comprises. Une fois les besoins validés, nous passerons au choix de l'architecture logicielle, définissant les technologies et les infrastructures nécessaires pour garantir la performance et la sécurité de l'outil. Cette étape inclura également la conception détaillée de l'outil, incluant la modélisation de l'interface et la planification des fonctionnalités. En parallèle, le développement du module de calcul sera initié, suivant une approche TDD pour garantir la fiabilité des résultats. Simultanément, nous mettrons en place des mécanismes pour la gestion des données, en intégrant les API pour la collecte automatique des informations chimiques. Enfin, le développement de l'interface utilisateur sera réalisé, visant à créer une expérience intuitive et accessible pour les chercheurs et étudiants en chimie, tout en intégrant les retours des utilisateurs au fur et à mesure de l'avancement du projet.
+
+
