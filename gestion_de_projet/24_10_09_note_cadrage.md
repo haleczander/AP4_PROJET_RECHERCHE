@@ -41,7 +41,7 @@ Les résultats pourront par la suite être sauvegardés localement ce qui permet
 
 Les livrables seront les suivants:
 ### Assurés
-- Un interface intuitif pour renseigner les données et respectant la charte grapique JUNIA avec un affichage des résultats sur forme de tableau et de graphique radar
+- Une interface intuitive pour renseigner les données et respectant la charte grapique JUNIA avec un affichage des résultats sur forme de tableau et de graphique radar
 - Un moteur de calcul qui fournira les résultats sans les conserver et qui pourra être enrichi
 
 ### En fonction des possibilités techniques
@@ -65,7 +65,7 @@ Concernant les hypothèses, il est prévu que les utilisateurs possèdent une co
 
 ## Approche du projet : méthodologie d’exécution, organigramme 
 
-La méthodologie d'exécution du projet suivra une approche Kanban, privilégiant un flux de travail continu et flexible. Chaque fonctionnalité sera développée de manière itérative en fonction de sa priorité, définie dans un backlog évolutif, facilitant le suivi de leur progression, de la collecte des données à leur implémentation finale. Cette méthode permettra d'intégrer les retours des parties prenantes en temps réel, tout en assurant une amélioration progressive de l'outil avec des livrables incrémentaux. Par ailleurs, une approche de développement piloté par les tests (TDD) sera envisagée pour le développement du module de calcul, garantissant ainsi une validation rigoureuse des fonctionnalités tout au long du processus.
+La méthodologie d'exécution du projet suivra une approche Kanban, privilégiant un flux de travail continu et flexible. Chaque fonctionnalité sera développée de manière itérative en fonction de sa priorité, définie dans un backlog évolutif, facilitant le suivi de sa progression, de la collecte des données à leur implémentation finale. Cette méthode permettra d'intégrer les retours des parties prenantes en temps réel, tout en assurant une amélioration progressive de l'outil avec des livrables incrémentaux. Par ailleurs, une approche de développement piloté par les tests (TDD) sera envisagée pour le développement du module de calcul, garantissant ainsi une validation rigoureuse des fonctionnalités tout au long du processus.
 
 ### Organigramme
 
