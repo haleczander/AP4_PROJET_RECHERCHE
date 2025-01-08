@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choisir des molécules</title>
+    </head>
+<body>
+    <div id="header-container"></div>
+    <h1>Choisir des molécules</h1>
+    <h2>Choisir les molécules via liste déroulante</h2>
+    <label for="molecule1">Molécule 1 :</label>
+    <select id="molecule1">
+        <option value="mol1">Molécule 1</option>
+        <option value="mol2">Molécule 2</option>
+        <option value="mol3">Molécule 3</option>      <!--for dans bdd ou json selon choix -->
+    </select>
+    <label for="molecule2">Molécule 2 :</label>
+    <select id="molecule2">
+        <option value="mol1">Molécule 1</option>
+        <option value="mol2">Molécule 2</option>
+        <option value="mol3">Molécule 3</option>
+    </select>
+    <h2>Créer les molécules graphiquement</h2>
+    <button class="molecule-btn" onclick="createMoleculeGraphically(1)">Créer Molécule 1</button>     <!--kekule pour créer des molécules en js -->
+    <button class="molecule-btn" onclick="createMoleculeGraphically(2)">Créer Molécule 2</button>
+    <div id="molecule-editor">
+        <p>Editeur apparaîtra ici</p>
+    </div>
+</body>
+</html>

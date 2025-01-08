@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculs de Chimie Verte</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <h1>Calculs de Chimie Verte</h1>
+
+    <div class="formula">
+        <h2>1. Énergie de Réaction (ΔH)</h2>
+        <label for="deltaHProducts">ΔH des produits (somme) :</label>
+        <input type="number" id="deltaHProducts" placeholder="Entrez la valeur en kJ/mol">
+        <label for="deltaHReactants">ΔH des réactifs (somme) :</label>
+        <input type="number" id="deltaHReactants" placeholder="Entrez la valeur en kJ/mol">
+        <button onclick="calculateDeltaH()">Calculer ΔH</button>
+        <div class="result" id="deltaHResult"></div>
+    </div>
+
+    <div class="formula">
+        <h2>2. ERM (Efficacité de Réaction Massique)</h2>
+        <label for="massProduct">Masse du produit désiré (g) :</label>
+        <input type="number" id="massProduct" placeholder="Entrez la masse en g">
+        <label for="massReactants">Masse totale des réactifs (g) :</label>
+        <input type="number" id="massReactants" placeholder="Entrez la masse en g">
+        <button onclick="calculateERM()">Calculer ERM</button>
+        <div class="result" id="ermResult"></div>
+    </div>
+
+    <div class="formula">
+        <h2>3. Facteur E</h2>
+        <label for="massWaste">Masse des déchets (g) :</label>
+        <input type="number" id="massWaste" placeholder="Entrez la masse en g">
+        <label for="massDesiredProduct">Masse du produit désiré (g) :</label>
+        <input type="number" id="massDesiredProduct" placeholder="Entrez la masse en g">
+        <button onclick="calculateFactorE()">Calculer Facteur E</button>
+        <div class="result" id="factorEResult"></div>
+    </div>
+
+    <div class="formula">
+        <h2>4. Utilisation Atomique</h2>
+        <label for="atomicMassDesired">Masse du produit désiré (g) :</label>
+        <input type="number" id="atomicMassDesired" placeholder="Entrez la masse en g">
+        <label for="atomicMassReactants">Masse totale des réactifs (g) :</label>
+        <input type="number" id="atomicMassReactants" placeholder="Entrez la masse en g">
+        <button onclick="calculateAtomicUsage()">Calculer Utilisation Atomique</button>
+        <div class="result" id="atomicUsageResult"></div>
+    </div>
+
+    <div class="formula">
+        <h2>5. Indice EF (Efficacité des Flux)</h2>
+        <label for="inputMass">Masse des intrants (g) :</label>
+        <input type="number" id="inputMass" placeholder="Entrez la masse en g">
+        <label for="outputMass">Masse des produits (g) :</label>
+        <input type="number" id="outputMass" placeholder="Entrez la masse en g">
+        <button onclick="calculateEF()">Calculer EF</button>
+        <div class="result" id="efResult"></div>
+    </div>
+
+    <div class="formula">
+        <h2>6. PRM (Pourcentage de Matière Recyclée)</h2>
+        <label for="recycledMass">Masse des matières recyclées (g) :</label>
+        <input type="number" id="recycledMass" placeholder="Entrez la masse en g">
+        <label for="totalMass">Masse totale des matières (g) :</label>
+        <input type="number" id="totalMass" placeholder="Entrez la masse en g">
+        <button onclick="calculatePRM()">Calculer PRM</button>
+        <div class="result" id="prmResult"></div>
+    </div>
+
+    <script src="../functions/formules.js"></script>
+</body>
+</html>
