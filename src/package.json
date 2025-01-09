@@ -1,0 +1,27 @@
+{
+  "name": "metriques_chimie_verte",
+  "version": "1.0.0",
+  "description": "Outil de calcul automatisé des métriques de la chimie verte",
+  "main": "index.js",
+  "directories": {
+    "doc": "doc"
+  },
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/haleczander/AP4_PROJET_RECHERCHE.git"
+  },
+  "author": "ISEN Lille AP4 2024-2025 - Alexandre HERSSENS, Floriant DECROIX, Fabien SACEPE, Amyr HAMAD, Clément Grez, Romain LANNOY",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/haleczander/AP4_PROJET_RECHERCHE/issues"
+  },
+  "homepage": "https://github.com/haleczander/AP4_PROJET_RECHERCHE#readme",
+  "dependencies": {
+    "chart": "^0.1.2",
+    "jest": "^29.7.0",
+    "kekule": "^1.0.2"
+  }
+}
