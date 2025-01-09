@@ -1,17 +1,24 @@
-class Reaction {
+export class BaseReaction {
     reactifs = [];
-    catalyseurs = [];
     activations = [];
-    produits = [];
+}
+
+export class MatieresPremieres extends BaseReaction {
+    catalyseurs = [];
+    solvants = [];
+}
+
+export const TraitementPostReactionnel = BaseReaction;
+export const Putification = BaseReaction;
+
+export class Reaction {
+    matieresPremieres;
+    traitementPostReactionnel;
+    purification;
+    produit;
+    sousProduits;
 
     constructor() {
     }
 
-    addReactif( reactif ) {
-        this.reactifs.push( reactif );
-    }
-
-    removeReactif( reactif ){ 
-        this.reactifs = this.reactifs.filter( rreactif => rreactif != reactif );
-    }
 }
