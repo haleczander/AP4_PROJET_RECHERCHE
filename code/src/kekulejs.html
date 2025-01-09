@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Visualisation Kekule js</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        .controls {
+            margin: 20px 0;
+        }
+        button {
+            padding: 8px 16px;
+            margin: 0 5px;
+            cursor: pointer;
+        }
+        canvas {
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Éditeur de Molécules - Kekule.js</h1>
+    <div class="controls">
+        <button onclick="setMode('atom')">Ajouter Atome</button>
+        <button onclick="setMode('bond')">Ajouter Liaison</button>
+        <button onclick="clearCanvas()">Effacer</button>
+        <select id="atomType">
+            <option value="C">Carbone (C)</option>
+            <option value="O">Oxygène (O)</option>
+            <option value="N">Azote (N)</option>
+            <option value="H">Hydrogène (H)</option>
+        </select>
+        <select id="bondType">
+            <option value="single">Simple</option>
+            <option value="double">Double</option>
+            <option value="triple">Triple</option>
+        </select>
+    </div>
+    <canvas id="moleculeCanvas" width="600" height="400"></canvas>
+ 
+    <script>
+        const canvas = document.getElementById('moleculeCanvas');
+        const ctx = canvas.getContext('2d');
+ 
+        let mode = 'atom';
+        let atoms = [];
+        let bonds = [];
+        let selectedAtom = null;
+        let tempBond = null;
+ 
+        function setMode(newMode) {
+            mode = newMode;
+            selectedAtom = null;
+            tempBond = null;
+        }
+ 
+        function clearCanvas() {
+            atoms = [];
+            bonds = [];
+            selectedAtom = null;
+            tempBond = null;
+            redraw();
+        }
+ 
+        function Atom(x, y, type) {
+            this.x = x;
+            this.y = y;
+            this.type = type;
+            this.radius = 15;
+        }
+ 
+        function Bond(atom1, atom2, type) {
+            this.atom1 = atom1;
+            this.atom2 = atom2;
+            this.type = type;
+        }
+ 
+        canvas.addEventListener('click', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+ 
+            if (mode === 'atom') {
+                const atomType = document.getElementById('atomType').value;
+                atoms.push(new Atom(x, y, atomType));
+            } else if (mode === 'bond') {
+                const clickedAtom = atoms.find(atom => 
+                    Math.hypot(atom.x - x, atom.y - y) < atom.radius
+                );
+ 
+                if (clickedAtom) {
+                    if (!selectedAtom) {
+                        selectedAtom = clickedAtom;
+                    } else if (selectedAtom !== clickedAtom) {
+                        const bondType = document.getElementById('bondType').value;
+                        bonds.push(new Bond(selectedAtom, clickedAtom, bondType));
+                        selectedAtom = null;
+                    }
+                }
+            }
+            redraw();
+        });
+ 
+        canvas.addEventListener('mousemove', (e) => {
+            if (mode === 'bond' && selectedAtom) {
+                const rect = canvas.getBoundingClientRect();
+                tempBond = {
+                    x1: selectedAtom.x,
+                    y1: selectedAtom.y,
+                    x2: e.clientX - rect.left,
+                    y2: e.clientY - rect.top
+                };
+                redraw();
+            }
+        });
+ 
+        function drawAtom(atom) {
+            ctx.beginPath();
+            ctx.arc(atom.x, atom.y, atom.radius, 0, 2 * Math.PI);
+            ctx.fillStyle = 'white';
+            ctx.fill();
+            ctx.strokeStyle = atom === selectedAtom ? 'red' : 'black';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+ 
+            ctx.fillStyle = 'black';
+            ctx.font = '16px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(atom.type, atom.x, atom.y);
+        }
+ 
+        function drawBond(bond) {
+            const dx = bond.atom2.x - bond.atom1.x;
+            const dy = bond.atom2.y - bond.atom1.y;
+            const angle = Math.atan2(dy, dx);
+            const length = Math.hypot(dx, dy);
+            const spacing = 4;
+ 
+            if (bond.type === 'single' || bond.type === 'double' || bond.type === 'triple') {
+                const bondCount = bond.type === 'single' ? 1 : (bond.type === 'double' ? 2 : 3);
+                const offset = ((bondCount - 1) * spacing) / 2;
+ 
+                for (let i = 0; i < bondCount; i++) {
+                    const perpX = Math.sin(angle) * (i * spacing - offset);
+                    const perpY = -Math.cos(angle) * (i * spacing - offset);
+ 
+                    ctx.beginPath();
+                    ctx.moveTo(
+                        bond.atom1.x + perpX,
+                        bond.atom1.y + perpY
+                    );
+                    ctx.lineTo(
+                        bond.atom2.x + perpX,
+                        bond.atom2.y + perpY
+                    );
+                    ctx.strokeStyle = 'black';
+                    ctx.lineWidth = 2;
+                    ctx.stroke();
+                }
+            }
+        }
+ 
+        function drawTempBond() {
+            if (tempBond) {
+                ctx.beginPath();
+                ctx.moveTo(tempBond.x1, tempBond.y1);
+                ctx.lineTo(tempBond.x2, tempBond.y2);
+                ctx.strokeStyle = 'gray';
+                ctx.setLineDash([5, 5]);
+                ctx.lineWidth = 2;
+                ctx.stroke();
+                ctx.setLineDash([]);
+            }
+        }
+ 
+        function redraw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            bonds.forEach(drawBond);
+            drawTempBond();
+            atoms.forEach(drawAtom);
+        }
+ 
+        redraw();
+    </script>
+</body>
+</html>
