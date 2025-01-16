@@ -1,0 +1,1 @@
+console.log('Je suis bien importé')
