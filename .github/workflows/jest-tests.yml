@@ -1,0 +1,35 @@
+name: Run Jest Tests
+
+on:
+  push:
+    branches:
+      - '*#*' # Match branches containing '#' with any preceding and following characters
+  pull_request:
+    branches:
+      - '*#*' # Same for pull requests targeting these branches
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout repository code
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+
+      # Set up Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      # Install dependencies
+      - name: Install Dependencies
+        working-directory: src # Specify the directory where the code will be checked out
+        run: npm i
+
+      # Run Jest tests
+      - name: Run Jest
+        working-directory: src # Specify the directory where the code will be checked out
+        run: npm run test
