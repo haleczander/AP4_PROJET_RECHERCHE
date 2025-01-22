@@ -1,0 +1,8 @@
+*,::after,::before{
+    box-sizing: border-box;
+}
+
+:root{
+    --ma-variable: #07f;
+    --ma-variable-bis: var(--ma-variable);
+}
