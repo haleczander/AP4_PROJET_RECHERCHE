@@ -1,12 +1,12 @@
+import Molecule from "../models/molecule.model";
 import MoleculeReaction from "../models/molecule.reaction.model";
 
-const molecule = new MoleculeReaction();
-
 function getCoef( molecule, indicateursFn ) {
-    const masse = molecule.masse ?? 0;
+    const masseG = getMasseG( molecule );
     const indicateurs = indicateursFn( molecule );
     const danger = moyenneIndicateurs( indicateurs );
-    return ( 1 - danger ) * masse;
+
+    return ( 1 - danger ) * masseG;
 }
 
 function moyenneIndicateurs( indicateurs ) {
@@ -15,8 +15,9 @@ function moyenneIndicateurs( indicateurs ) {
     for (let indicateur in indicateurs) {
         const { valeur, coef } = indicateurs[indicateur];
         somme += (valeur * coef);
-        coefs += 1;
+        coefs += coef;
     }
+
     return coefs == 0 ? 0 : somme / coefs;
 }
 
@@ -28,6 +29,19 @@ export function getCoefToxicite( molecule ) {
 }
 export function getCoefCMR( molecule ) {
     return getCoef( molecule, getIndicateursCMR );
+}
+
+export function getDanger( molecule ) {
+    const indicateurs = getIndicateursDanger( molecule );
+    return moyenneIndicateurs( indicateurs );
+}
+export function getToxicite( molecule ) {
+    const indicateurs = getIndicateursToxicite( molecule );
+    return moyenneIndicateurs( indicateurs );
+}
+export function getCMR( molecule ) {
+    const indicateurs = getIndicateursCMR( molecule );
+    return moyenneIndicateurs( indicateurs );
 }
 
 export function getIndicateursDanger( molecule ){
@@ -72,8 +86,70 @@ export function getMasseG( molecule ){
 }
 
 export function getPrixEuro( molecule ){
-    const masse = molecule.masse;
+    const masseG = getMasseG( molecule );
     const prix = molecule.prixG;
 
-    return masse * prix;
+    return masseG * prix;
+}
+
+
+export function createMolecule(
+    nom, formule, cas, masseMolaire, nbCarbone,
+    nocif, irritant, explosible, dangereuxPourEnvironnement, 
+    toxique, tresToxique, facilementInflammable, extremementInflammable, 
+    r40, r45, r49, r46, r60, r61, r62, r63
+) {
+    const molecule = new Molecule();
+
+    molecule.nom = nom;
+    molecule.formule = formule;
+    molecule.cas = cas;
+    molecule.masseMolaire = masseMolaire;
+    molecule.nbCarbone = nbCarbone;
+    molecule.nocif = nocif;
+    molecule.irritant = irritant;
+    molecule.explosible = explosible;
+    molecule.dangereuxPourEnvironnement = dangereuxPourEnvironnement;
+    molecule.toxique = toxique;
+    molecule.tresToxique = tresToxique;
+    molecule.facilementInflammable = facilementInflammable;
+    molecule.extremementInflammable = extremementInflammable;
+    molecule.r40 = r40;
+    molecule.r45 = r45;
+    molecule.r49 = r49;
+    molecule.r46 = r46;
+    molecule.r60 = r60;
+    molecule.r61 = r61;
+    molecule.r62 = r62;
+    molecule.r63 = r63;
+
+    return molecule;
+}
+
+export function createMoleculeReaction( molecule ) {
+    const moleculeReaction = new MoleculeReaction();
+
+    moleculeReaction.nom = molecule.nom;
+    moleculeReaction.formule = molecule.formule;
+    moleculeReaction.cas = molecule.cas;
+    moleculeReaction.masseMolaire = molecule.masseMolaire;
+    moleculeReaction.nbCarbone = molecule.nbCarbone;
+    moleculeReaction.nocif = molecule.nocif;
+    moleculeReaction.irritant = molecule.irritant;
+    moleculeReaction.explosible = molecule.explosible;
+    moleculeReaction.dangereuxPourEnvironnement = molecule.dangereuxPourEnvironnement;
+    moleculeReaction.toxique = molecule.toxique;
+    moleculeReaction.tresToxique = molecule.tresToxique;
+    moleculeReaction.facilementInflammable = molecule.facilementInflammable;
+    moleculeReaction.extremementInflammable = molecule.extremementInflammable;
+    moleculeReaction.r40 = molecule.r40;
+    moleculeReaction.r45 = molecule.r45;
+    moleculeReaction.r49 = molecule.r49;
+    moleculeReaction.r46 = molecule.r46;
+    moleculeReaction.r60 = molecule.r60;
+    moleculeReaction.r61 = molecule.r61;
+    moleculeReaction.r62 = molecule.r62;
+    moleculeReaction.r63 = molecule.r63;
+
+    return moleculeReaction;
 }
