@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajout Molécule</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/navbar.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <script type="module" src="/src/main.js" defer></script>
+</head>
+<body>
+    <!-- Conteneur pour la navbar, chargée dynamiquement -->
+    <div id="navbar-container"></div>
+
+    <div class="main-content">
+        <h2>Schéma de la molécule</h2>
+        <div id="molecule-drawing"></div>
+        <h2>Nommage</h2>
+        <form id="molecule-form">
+            <div id="nommage-form">
+                <input type="text" id="nom" placeholder="Nom">
+                <input type="text" id="cas" placeholder="CAS">
+                <input type="text" id="masseMolaire" placeholder="M">
+                <input type="text" id="formule" placeholder="Formule">
+            </div>
+            <h2>Caractéristiques</h2>
+            <div id="caracteristiques-form">
+                <div><label><input type="checkbox" id="stat-nocif"> Nocif</label></div>
+                <div><label><input type="checkbox" id="stat-irritant"> Irritant</label></div>
+                <div><label><input type="checkbox" id="stat-explosible"> Explosible</label></div>
+                <div><label><input type="checkbox" id="stat-toxique"> Toxique</label></div>
+                <div><label><input type="checkbox" id="stat-tres-toxique"> Très toxique</label></div>
+                <div><label><input type="checkbox" id="stat-danger-environnement"> Danger environnement</label></div>
+                <div><label><input type="checkbox" id="stat-facilement-inflammable"> Facilement inflammable</label></div>
+                <div><label><input type="checkbox" id="stat-extremement-inflammable"> Extrêmement inflammable</label></div>
+                <div><label><input type="checkbox" id="stat-r40"> R40</label></div>
+                <div><label><input type="checkbox" id="stat-r45"> R45</label></div>
+                <div><label><input type="checkbox" id="stat-r46"> R46</label></div>
+                <div><label><input type="checkbox" id="stat-r49"> R49</label></div>
+                <div><label><input type="checkbox" id="stat-r60"> R60</label></div>
+                <div><label><input type="checkbox" id="stat-r61"> R61</label></div>
+                <div><label><input type="checkbox" id="stat-r62"> R62</label></div>
+                <div><label><input type="checkbox" id="stat-r63"> R63</label></div>
+            </div>
+            <button type="button" class="import-btn">Import BDD</button>
+            <button type="submit" class="add-btn">Ajouter</button>
+        </form>
+    </div>
+
+    <!-- Inclusion du script pour charger la navbar -->
+    <script src="scripts/navbarLoader.js"></script>
+</body>
+</html>
