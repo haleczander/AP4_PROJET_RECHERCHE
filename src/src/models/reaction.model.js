@@ -3,15 +3,15 @@ export class BaseReaction {
     activations = [];
 }
 
-export class MatieresPremieres extends BaseReaction {
+export class ReactionPrincipale extends BaseReaction {
     catalyseurs = [];
     solvants = [];
 }
 
 export const TraitementPostReactionnel = BaseReaction;
-export const Putification = BaseReaction;
+export const Purification = BaseReaction;
 
-export class Reaction {
+export class ReactionComplete {
     matieresPremieres;
     traitementPostReactionnel;
     purification;
