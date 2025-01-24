@@ -1,6 +1,8 @@
-class Activation {
-    constructor( id, nom ) {
-        this.id = id;
-        this.nom = nom;
-    }
+export class Activation {
+    id = null;
+    nom = null;
+
+    constructor() {}
 }
+
+export default Activation;

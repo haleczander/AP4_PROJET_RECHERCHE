@@ -2,8 +2,8 @@ export class Molecule {
     nom = null;
     formule = null;
     cas = null;
-    masseMolaire = null;
-    nbCarbone = null;
+    masseMolaire = 0;
+    nbCarbone = 0;
 
     nocif = false;
     irritant = false;
