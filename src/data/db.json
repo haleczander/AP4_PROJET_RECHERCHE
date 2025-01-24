@@ -1,0 +1,187 @@
+{
+  "version": 1.0,
+  "data": {
+    "molecules": [
+      {
+        "cas": "50-00-0",
+        "nom": "Formaldéhyde",
+        "formule": "CH2O",
+        "masseMolaire": 30.03,
+        "nbCarbone": 1,
+        "nocif": true,
+        "irritant": true,
+        "explosible": false,
+        "dangereuxPourEnvironnement": false,
+        "toxique": true,
+        "tresToxique": false,
+        "facilementInflammable": false,
+        "extremementInflammable": true,
+        "r40": false,
+        "r45": false,
+        "r49": true,
+        "r46": false,
+        "r60": false,
+        "r61": true,
+        "r62": false,
+        "r63": true
+      },
+      {
+        "cas": "64-17-5",
+        "nom": "Éthanol",
+        "formule": "C2H6O",
+        "masseMolaire": 46.07,
+        "nbCarbone": 2,
+        "nocif": false,
+        "irritant": false,
+        "explosible": false,
+        "dangereuxPourEnvironnement": false,
+        "toxique": false,
+        "tresToxique": false,
+        "facilementInflammable": false,
+        "extremementInflammable": false,
+        "r40": false,
+        "r45": false,
+        "r49": false,
+        "r46": false,
+        "r60": false,
+        "r61": false,
+        "r62": false,
+        "r63": true
+      },
+      {
+        "cas": "67-56-1",
+        "nom": "Méthanol",
+        "formule": "CH3OH",
+        "masseMolaire": 32.04,
+        "nbCarbone": 1,
+        "nocif": false,
+        "irritant": false,
+        "explosible": true,
+        "dangereuxPourEnvironnement": false,
+        "toxique": false,
+        "tresToxique": false,
+        "facilementInflammable": false,
+        "extremementInflammable": true,
+        "r40": true,
+        "r45": false,
+        "r49": false,
+        "r46": false,
+        "r60": true,
+        "r61": false,
+        "r62": false,
+        "r63": false
+      },
+      {
+        "cas": "7664-93-9",
+        "nom": "Acide sulfurique",
+        "formule": "H2SO4",
+        "masseMolaire": 98.08,
+        "nbCarbone": 2,
+        "nocif": true,
+        "irritant": false,
+        "explosible": true,
+        "dangereuxPourEnvironnement": false,
+        "toxique": true,
+        "tresToxique": false,
+        "facilementInflammable": false,
+        "extremementInflammable": false,
+        "r40": false,
+        "r45": false,
+        "r49": false,
+        "r46": true,
+        "r60": false,
+        "r61": false,
+        "r62": false,
+        "r63": false
+      },
+      {
+        "cas": "7440-22-4",
+        "nom": "Argent",
+        "formule": "Ag",
+        "masseMolaire": 107.87,
+        "nbCarbone": 1,
+        "nocif": false,
+        "irritant": false,
+        "explosible": false,
+        "dangereuxPourEnvironnement": true,
+        "toxique": false,
+        "tresToxique": false,
+        "facilementInflammable": false,
+        "extremementInflammable": false,
+        "r40": false,
+        "r45": false,
+        "r49": false,
+        "r46": false,
+        "r60": false,
+        "r61": false,
+        "r62": false,
+        "r63": true
+      },
+      {
+        "cas": "7732-18-5",
+        "nom": "Eau",
+        "formule": "H2O",
+        "masseMolaire": 18.02,
+        "nbCarbone": 2,
+        "nocif": false,
+        "irritant": false,
+        "explosible": false,
+        "dangereuxPourEnvironnement": false,
+        "toxique": false,
+        "tresToxique": false,
+        "facilementInflammable": false,
+        "extremementInflammable": false,
+        "r40": false,
+        "r45": false,
+        "r49": false,
+        "r46": false,
+        "r60": false,
+        "r61": false,
+        "r62": false,
+        "r63": true
+      }
+    ],
+    "activations": [
+      {
+        "serial": 1,
+        "nom": "Activation thermique"
+      },
+      {
+        "serial": 2,
+        "nom": "Activation par lumière"
+      },
+      {
+        "serial": 3,
+        "nom": "Activation par lumière visible"
+      },
+      {
+        "serial": 4,
+        "nom": "Activation électrochimique"
+      },
+      {
+        "serial": 5,
+        "nom": "Activation catalytique"
+      },
+      {
+        "serial": 6,
+        "nom": "Activation mécanique"
+      },
+      {
+        "serial": 7,
+        "nom": "Activation micro-ondes"
+      },
+      {
+        "serial": 8,
+        "nom": "Activation plasma"
+      },
+      {
+        "serial": 9,
+        "nom": "Activation par pression"
+      },
+      {
+        "serial": 10,
+        "nom": "Activation sonochimique"
+      }
+    ]
+  }
+}

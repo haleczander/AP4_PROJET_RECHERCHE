@@ -5,7 +5,11 @@ export class MoleculeSevice {
         };
     }
 
-    getByCas( cas ) {
+    findByCas( cas ) {
+        throw new Error("La méthode n'est pas implémentée.");
+    }
+
+    findAllByAny( needle ) {
         throw new Error("La méthode n'est pas implémentée.");
     }
 
