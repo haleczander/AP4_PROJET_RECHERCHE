@@ -2,7 +2,10 @@ import Activation from './activation.model';
 
 export class ActivationReaction extends Activation {
     dureeM = 0;
-    puissance = 0;
+    puissanceW = 0;
 
-    constructor(){}
+    constructor( id = null, nom = null ){
+        super( id, nom );
+    }
+    
 }

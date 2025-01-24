@@ -2,7 +2,10 @@ export class Activation {
     id = null;
     nom = null;
 
-    constructor() {}
+    constructor( id = null, nom = null ) {
+        this.id = id;
+        this.nom = nom;
+    }
 }
 
 export default Activation;
