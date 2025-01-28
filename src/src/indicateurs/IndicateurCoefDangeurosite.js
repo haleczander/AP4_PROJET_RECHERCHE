@@ -1,0 +1,3 @@
+class IndicateurCoefDangerosite extends Indicateurs {
+    
+}
