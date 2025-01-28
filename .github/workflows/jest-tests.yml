@@ -26,10 +26,10 @@ jobs:
 
       # Install dependencies
       - name: Install Dependencies
-        working-directory: src # Specify the directory where the code will be checked out
+        working-directory: webapp # Specify the directory where the code will be checked out
         run: npm i
 
       # Run Jest tests
       - name: Run Jest
-        working-directory: src # Specify the directory where the code will be checked out
+        working-directory: webapp # Specify the directory where the code will be checked out
         run: npm run test
