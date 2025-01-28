@@ -12,6 +12,8 @@ console.log( service.findMoleculesByAny("CH"))
 
 console.log( service.findMoleculesByCas("224"))
 
+console.log ( service.findMoleculesByFormule("CH"))
+
 // non fonctionnel
 
 // const newMolecule = {

@@ -1,7 +1,6 @@
 import DataService from "../data.service";
 import json from "../../../data/db.json";
-import fs from 'fs';
-import path from 'path';
+
 
 export class LocalDataService extends DataService {
     _molecules = [];
@@ -18,29 +17,29 @@ export class LocalDataService extends DataService {
     }
 
     // Méthode pour ajouter une molécule
-    addMolecule(newMolecule) {
+    // addMolecule(newMolecule) {
 
-        // Vérifie que la molécule ne soit pas déjà présente
-        if (this._molecules.some(molecule => molecule.cas === newMolecule.cas)) {
-            console.log("La molécule avec ce CAS existe déjà.");
-            return;
-        }
+    //     // Vérifie que la molécule ne soit pas déjà présente
+    //     if (this._molecules.some(molecule => molecule.cas === newMolecule.cas)) {
+    //         console.log("La molécule avec ce CAS existe déjà.");
+    //         return;
+    //     }
 
-        // Ajouter la nouvelle molécule à la liste
-        this._molecules.push(newMolecule);
+    //     // Ajouter la nouvelle molécule à la liste
+    //     this._molecules.push(newMolecule);
 
-        // Mettre à jour les données dans le LocalStorage
-        const updatedJsonData = {
-        version: 1,
-        data: {
-            molecules: this._molecules,
-            activations: this._activations
-        }
-    };
+    //     // Mettre à jour les données dans le LocalStorage
+    //     const updatedJsonData = {
+    //     version: 1,
+    //     data: {
+    //         molecules: this._molecules,
+    //         activations: this._activations
+    //     }
+    // };
 
-    // Je n'ai pas réusie à trouver un moyen de modifier un fichier JS OU JSON a partir d'un javascript client.
+    // // Je n'ai pas réusie à trouver un moyen de modifier un fichier JS OU JSON a partir d'un javascript client.
 
-    }
+    // }
 
     // Vérifie si les données sont chargées avant de retourner les molécules
     findAllMolecules() {
@@ -75,6 +74,26 @@ export class LocalDataService extends DataService {
             return [];
         }
     }
+
+    findMoleculesByFormule(needle) {
+        // Nettoie le needle pour enlever les espaces et les caractères spéciaux
+        const cleanedNeedle = needle.replace(/\s+/g, "").toUpperCase();
+    
+        // Recherche les molécules dont la formule contient le needle
+        const matchingMolecules = this._molecules.filter(molecule => {
+            const moleculeFormule = molecule.formule.replace(/\s+/g, "").toUpperCase(); // Nettoie la formule de la molécule
+            return moleculeFormule.includes(cleanedNeedle);  // Recherche une correspondance partielle
+        });
+    
+        // Si des molécules correspondent, les retourner
+        if (matchingMolecules.length > 0) {
+            return matchingMolecules;
+        } else {
+            console.log("Aucune molécule trouvée avec cette formule.");
+            return [];
+        }
+    }
+    
 
     /* HELPER METHOD */
 
