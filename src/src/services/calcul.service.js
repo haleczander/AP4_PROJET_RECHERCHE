@@ -21,12 +21,12 @@ export class CalculService {
 
     calculPRM(){
         throw new Error("La méthode n'est pas implémentée."); 
-
+        // PRM = (Masse des matières recyclées ou réutilisables / Masse totale des matières introduites dans le processus) × 100
     }
 
     calculEfficaciteMassique(){
         throw new Error("La méthode n'est pas implémentée."); 
-
+        // EF = Masse des intrants / Masse des produits
     }
 
     calculRendemente(){
@@ -34,14 +34,16 @@ export class CalculService {
 
     }
 
-    calculEconomieAtomes(){
+    // aussi appelé économie atomique
+    calculUtilisationAtomique(){
         throw new Error("La méthode n'est pas implémentée."); 
-
+        //Utilisation Atomique = (Masse du produit désiré / Σ Masse des réactifs) × 100
     }
     
     calculEconomieCarbone(){
         throw new Error("La méthode n'est pas implémentée."); 
 
     }
+  
 }
 export default CalculService;
