@@ -22,20 +22,20 @@ export const ACETOACETATE_ETHYLE = createMolecule(
 );
 
 export const ACIDE_CHLORHYDRIQUE = createMolecule(
-  "Acide chlorhydrique", "HCl", "7647-01-0", 36.5, 1,
-  true, false, false, false, false, 
+  "Acide chlorhydrique", "HCl", "7647-01-0", 36.46, 1,
+  true, true, false, false, false, 
   false, false, false, false, 
   false, false, false, false
 );
 
-const ETHANOL = createMolecule(
-  "Ethanol", "C2H6O", "64-17-5", null, null,
-  true, false, false, false, false,
-  false, false, true, false,
+export const ETHANOL = createMolecule(
+  "Ethanol", "C2H6O", "64-17-5", 46.068, null,
+  false, false, false, false, false,
+  false, true, false, false,
   false, false, false, false
 );
 
-const EAU = createMolecule(
+export const EAU = createMolecule(
   "Eau", "H2O", "7732-18-5", null, null,
   false, false, false, false, false,
   false, false, false, false,
