@@ -2,7 +2,6 @@ import { createMoleculeReaction, getCMR, getCoefCMR, getCoefDanger, getCoefToxic
 import { UREE } from "../../molecules.data";
 
 const TEST_UREE = createMoleculeReaction( UREE );
-TEST_UREE.densite = 1;
 TEST_UREE.purete = 99;
 TEST_UREE.volume = 0.75;
 TEST_UREE.prixG = .035;

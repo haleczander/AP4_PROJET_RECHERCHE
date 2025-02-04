@@ -2,7 +2,6 @@ import { createMoleculeReaction, getCMR, getCoefCMR, getCoefDanger, getCoefToxic
 import { ACETOACETATE_ETHYLE } from "../../molecules.data";
 
 const TEST_ACETOACETATE_ETHYLE = createMoleculeReaction( ACETOACETATE_ETHYLE );
-TEST_ACETOACETATE_ETHYLE.densite = 1.03;
 TEST_ACETOACETATE_ETHYLE.purete = 99;
 TEST_ACETOACETATE_ETHYLE.volume = 2.4;
 TEST_ACETOACETATE_ETHYLE.prixG = .016;

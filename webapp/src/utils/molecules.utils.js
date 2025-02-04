@@ -94,7 +94,7 @@ export function getPrixEuro( molecule ){
 
 
 export function createMolecule(
-    nom, formule, cas, masseMolaire, nbCarbone,
+    nom, formule, cas, masseMolaire, densite, nbCarbone,
     nocif, irritant, explosible, dangereuxPourEnvironnement, 
     toxique, tresToxique, facilementInflammable, extremementInflammable, 
     r40, r45, r49, r46, r60, r61, r62, r63
@@ -105,6 +105,7 @@ export function createMolecule(
     molecule.formule = formule;
     molecule.cas = cas;
     molecule.masseMolaire = masseMolaire;
+    molecule.densite = densite;
     molecule.nbCarbone = nbCarbone;
     molecule.nocif = nocif;
     molecule.irritant = irritant;
@@ -133,6 +134,7 @@ export function createMoleculeReaction( molecule ) {
     moleculeReaction.formule = molecule.formule;
     moleculeReaction.cas = molecule.cas;
     moleculeReaction.masseMolaire = molecule.masseMolaire;
+    moleculeReaction.densite = molecule.densite;
     moleculeReaction.nbCarbone = molecule.nbCarbone;
     moleculeReaction.nocif = molecule.nocif;
     moleculeReaction.irritant = molecule.irritant;
