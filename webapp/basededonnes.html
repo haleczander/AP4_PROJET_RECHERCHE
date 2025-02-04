@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schéma Réactionnel</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/navbar.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <script type="module" src="/src/main.js" defer></script>
+</head>
+<body>
+    <!-- Conteneur pour la navbar, qui sera rempli par le script -->
+    <div id="navbar-container"></div> 
+    <div class="main-content">
+        <h1 class="page-title">Liste des molécules</h1>
+        <input type="text" id="search-input" placeholder="Rechercher une molécule..." />
+        <div id="molecule-table-container" class="table-wrapper"></div>
+      </div>           
+    <!-- Inclusion du script pour charger la navbar -->
+    <script src="scripts/navbarLoader.js"></script>
+    <script src="scripts/tableLoader.js"></script>
+</body>
+</html>

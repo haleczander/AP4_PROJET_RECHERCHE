@@ -1,0 +1,70 @@
+
+/* Barre de navigation verticale, responsive via vw/vh */
+.navbar {
+    width: 10.6vw;               /* Largeur en fonction du viewport */
+    min-height: 100vh;           /* Hauteur minimale égale à la hauteur de la fenêtre */
+    background-color: #fff;
+    padding: 2vw;                /* Espacement intérieur basé sur le viewport */
+    display: flex;
+    position: fixed;
+    flex-direction: column;
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Logo (en haut) */
+.navbar .nav-logo {
+    margin-bottom: 2vh;          /* Espace sous le logo en fonction de la hauteur de la fenêtre */
+}
+
+.navbar .nav-logo .logo {
+    max-width: 15vw;             /* Largeur maximale du logo basée sur le viewport */
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+/* Conteneur des liens */
+.navbar .nav-link {
+    display: flex;
+    flex-direction: column;
+    gap: 2vh;                  /* Espacement vertical entre chaque lien */
+    margin-top: 2vh;
+}
+
+/* Style par défaut pour chaque lien */
+.navbar .nav-link a {
+    display: flex;
+    align-items: center;
+    gap: 1vw;                  /* Espacement horizontal entre l'icône et le texte */
+    color: #000;
+    text-decoration: none;
+    padding: 1vh 1vw;          /* Espacement interne vertical/horizontal */
+    border-radius: 1vh;        /* Coins arrondis proportionnels au viewport */
+    font-weight: 600;
+    font-size: 1.45vh;          /* Taille de texte réduite */
+    transition: background-color 0.3s ease;
+}
+
+/* Au survol : simple soulignement du texte */
+.navbar .nav-link a:hover {
+    text-decoration: underline;
+}
+
+/* État "actif" : fond et bordure violets, texte violet */
+.navbar .nav-link a.active {
+    background-color: #EEEBF4;
+    border: 0.2vh solid #775DA6;
+    color: #775DA6;
+}
+
+/* Icônes : taille et transition */
+.navbar .nav-link img {
+    width: 2vh;                /* Taille de l'icône basée sur la hauteur du viewport */
+    height: 2vh;
+    transition: filter 0.3s ease;
+}
+
+/* Icône en état actif : applique un filtre violet */
+.navbar .nav-link a.active img {
+    filter: invert(35%) sepia(77%) saturate(3718%) hue-rotate(223deg) brightness(95%) contrast(90%);
+}
