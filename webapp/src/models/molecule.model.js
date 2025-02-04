@@ -3,6 +3,7 @@ export class Molecule {
     formule = null;
     cas = null;
     masseMolaire = 0;
+    densite = 0;
     nbCarbone = 0;
 
     nocif = false;

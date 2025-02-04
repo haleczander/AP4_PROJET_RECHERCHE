@@ -2,7 +2,6 @@ import { createMoleculeReaction, getCMR, getCoefCMR, getCoefDanger, getCoefToxic
 import { ETHANOL } from "../../molecules.data";
 
 const TEST_ETHANOL = createMoleculeReaction( ETHANOL );
-TEST_ETHANOL.densite = 0.789;
 TEST_ETHANOL.purete = 95;
 TEST_ETHANOL.volume = 4.75;
 TEST_ETHANOL.prixG = .015;
@@ -100,7 +99,6 @@ test(
 test(
     "test getCoefToxicite Ethanol",
     () => {
-        console.log(TEST_ETHANOL)
         expect(
             getCoefToxicite( TEST_ETHANOL )
         ).toBeCloseTo(

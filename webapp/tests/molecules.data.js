@@ -1,42 +1,42 @@
 import { createMolecule } from "../src/utils/molecules.utils";
 
 export const BENZALDEHYDE = createMolecule(
-  "Benzaldéhyde", "C7H6O", "100-52-7", 106.12, 7, 
+  "Benzaldéhyde", "C7H6O", "100-52-7", 106.12, 1.05, 7, 
   true, false, false, false, false, 
   false, false, false, false, 
   false, false, false, false, false, false, false, false
 );
 
 export const UREE = createMolecule(
-    "Urée", "CH4N2O", "57-13-6", 60.05, 1,
+    "Urée", "CH4N2O", "57-13-6", 60.05, 0.75, 1,
     false, true, false, false, false,
     false, false, false, false,
     false, false, false, false, false, false, false, false
 );
 
 export const ACETOACETATE_ETHYLE = createMolecule(
-    "Acetoacétate d'éthyle", "C6H10O3", "141-97-9", 130.14, 6,
+    "Acetoacétate d'éthyle", "C6H10O3", "141-97-9", 130.14, 1.03, 6,
     false, true, false, false, false,
     false, false, false, false,
     false, false, false, false, false, false, false, false
 );
 
 export const ACIDE_CHLORHYDRIQUE = createMolecule(
-  "Acide chlorhydrique", "HCl", "7647-01-0", 36.46, 1,
+  "Acide chlorhydrique", "HCl", "7647-01-0", 36.46, 1.18, 0,
   true, true, false, false, false, 
   false, false, false, false, 
   false, false, false, false
 );
 
 export const ETHANOL = createMolecule(
-  "Ethanol", "C2H6O", "64-17-5", 46.068, null,
+  "Ethanol", "C2H6O", "64-17-5", 46.068, 0.789, 1,
   false, false, false, false, false,
   false, true, false, false,
   false, false, false, false
 );
 
 export const EAU = createMolecule(
-  "Eau", "H2O", "7732-18-5", null, null,
+  "Eau", "H2O", "7732-18-5", 18.015, 0.997, 0,
   false, false, false, false, false,
   false, false, false, false,
   false, false, false, false 
