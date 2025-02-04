@@ -2,7 +2,6 @@ import { createMoleculeReaction, getCMR, getCoefCMR, getCoefDanger, getCoefToxic
 import { BENZALDEHYDE } from "../../molecules.data";
 
 const TEST_BENZALDEHYDE = createMoleculeReaction( BENZALDEHYDE );
-TEST_BENZALDEHYDE.densite = 1.05;
 TEST_BENZALDEHYDE.purete = 99;
 TEST_BENZALDEHYDE.volume = 1.3;
 TEST_BENZALDEHYDE.prixG = .035;

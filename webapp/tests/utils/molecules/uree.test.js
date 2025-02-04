@@ -2,7 +2,6 @@ import { createMoleculeReaction, getCMR, getCoefCMR, getCoefDanger, getCoefToxic
 import { UREE } from "../../molecules.data";
 
 const TEST_UREE = createMoleculeReaction( UREE );
-TEST_UREE.densite = 1;
 TEST_UREE.purete = 99;
 TEST_UREE.volume = 0.75;
 TEST_UREE.prixG = .035;
@@ -14,7 +13,7 @@ test(
         expect(
             getMasseG( TEST_UREE )
         ).toBeCloseTo(
-            0.750, 3
+            0.563, 3
         );
     }
 );
@@ -25,7 +24,7 @@ test(
         expect(
             getNParMmol( TEST_UREE )
         ).toBeCloseTo(
-            12.36, 2
+            9.27, 2
         );
     }
 );
@@ -36,7 +35,7 @@ test(
         expect(
             getPrixEuro( TEST_UREE )
         ).toBeCloseTo (
-            0.026, 3
+            0.020, 3
         );
     }
 );
@@ -59,7 +58,7 @@ test(
         expect(
             getCoefDanger( TEST_UREE )
         ).toBeCloseTo(
-            0.696, 3
+            0.522, 3
         );
     }
 );
@@ -81,7 +80,7 @@ test(
         expect(
             getCoefCMR( TEST_UREE )
         ).toBeCloseTo(
-            0.75, 2
+            0.56, 2
         );
     }
 );
@@ -103,7 +102,7 @@ test(
         expect(
             getCoefToxicite( TEST_UREE )
         ).toBeCloseTo(
-            0.75, 2
+            0.56, 2
         );
     }
 );

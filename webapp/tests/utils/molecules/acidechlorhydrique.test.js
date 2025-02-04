@@ -1,73 +1,73 @@
 import { createMoleculeReaction, getCMR, getCoefCMR, getCoefDanger, getCoefToxicite, getDanger, getMasseG, getNParMmol, getPrixEuro, getToxicite } from "../../../src/utils/molecules.utils";
-import { UREE } from "../../molecules.data";
+import { ACIDE_CHLORHYDRIQUE } from "../../molecules.data";
 
-const TEST_UREE = createMoleculeReaction( UREE );
-TEST_UREE.purete = 99;
-TEST_UREE.volume = 0.75;
-TEST_UREE.prixG = .035;
+const TEST_ACIDE_CHLORHYDRIQUE = createMoleculeReaction( ACIDE_CHLORHYDRIQUE );
+TEST_ACIDE_CHLORHYDRIQUE.purete = 36.5;
+TEST_ACIDE_CHLORHYDRIQUE.volume = 0.85;
+TEST_ACIDE_CHLORHYDRIQUE.prixG = .025;
 
 
 test(
-    "test getMasseG Uréee",
+    "test getMasseG Acide chlorhydrique",
     () => {
         expect(
-            getMasseG( TEST_UREE )
+            getMasseG( TEST_ACIDE_CHLORHYDRIQUE )
         ).toBeCloseTo(
-            0.750, 3
+            1.003, 3
         );
     }
 );
 
 test(
-    "test getNParMmol Uréee",
+    "test getNParMmol Acide chlorhydrique",
     () => {
         expect(
-            getNParMmol( TEST_UREE )
+            getNParMmol( TEST_ACIDE_CHLORHYDRIQUE )
         ).toBeCloseTo(
-            12.36, 2
+            10.04, 2
         );
     }
 );
 
 test(
-    "test getPrixEuro Uréee",
+    "test getPrixEuro Acide chlorhydrique",
     () => {
         expect(
-            getPrixEuro( TEST_UREE )
+            getPrixEuro( TEST_ACIDE_CHLORHYDRIQUE )
         ).toBeCloseTo (
-            0.026, 3
-        );
+            0.03, 2
+        )
     }
 );
 
 
 test(
-    "test getDanger Uréee",
+    "test getDanger Acide chlorhydrique",
     () => {
         expect(
-            getDanger( TEST_UREE )
+            getDanger( TEST_ACIDE_CHLORHYDRIQUE )
         ).toBeCloseTo(
-            .071, 3
+            .1428, 3
         );
     }
 );
 
 test(
-    "test getCoefDanger Uréee",
+    "test getCoefDanger Acide chlorhydrique",
     () => {
         expect(
-            getCoefDanger( TEST_UREE )
+            getCoefDanger( TEST_ACIDE_CHLORHYDRIQUE )
         ).toBeCloseTo(
-            0.696, 3
+            0.8597, 4
         );
     }
 );
 
 test(
-    "test getCMR Uréee",
+    "test getCMR Acide chlorhydrique",
     () => {
         expect(
-            getCMR( TEST_UREE )
+            getCMR( TEST_ACIDE_CHLORHYDRIQUE )
         ).toBe(
             0
         );
@@ -75,21 +75,21 @@ test(
 );
 
 test(
-    "test getCoefCMR Uréee",
+    "test getCoefCMR Acide chlorhydrique",
     () => {
         expect(
-            getCoefCMR( TEST_UREE )
+            getCoefCMR( TEST_ACIDE_CHLORHYDRIQUE )
         ).toBeCloseTo(
-            0.75, 2
+            1.00, 2
         );
     }
 );
 
 test(
-    "test getToxicite Uréee",
+    "test getToxicite Acide chlorhydrique",
     () => {
         expect(
-            getToxicite( TEST_UREE )
+            getToxicite( TEST_ACIDE_CHLORHYDRIQUE )
         ).toBe(
             0
         );
@@ -97,12 +97,13 @@ test(
 );
 
 test(
-    "test getCoefToxicite Uréee",
+    "test getCoefToxicite Acide chlorhydrique",
     () => {
         expect(
-            getCoefToxicite( TEST_UREE )
+            getCoefToxicite( TEST_ACIDE_CHLORHYDRIQUE )
         ).toBeCloseTo(
-            0.75, 2
+            1.003 , 3
+
         );
     }
 );

@@ -8,7 +8,7 @@ export const BENZALDEHYDE = createMolecule(
 );
 
 export const UREE = createMolecule(
-    "Urée", "CH4N2O", "57-13-6", 60.05, 1.32, 1,
+    "Urée", "CH4N2O", "57-13-6", 60.05, 0.75, 1,
     false, true, false, false, false,
     false, false, false, false,
     false, false, false, false, false, false, false, false
@@ -22,7 +22,7 @@ export const ACETOACETATE_ETHYLE = createMolecule(
 );
 
 export const ACIDE_CHLORHYDRIQUE = createMolecule(
-  "Acide chlorhydrique", "HCl", "7647-01-0", 36.46, 1.18, 1,
+  "Acide chlorhydrique", "HCl", "7647-01-0", 36.46, 1.18, 0,
   true, true, false, false, false, 
   false, false, false, false, 
   false, false, false, false
