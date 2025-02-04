@@ -12,7 +12,7 @@ export const TraitementPostReactionnel = BaseReaction;
 export const Purification = BaseReaction;
 
 export class ReactionComplete {
-    matieresPremieres;
+    reactionPrincipale;
     traitementPostReactionnel;
     purification;
     produit;
