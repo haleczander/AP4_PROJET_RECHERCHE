@@ -1,30 +1,27 @@
 import { LocalDataService } from "../../../../src/services/impl/local.data.service";
-import json from "../../../../data/db.json";
+import { BENZALDEHYDE, UREE, ACETOACETATE_ETHYLE, ACIDE_CHLORHYDRIQUE, ETHANOL, EAU } from "../../../molecules.data";
 
 describe("LocalDataService - findMoleculesByFormule", () => {
     let service;
-    let expectedData;
 
     beforeAll(() => {
         service = new LocalDataService();
-        expectedData = json.data.molecules;
+        service.molecules = [BENZALDEHYDE, UREE, ACETOACETATE_ETHYLE, ACIDE_CHLORHYDRIQUE, ETHANOL, EAU];
     });
 
     test("Doit retourner les molécules correspondant à la formule donnée", () => {
-        const needle = "C2H4O2";
-        const expectedResults = expectedData.filter(molecule => 
-            molecule.formule.toUpperCase().includes(needle.toUpperCase())
-        );
-    
+        const needle = "HCl"; 
+        const expectedResults = [ACIDE_CHLORHYDRIQUE]; 
+
         const actualResults = service.findMoleculesByFormule(needle);
-    
+
         expect(actualResults).toEqual(expectedResults);
     });
 
     test("Doit retourner aucune molécule si aucune formule ne correspond", () => {
-        const needle = "C6H12O6";
+        const needle = "C6H12O6"; 
         const actualResults = service.findMoleculesByFormule(needle);
-    
+
         expect(actualResults).toEqual([]);
     });
 });

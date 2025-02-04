@@ -1,11 +1,17 @@
 import { LocalDataService } from "../../../src/services/impl/local.data.service";
-import json from "../../../data/db.json";
-
-const service = new LocalDataService();
-const expectedData = json.data.molecules;
+import { BENZALDEHYDE, UREE, ACETOACETATE_ETHYLE, ACIDE_CHLORHYDRIQUE, ETHANOL, EAU } from "../../molecules.data";
 
 describe("LocalDataService", () => {
-    test("Vérifier le chargement des données JSON", () => {
-        expect(service.findAllMolecules()).toEqual(expectedData);
+    let service;
+    let mockMolecules;
+
+    beforeEach(() => {
+        service = new LocalDataService();
+        mockMolecules = [BENZALDEHYDE, UREE, ACETOACETATE_ETHYLE, ACIDE_CHLORHYDRIQUE, ETHANOL, EAU];
+        service.molecules = mockMolecules;
+    });
+
+    test("Vérifier le chargement des molécules définies", () => {
+        expect(service.findAllMolecules()).toEqual(mockMolecules);
     });
 });

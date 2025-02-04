@@ -1,6 +1,4 @@
 import DataService from "../data.service";
-import json from "../../../data/db.json";
-
 
 export class LocalDataService extends DataService {
     _molecules = [];
@@ -8,9 +6,13 @@ export class LocalDataService extends DataService {
 
     constructor() {
         super();
-        
-        const { molecules, activations } = json.data;
+    }
+
+    set molecules( molecules ) {
         this._molecules = molecules;
+    }
+
+    set activations( activations ) {
         this._activations = activations;
     }
 

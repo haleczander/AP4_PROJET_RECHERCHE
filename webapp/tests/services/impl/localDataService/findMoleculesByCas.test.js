@@ -1,21 +1,18 @@
 import { LocalDataService } from "../../../../src/services/impl/local.data.service";
-import json from "../../../../data/db.json";
+import { BENZALDEHYDE, UREE, ACETOACETATE_ETHYLE, ACIDE_CHLORHYDRIQUE, ETHANOL, EAU } from "../../../molecules.data";
 
 describe("LocalDataService - findMoleculesByCas", () => {
     let service;
-    let expectedData;
 
     beforeAll(() => {
         service = new LocalDataService();
-        expectedData = json.data.molecules;
+        service.molecules = [BENZALDEHYDE, UREE, ACETOACETATE_ETHYLE, ACIDE_CHLORHYDRIQUE, ETHANOL, EAU];
     });
 
     test("Doit retourner les molécules correspondant au CAS donné", () => {
-        const needle = "64-19-7";
-        const expectedResults = expectedData.filter(molecule => 
-            molecule.cas.replaceAll('-', '').includes(needle.replaceAll('-', ''))
-        );
-    
+        const needle = "7647-01-0";
+        const expectedResults = [ACIDE_CHLORHYDRIQUE];
+
         const actualResults = service.findMoleculesByCas(needle);
     
         expect(actualResults).toEqual(expectedResults);
@@ -28,4 +25,3 @@ describe("LocalDataService - findMoleculesByCas", () => {
         expect(actualResults).toEqual([]);
     });
 });
- 
