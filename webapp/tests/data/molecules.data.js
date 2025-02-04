@@ -1,4 +1,4 @@
-import { createMolecule } from "../src/utils/molecules.utils";
+import { createMolecule } from "../../src/utils/molecules.utils";
 
 export const BENZALDEHYDE = createMolecule(
   "Benzaldéhyde", "C7H6O", "100-52-7", 106.12, 1.05, 7, 
@@ -38,6 +38,13 @@ export const ETHANOL = createMolecule(
 export const EAU = createMolecule(
   "Eau", "H2O", "7732-18-5", 18.015, 0.997, 0,
   false, false, false, false, false,
+  false, false, false, false,
+  false, false, false, false 
+);
+
+export const PRODUIT_BIGINELLI = createMolecule(
+  "Produit Biginelli", null, "5395-36-8", 260.29, 14,
+  true, false, false, false, false,
   false, false, false, false,
   false, false, false, false 
 );
