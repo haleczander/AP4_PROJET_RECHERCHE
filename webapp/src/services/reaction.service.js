@@ -12,6 +12,10 @@ export default class ReactionService {
         return getSum( this.reactifs( reaction ), getMasseG );
     }
 
+    masseMolaireReactifs( reaction ) {
+        return getSum( this.reactifs( reaction ), reactif => reactif.masseMolaire );
+    }
+
     solvants( reaction ) {
         return reaction.reactionPrincipale.solvants;
     }
