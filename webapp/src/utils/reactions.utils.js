@@ -1,5 +1,5 @@
 import { getEnergieKWh } from "./activations.utils";
-import { getCoefCMR, getCoefDanger, getCoefToxicite, getMasseG, getPrixEuro } from "./molecules.utils";
+import { getCoefCMR, getCoefDanger, getCoefToxicite, getMasseG, getMassePureteG, getPrixEuro } from "./molecules.utils";
 
 export function getSum( elements, fn ) {
     return elements.reduce( 
@@ -24,6 +24,10 @@ export function getSumMasseG( molecules ){
     return getSum( molecules, getMasseG );
 }
 
+export function getSumMassePureteG( molecules ) {
+    return getSum( molecules, getMassePureteG );
+}
+
 export function getSumPrixEuro( molecules ) {
     return getSum( molecules, getPrixEuro );
 }
@@ -39,3 +43,5 @@ export function getSumEnergieKWh( activations ) {
 export function getSumMasseRecyclee( molecules ) {
     return getSum( molecules, molecule => molecule.recyclabilite * getMasseG( molecule ) );
 }
+
+

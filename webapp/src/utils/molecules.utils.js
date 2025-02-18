@@ -1,5 +1,6 @@
 import Molecule from "../models/molecule.model";
 import MoleculeReaction from "../models/molecule.reaction.model";
+import Produit from "../models/molecule.produit.model";
 
 function getCoef( molecule, indicateursFn ) {
     const masseG = getMasseG( molecule );
@@ -85,13 +86,30 @@ export function getMasseG( molecule ){
     return densite * volume;
 }
 
+export function getMassePureteG( molecule ) {
+    const masseG = getMasseG( molecule );
+    const purete = molecule.purete / 100;
+    return purete * masseG;
+}
+
+export function getMasseRecycleeG( molecule ) {
+    const masseG = getMasseG( molecule );
+    const recyclabilite = molecule.recyclabilite / 100;
+    return masseG * recyclabilite;
+}
+
+export function getMasseRecycleePureteG( molecule ) {
+    const masseRecyclee = getMasseRecycleeG( molecule );
+    const purete = molecule.purete / 100;
+    return masseRecyclee * purete;
+}
+
 export function getPrixEuro( molecule ){
     const masseG = getMasseG( molecule );
     const prix = molecule.prixG;
 
     return masseG * prix;
 }
-
 
 export function createMolecule(
     nom, formule, cas, masseMolaire, densite, nbCarbone,
@@ -154,4 +172,32 @@ export function createMoleculeReaction( molecule ) {
     moleculeReaction.r63 = molecule.r63;
 
     return moleculeReaction;
+}
+
+export function createProduit( molecule ) {
+    const produit = new Produit();
+
+    produit.nom = molecule.nom;
+    produit.formule = molecule.formule;
+    produit.cas = molecule.cas;
+    produit.masseMolaire = molecule.masseMolaire;
+    produit.nbCarbone = molecule.nbCarbone;
+    produit.nocif = molecule.nocif;
+    produit.irritant = molecule.irritant;
+    produit.explosible = molecule.explosible;
+    produit.dangereuxPourEnvironnement = molecule.dangereuxPourEnvironnement;
+    produit.toxique = molecule.toxique;
+    produit.tresToxique = molecule.tresToxique;
+    produit.facilementInflammable = molecule.facilementInflammable;
+    produit.extremementInflammable = molecule.extremementInflammable;
+    produit.r40 = molecule.r40;
+    produit.r45 = molecule.r45;
+    produit.r49 = molecule.r49;
+    produit.r46 = molecule.r46;
+    produit.r60 = molecule.r60;
+    produit.r61 = molecule.r61;
+    produit.r62 = molecule.r62;
+    produit.r63 = molecule.r63;
+
+    return produit;
 }
