@@ -1,4 +1,4 @@
-import { getMasseG, getMassePureteG, getMasseRecycleeG, getMasseRecycleePureteG } from "../utils/molecules.utils";
+import { getCoefDanger, getMasseG, getMassePureteG, getMasseRecycleeG, getMasseRecycleePureteG } from "../utils/molecules.utils";
 import { getSum, getSumMasseG, getSumMassePureteG } from "../utils/reactions.utils";
 
 export default class ReactionService {
@@ -20,12 +20,21 @@ export default class ReactionService {
         return getSum( this.reactifs( reaction ), reactif => reactif.nbCarbone );
     }
 
+    coefDangerReactifs( reaction ) {
+        return getSum( this.reactifs( reaction ), getCoefDanger );
+    }
+
     solvants( reaction ) {
         return reaction.reactionPrincipale.solvants;
     }
 
     masseSolvants( reaction ) {
         return getSum( this.solvants( reaction ), getMassePureteG );
+    }
+
+    coefDangerSolvants( reaction ) {
+        const erreurSolvant = true; // ERREUR dans l'excel 
+        return getSum( this.solvants( reaction ), solvant => getCoefDanger(solvant, erreurSolvant) );
     }
 
     masseSolvantsRecyclable( reaction ) {
@@ -40,6 +49,10 @@ export default class ReactionService {
         return getSum( this.catalyseurs( reaction ), getMasseG );
     }
 
+    coefDangerCatalyseurs( reaction ) {
+        return getSum( this.catalyseurs( reaction ), getCoefDanger );
+    }
+
     masseCatalyseursRecyclable( reaction ) {
         return getSum( this.catalyseurs( reaction ), getMasseRecycleeG );
     }
@@ -52,12 +65,25 @@ export default class ReactionService {
         return getSum( this.postTraitement( reaction ), getMassePureteG );
     }
 
+    coefDangerPostTraitement( reaction ) {
+        return getSum( this.postTraitement( reaction ), molecule => getCoefDanger(molecule, true) );
+    }
+
     massePostTraitementRecyclable( reaction ) {
         return getSum( this.postTraitement( reaction ), getMasseRecycleePureteG );
     }
 
     purification( reaction ) {
         return reaction.purification.reactifs;
+    }
+
+    coefDangerPurification( reaction ) {
+        const erreurPurification = true; // ERREUR dans l'excel 
+        return getSum( this.purification( reaction ), molecule => getCoefDanger(molecule, true, erreurPurification) );
+    }
+
+    coefToxicitePurification( reaction ) {
+        return getSum( this.purification( reaction ), molecule => getCoefToxicite(molecule, true) );
     }
 
     massePurification( reaction ) {
@@ -79,11 +105,20 @@ export default class ReactionService {
             + this.massePurificationRecyclable( reaction );
     }
 
+    moleculesReactionPrincipale( reaction ) {
+        return [
+            ...this.reactifs( reaction ),
+            ...this.solvants( reaction ),
+            ...this.catalyseurs( reaction )
+        ];
+    }
+
     masseReactionPrincipale( reaction ) {
         return this.masseReactifs( reaction ) 
             + this.masseSolvants( reaction ) 
             + this.masseCatalyseurs( reaction );
     }
+
 
     masseReactionComplete( reaction ) {
         return this.masseReactionPrincipale( reaction ) 

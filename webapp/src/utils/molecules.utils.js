@@ -2,8 +2,8 @@ import Molecule from "../models/molecule.model";
 import MoleculeReaction from "../models/molecule.reaction.model";
 import Produit from "../models/molecule.produit.model";
 
-function getCoef( molecule, indicateursFn ) {
-    const masseG = getMasseG( molecule );
+function getCoef( molecule, indicateursFn, purete = false ) {
+    const masseG = purete ? getMassePureteG(molecule) : getMasseG( molecule );
     const indicateurs = indicateursFn( molecule );
     const danger = moyenneIndicateurs( indicateurs );
 
@@ -22,8 +22,8 @@ function moyenneIndicateurs( indicateurs ) {
     return coefs == 0 ? 0 : somme / coefs;
 }
 
-export function getCoefDanger( molecule ) {
-    return getCoef( molecule, getIndicateursDanger );
+export function getCoefDanger( molecule, purete = false, erreurPurification=false ) {
+    return getMasseG( molecule, purete ) * ( 1 - getDanger( molecule, erreurPurification ) );
 }
 export function getCoefToxicite( molecule ) {
     return getCoef( molecule, getIndicateursToxicite );
@@ -32,9 +32,10 @@ export function getCoefCMR( molecule ) {
     return getCoef( molecule, getIndicateursCMR );
 }
 
-export function getDanger( molecule ) {
+export function getDanger( molecule, erreurPurification = false ) {
     const indicateurs = getIndicateursDanger( molecule );
-    return moyenneIndicateurs( indicateurs );
+    const ERREUR_EXCEL = erreurPurification ? 14 / 12 : 1;
+    return ERREUR_EXCEL * moyenneIndicateurs( indicateurs );
 }
 export function getToxicite( molecule ) {
     const indicateurs = getIndicateursToxicite( molecule );
@@ -79,11 +80,11 @@ export function getNParMmol( molecule ){
     return ( 10 * masseG * purete ) / masseMolaire;
 }
 
-export function getMasseG( molecule ){
+export function getMasseG( molecule, purete = false ) {
     const densite = molecule.densite;
     const volume = molecule.volume;
-
-    return densite * volume;
+    const coefPurete = purete ? molecule.purete / 100 : 1; 
+    return coefPurete * densite * volume;
 }
 
 export function getMassePureteG( molecule ) {
