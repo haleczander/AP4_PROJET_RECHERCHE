@@ -37,6 +37,10 @@ export class LocalDataService extends DataService {
     findMoleculesByFormule( needle ) {
         return this._molecules.filter( molecule => this._filterFormule( needle, molecule ))
     }
+
+    findMoleculesByName( needle ) {
+        return this._molecules.filter( molecule => this._filterNom( needle, molecule ))
+    }
     
     _filterCas(needle, molecule) {
         const sanitizeCas =  cas => cas.replaceAll('-', '');
