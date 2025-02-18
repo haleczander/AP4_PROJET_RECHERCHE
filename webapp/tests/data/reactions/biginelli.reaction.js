@@ -57,15 +57,12 @@ function reactionPrincipale() {
     solvant1.prixG = .015;
     solvant1.recyclabilite = 0;
 
-    const solvant2 = createActivationReaction( EAU );
+    const solvant2 = createMoleculeReaction( EAU );
     solvant2.densite = 1;
     solvant2.purete = 5;
     solvant2.volume = .25;
     solvant2.prixG = 0;
     solvant2.recyclabilite = 0;
-    console.log(.01*solvant1.densite*solvant1.purete*solvant1.volume, .01*solvant2.densite*solvant2.purete*solvant2.volume)
-    console.log( getMasseG( solvant1), getMasseG(solvant2))
-
 
     reactionPrincipale.solvants = [ solvant1, solvant2 ];
 
