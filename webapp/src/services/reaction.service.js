@@ -60,9 +60,13 @@ export default class ReactionService {
         return getSum( this.purification( reaction ), getMasseRecycleePureteG );
     }
 
+    masseRecyclableReactionPrincipale( reaction ) {
+        return this.masseSolvantsRecyclable( reaction ) 
+            + this.masseCatalyseursRecyclable( reaction );
+    }
+
     masseRecyclable( reaction ) {
-        return this.masseSolvantsRecyclable( reaction )
-            + this.masseCatalyseursRecyclable( reaction )
+        return this.masseRecyclableReactionPrincipale( reaction )
             + this.massePostTraitementRecyclable( reaction )
             + this.massePurificationRecyclable( reaction );
     }
