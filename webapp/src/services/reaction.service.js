@@ -82,4 +82,12 @@ export default class ReactionService {
             + this.massePostTraitement( reaction ) 
             + this.massePurification( reaction );
     }
+
+    
+    nMolProduit( reaction ) {
+        const produit = reaction.produit;
+        const purete = produit.purete / 100;
+        const massePure = purete * produit.masseG;
+        return massePure / produit.masseMolaire;
+    }
 }

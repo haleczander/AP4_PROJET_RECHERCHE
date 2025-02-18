@@ -18,13 +18,9 @@ export class RendementIndicateur extends Indicateur {
         MIN(I6:I9) = min n/mol reactifs
         */
        const nMolReactifs = this.reactionService.reactifs( reaction ).map( getNParMmol );
-       console.log( "nMolReactifs", nMolReactifs );
-       const nMolMinReactifs = Math.min( nMolReactifs );
-       console.log( "nMolMinReactifs", nMolMinReactifs );
-       const nMolProduit = getNParMmol( reaction.produit );
-         console.log( "nMolProduit", nMolProduit );
+       const nMolMinReactifs = Math.min( ...nMolReactifs );
+       const nMolProduit = this.reactionService.nMolProduit( reaction );
        const nMolRatio = nMolProduit / nMolMinReactifs;
-         console.log( "nMolRatio", nMolRatio );
        return nMolRatio * 1000;
     };
 
