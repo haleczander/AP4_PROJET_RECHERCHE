@@ -1,4 +1,4 @@
-import Rendement from "../../src/indicateurs/impl/rendement.indicateur";
+import RendementIndicateur from "../../src/indicateurs/impl/rendement.indicateur";
 import REACTION_BIGINELLI from "../data/reactions/biginelli.reaction";
 
 describe(
@@ -10,7 +10,7 @@ describe(
         beforeAll( 
             () => {
                 reaction = REACTION_BIGINELLI;
-                indicateur = new Rendement();
+                indicateur = new RendementIndicateur();
             } 
         );
 
