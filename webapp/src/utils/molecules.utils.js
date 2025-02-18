@@ -25,11 +25,11 @@ function moyenneIndicateurs( indicateurs ) {
 export function getCoefDanger( molecule, purete = false, erreurPurification=false ) {
     return getMasseG( molecule, purete ) * ( 1 - getDanger( molecule, erreurPurification ) );
 }
-export function getCoefToxicite( molecule ) {
-    return getCoef( molecule, getIndicateursToxicite );
+export function getCoefToxicite( molecule, purete = false ) {
+    return getCoef( molecule, getIndicateursToxicite, purete );
 }
-export function getCoefCMR( molecule ) {
-    return getCoef( molecule, getIndicateursCMR );
+export function getCoefCMR( molecule, purete = false ) {
+    return getCoef( molecule, getIndicateursCMR, purete );
 }
 
 export function getDanger( molecule, erreurPurification = false ) {

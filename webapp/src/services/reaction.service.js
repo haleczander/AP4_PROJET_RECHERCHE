@@ -1,4 +1,4 @@
-import { getCoefDanger, getMasseG, getMassePureteG, getMasseRecycleeG, getMasseRecycleePureteG } from "../utils/molecules.utils";
+import { getCoefDanger, getCoefToxicite, getMasseG, getMassePureteG, getMasseRecycleeG, getMasseRecycleePureteG } from "../utils/molecules.utils";
 import { getSum, getSumMasseG, getSumMassePureteG } from "../utils/reactions.utils";
 
 export default class ReactionService {
@@ -24,6 +24,10 @@ export default class ReactionService {
         return getSum( this.reactifs( reaction ), getCoefDanger );
     }
 
+    coefToxiciteReactifs( reaction ) {
+        return getSum( this.reactifs( reaction ), getCoefToxicite );
+    }
+
     solvants( reaction ) {
         return reaction.reactionPrincipale.solvants;
     }
@@ -33,8 +37,11 @@ export default class ReactionService {
     }
 
     coefDangerSolvants( reaction ) {
-        const erreurSolvant = true; // ERREUR dans l'excel 
-        return getSum( this.solvants( reaction ), solvant => getCoefDanger(solvant, erreurSolvant) );
+        return getSum( this.solvants( reaction ), solvant => getCoefDanger(solvant, true) );
+    }
+
+    coefToxiciteSolvants( reaction ) {
+        return getSum( this.solvants( reaction ), molecule => getCoefToxicite(molecule, true) );
     }
 
     masseSolvantsRecyclable( reaction ) {
@@ -53,6 +60,10 @@ export default class ReactionService {
         return getSum( this.catalyseurs( reaction ), getCoefDanger );
     }
 
+    coefToxiciteCatalyseurs( reaction ) {
+        return getSum( this.catalyseurs( reaction ), getCoefToxicite );
+    }
+
     masseCatalyseursRecyclable( reaction ) {
         return getSum( this.catalyseurs( reaction ), getMasseRecycleeG );
     }
@@ -67,6 +78,10 @@ export default class ReactionService {
 
     coefDangerPostTraitement( reaction ) {
         return getSum( this.postTraitement( reaction ), molecule => getCoefDanger(molecule, true) );
+    }
+
+    coefToxicitePostTraitement( reaction ) {
+        return getSum( this.postTraitement( reaction ), molecule => getCoefToxicite(molecule, true) );
     }
 
     massePostTraitementRecyclable( reaction ) {
