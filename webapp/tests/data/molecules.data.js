@@ -43,7 +43,7 @@ export const EAU = createMolecule(
 );
 
 export const PRODUIT_BIGINELLI = createMolecule(
-  "Produit Biginelli", null, "5395-36-8", 260.29, 14,
+  "Produit Biginelli", null, "5395-36-8", 260.29, null, 14,
   true, false, false, false, false,
   false, false, false, false,
   false, false, false, false 

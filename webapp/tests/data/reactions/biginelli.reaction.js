@@ -43,6 +43,7 @@ function reactionPrincipale() {
     reactionPrincipale.activations = [ activation ];
 
     const catalyseur = createMoleculeReaction( ACIDE_CHLORHYDRIQUE );
+    catalyseur.irritant = false;
     catalyseur.purete = 35;
     catalyseur.volume = .5;
     catalyseur.prixG = .015;
@@ -51,6 +52,7 @@ function reactionPrincipale() {
     reactionPrincipale.catalyseurs = [ catalyseur ];
 
     const solvant1 = createMoleculeReaction( ETHANOL );
+    solvant1.nocif = true;
     solvant1.densite = .79;
     solvant1.purete = 95;
     solvant1.volume = 4.75;
@@ -78,6 +80,8 @@ function purification(){
     const purification = new Purification();
 
     const reactif1 = createMoleculeReaction( ETHANOL );
+    reactif1.nocif = true;
+    reactif1.densite = .79;
     reactif1.purete = 100;
     reactif1.volume = 4.75;
     reactif1.prixG = .015;
