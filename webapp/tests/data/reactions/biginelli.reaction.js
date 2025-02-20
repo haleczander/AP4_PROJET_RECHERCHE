@@ -3,6 +3,7 @@ import { createActivationReaction } from "../../../src/utils/activations.utils";
 import { createMoleculeReaction, createProduit, getMasseG } from "../../../src/utils/molecules.utils";
 import { ACETOACETATE_ETHYLE, ACIDE_CHLORHYDRIQUE, BENZALDEHYDE, EAU, ETHANOL, PRODUIT_BIGINELLI, UREE } from "../../data/molecules.data";
 import { ETUVE, PLAQUE_CHAUFFANTE } from "../activations.data";
+import { ELECTRICITE } from "../energies.data";
 
 export default createReaction();
 
@@ -12,6 +13,7 @@ function createReaction() {
     reaction.traitementPostReactionnel = traitementPostReactionnel();
     reaction.purification = purification();
     reaction.produit = produit();
+
     return reaction;
 }
 
@@ -39,8 +41,9 @@ function reactionPrincipale() {
     const activation = createActivationReaction( PLAQUE_CHAUFFANTE );
     activation.dureeM = 90;
     activation.puissance = 800;
+    activation.energie = ELECTRICITE;
 
-    reactionPrincipale.activations = [ activation ];
+    reactionPrincipale.activations.push( activation );
 
     const catalyseur = createMoleculeReaction( ACIDE_CHLORHYDRIQUE );
     catalyseur.irritant = false;
@@ -87,8 +90,9 @@ function purification(){
     reactif1.prixG = .015;
     reactif1.recyclabilite = 0;
 
-    const reactif2 = createActivationReaction( EAU );
+    const reactif2 = createMoleculeReaction( EAU );
     reactif2.purete = 100;
+    reactif2.densite = 1;
     reactif2.volume = .25;
     reactif2.prixG = 0;
     reactif2.recyclabilite = 0;
@@ -98,10 +102,12 @@ function purification(){
     const activation1 = createActivationReaction( PLAQUE_CHAUFFANTE );
     activation1.dureeM = 15;
     activation1.puissance = 800;
+    activation1.energie = ELECTRICITE;
 
     const activation2 = createActivationReaction( ETUVE );
-    activation2.dureeM = 45;
+    activation2.dureeM = 40;
     activation2.puissance = 2000;
+    activation2.energie = ELECTRICITE;
 
     purification.activations = [ activation1, activation2 ];
 

@@ -31,7 +31,6 @@ export class MasseDechetsIndicateur extends Indicateur {
         const masseRecyclable = this.reactionService.masseRecyclable( reaction );
         
         const masseProduit = reaction.produit.masseG;
-        console.log( masseReactionComplete, masseProduit, masseRecyclable)
         return masseReactionComplete - masseProduit - masseRecyclable;
     };
 

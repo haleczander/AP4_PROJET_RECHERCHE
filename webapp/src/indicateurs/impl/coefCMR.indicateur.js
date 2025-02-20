@@ -1,20 +1,46 @@
-export class CoefCMRIndicateur {
-    nom = null;
-    code = null;
+import ReactionService from "../../services/reaction.service";
+import Indicateur from "../indicateur";
 
-    constructor( nom, code ) {
-        this.nom = nom;
-        this.code = code;
+export class CoefCMRIndicateur extends Indicateur{
+
+    constructor() {
+        super( "Coefficient CMR", "CMR")
+        this.reactionService = new ReactionService();
     }
 
 
     reactionPrincipale( reaction ){
-        throw new Error("La méthode n'est pas implémentée."); 
+        /*
+        H26
+        H26 = Somme coef CMR reaction principale / masse reaction principale
+        */
+        const masseReactionPrincipale = this.reactionService.masseReactionPrincipale( reaction );
+
+        const coefCMRReactifs = this.reactionService.coefCMRReactifs( reaction );
+        const coefCMRCatalyseurs = this.reactionService.coefCMRCatalyseurs( reaction );
+        const coefCMRSolvants = this.reactionService.coefCMRSolvants( reaction );
+
+        return ( coefCMRReactifs + coefCMRSolvants + coefCMRCatalyseurs ) / masseReactionPrincipale;
+    
     };
 
     reactionComplete( reaction ){
-        throw new Error("La méthode n'est pas implémentée.");
-    };
+        const masseReactionComplete = this.reactionService.masseReactionComplete( reaction );
+
+        const coefCMRReactifs = this.reactionService.coefCMRReactifs( reaction );
+        const coefCMRCatalyseurs = this.reactionService.coefCMRCatalyseurs( reaction );
+        const coefCMRSolvants = this.reactionService.coefCMRSolvants( reaction );
+        const coefCMRPostTraitement = this.reactionService.coefCMRPostTraitement( reaction );
+        const coefCMRPurification = this.reactionService.coefCMRPurification( reaction );
+
+        const sumCoefCMR = coefCMRReactifs 
+                        + coefCMRSolvants 
+                        + coefCMRCatalyseurs 
+                        + coefCMRPostTraitement 
+                        + coefCMRPurification;
+
+        return sumCoefCMR / masseReactionComplete;
+        };
 }
 
 export default CoefCMRIndicateur;

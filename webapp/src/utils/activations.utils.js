@@ -8,17 +8,18 @@ export function getEnergieKWh( activation ) {
     return ( dureeM * puissanceKw ) / 60;
 }
 
-export function getPrixEnergie( activation, prixKWh ) {
+export function getPrixEnergie( activation ) {
     const energieKWh = getEnergieKWh( activation );
+    const prixKWh = activation.energie.prixKWh;
 
     return energieKWh * prixKWh;
 }
 
 export function createActivationReaction( activation  ) {
+
     const activationReaction = new ActivationReaction( 
         null, 
         activation.nom 
     );
-
-    return activation;
+    return activationReaction;
 }
