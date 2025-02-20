@@ -1,4 +1,4 @@
-import FacteurStoechimetriqueInverse from "../../src/indicateurs/impl/facteurStoechimetriqueInverse.indicateur";
+import FacteurStoechimetriqueInverse from "../../src/indicateurs/impl/facteurStoechiometriqueInverse.indicateur";
 import REACTION_BIGINELLI from "../data/reactions/biginelli.reaction";
 
 describe(

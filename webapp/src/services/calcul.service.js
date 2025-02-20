@@ -1,49 +1,24 @@
 export class CalculService {
-    constructor() {
-        if ( this.constructor == CalculService ) {
-            throw new Error("La classe est abstraite et ne peut pas être instanciée.");
-        };
-    }
+    indicateurs = []
 
-    calculReaction( reaction ) {
-        throw new Error("La méthode n'est pas implémentée."); 
-    }
+    constructor() {}
 
-    calculCoefToxicite(){
-        throw new Error("La méthode n'est pas implémentée."); 
-
-    }
-
-    calculCoefDangerosité(){
-        throw new Error("La méthode n'est pas implémentée."); 
+    calculReaction( reaction, decimales ) {
+        let results = {}
+        this.indicateurs.forEach( indicateur => {
+            const principale = this.round( indicateur.reactionPrincipale(reaction), decimales );
+            const complete = this.round( indicateur.reactionComplete(reaction), decimales );
+            results[ indicateur.code ] = { complete, principale }
+        } );
+        return results;
 
     }
 
-    calculPRM(){
-        throw new Error("La méthode n'est pas implémentée."); 
-        // PRM = (Masse des matières recyclées ou réutilisables / Masse totale des matières introduites dans le processus) × 100
+    round( valeur, decimales ) {
+        const coef = Math.pow(10, decimales);
+        return Math.round( valeur * coef ) / coef;
     }
 
-    calculEfficaciteMassique(){
-        throw new Error("La méthode n'est pas implémentée."); 
-        // EF = Masse des intrants / Masse des produits
-    }
-
-    calculRendemente(){
-        throw new Error("La méthode n'est pas implémentée."); 
-
-    }
-
-    // aussi appelé économie atomique
-    calculUtilisationAtomique(){
-        throw new Error("La méthode n'est pas implémentée."); 
-        //Utilisation Atomique = (Masse du produit désiré / Σ Masse des réactifs) × 100
-    }
-    
-    calculEconomieCarbone(){
-        throw new Error("La méthode n'est pas implémentée."); 
-
-    }
   
 }
 export default CalculService;
