@@ -56,3 +56,5 @@ export class LocalDataService extends DataService {
         return molecule.formule.toUpperCase().includes( needle.toUpperCase());
     }
 }
+
+export default LocalDataService;

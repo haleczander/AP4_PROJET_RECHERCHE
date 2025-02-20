@@ -105,8 +105,8 @@ export function getMasseRecycleePureteG( molecule ) {
     return masseRecyclee * purete;
 }
 
-export function getPrixEuro( molecule ){
-    const masseG = getMasseG( molecule );
+export function getPrixEuro( molecule, purete = false ){
+    const masseG = getMasseG( molecule, purete );
     const prix = molecule.prixG;
 
     return masseG * prix;
