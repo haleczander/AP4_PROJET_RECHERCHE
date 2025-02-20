@@ -1,5 +1,5 @@
 import { LocalDataService } from "../../../src/services/impl/local.data.service";
-import { BENZALDEHYDE, UREE, ACETOACETATE_ETHYLE, ACIDE_CHLORHYDRIQUE, ETHANOL, EAU } from "../../molecules.data";
+import { BENZALDEHYDE, UREE, ACETOACETATE_ETHYLE, ACIDE_CHLORHYDRIQUE, ETHANOL, EAU } from "../../data/molecules.data";
 
 describe("LocalDataService", () => {
     let service;
