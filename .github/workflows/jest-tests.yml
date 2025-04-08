@@ -3,10 +3,10 @@ name: Run Jest Tests
 on:
   push:
     branches:
-      - '*#*' # Match branches containing '#' with any preceding and following characters
+      - '*' 
   pull_request:
     branches:
-      - '*#*' # Same for pull requests targeting these branches
+      - 'develop*' 
 
 jobs:
   test:

@@ -2,19 +2,21 @@ import { defineConfig } from 'vite';
 import path from 'path';
 
 export default defineConfig({
-  // Ne définissez pas root ici, ou définissez-le sur '.' (la racine du projet)
-  root: '.',
   build: {
-    outDir: 'dist',
+    outDir: 'dist', // Dossier de sortie
     rollupOptions: {
-      input: path.resolve(__dirname, 'index.html')
+      input: path.resolve(__dirname, 'src/main.js'), // Point d'entrée principal
+      output: {
+        entryFileNames: 'bundle.min.js', // Nom du fichier minifié
+        format: 'iife', // Format adapté pour les navigateurs (Immediately Invoked Function Expression)
+      },
     },
-    minify: 'esbuild',
-    sourcemap: false,
+    minify: 'esbuild', // Utiliser esbuild pour la minification (rapide et efficace)
+    sourcemap: false, // Désactiver les sourcemaps (peut être activé si nécessaire)
   },
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, 'src')
+      '@': path.resolve(__dirname, 'src'), // Alias pour les imports simplifiés
     },
   },
 });

@@ -1,41 +1,33 @@
-import { createMolecule } from './utils/molecules.utils.js';
+import routes from './routes.js';
+import AssetService from './services/asset.service.js';
+import Router from './router.js';
 
-console.log('Je suis bien importé')
+console.log( 'Je suis bien chargé' );
 
-const form = document.getElementById('molecule-form');
+const navLinksContainer = document.getElementById('nav-links-container');
 
-    form.addEventListener('submit', (event) => {
-        event.preventDefault(); // Empêche le rechargement de la page
+function generateNavLinks( routes ) {
+  routes.forEach(route => {
+    const linkElement = generateNavLink(route);
+    navLinksContainer.appendChild(linkElement);
+  });
+}
 
-        // Récupérer les valeurs des champs texte
-        const nom = document.getElementById('nom').value.trim();
-        const cas = document.getElementById('cas').value.trim();
-        const masseMolaire = parseFloat(document.getElementById('masseMolaire').value) || 0;
-        const formule = document.getElementById('formule').value.trim();
+function generateNavLink( route ) {
+    const linkElement = document.createElement('a');
+    linkElement.href = route.chemin;
+    linkElement.classList.add('sidebar-link');
 
-        // Fonction pour récupérer l'état des cases à cocher
-        const getCheckboxValue = (id) => document.getElementById(id).checked;
+    const imgElement = document.createElement('img');
+    imgElement.src = new AssetService().icon(route.icone);
 
-        // Création de l'objet molécule
-        const molecule = createMolecule(
-            nom, formule, cas, masseMolaire, 0, 0, // densité et nbCarbone à 0 pour l'instant
-            getCheckboxValue('stat-nocif'),
-            getCheckboxValue('stat-irritant'),
-            getCheckboxValue('stat-explosible'),
-            getCheckboxValue('stat-danger-environnement'),
-            getCheckboxValue('stat-toxique'),
-            getCheckboxValue('stat-tres-toxique'),
-            getCheckboxValue('stat-facilement-inflammable'),
-            getCheckboxValue('stat-extremement-inflammable'),
-            getCheckboxValue('stat-r40'),
-            getCheckboxValue('stat-r45'),
-            getCheckboxValue('stat-r49'),
-            getCheckboxValue('stat-r46'),
-            getCheckboxValue('stat-r60'),
-            getCheckboxValue('stat-r61'),
-            getCheckboxValue('stat-r62'),
-            getCheckboxValue('stat-r63')
-        );
+    const textNode = document.createTextNode(route.nom);
 
-        console.log("Nouvelle molécule créée :", molecule);
-    });
+    linkElement.appendChild(imgElement);
+    linkElement.appendChild(textNode);
+
+    return linkElement;
+}
+
+generateNavLinks( routes );
+new Router( routes, document.getElementById('main-content') );

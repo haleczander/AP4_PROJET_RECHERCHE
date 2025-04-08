@@ -205,3 +205,123 @@ input {
     border: 2px solid #ccc;
     margin: 20px auto; /* Centre horizontalement */
 }
+
+
+/* Réinitialisation globale */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f8f9fa;
+
+    /* On place la navbar à gauche et le contenu (top-bar + main) à droite */
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Zone de contenu (à droite) */
+.content-area {
+    flex: 1;                   /* Prend tout l'espace restant */
+    display: flex;
+    flex-direction: column;    /* La top-bar en haut, le contenu en dessous */
+}
+
+/* Barre supérieure occupant toute la largeur de la zone de contenu */
+.top-bar {
+    background-color: #fff;
+    box-shadow: 0 3px 6px -3px rgba(0, 0, 0, 0.1); /* Ombre discrète en bas */
+    padding: 1rem;            /* Espace intérieur autour du contenu */
+    display: flex;
+    align-items: center;
+}
+
+/* Conteneur du champ de recherche, centré */
+.search-container {
+    width: 16vw;                /* Le champ de recherche fait 8% de la largeur du viewport */
+}
+
+/* Champ de recherche */
+.search-container input[type="text"] {
+    padding: 0.5rem 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+/* Contenu principal */
+#main-content {
+    padding: 1rem;
+    /* Ajuste selon tes préférences */
+}
+
+
+
+/* Barre de navigation verticale, responsive via vw/vh */
+.navbar {
+    width: 10.6vw;               /* Largeur en fonction du viewport */
+    min-height: 100vh;           /* Hauteur minimale égale à la hauteur de la fenêtre */
+    background-color: #fff;
+    padding: 2vw;                /* Espacement intérieur basé sur le viewport */
+    display: flex;
+    flex-direction: column;
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Logo (en haut) */
+.navbar .nav-logo {
+    margin-bottom: 2vh;          /* Espace sous le logo en fonction de la hauteur de la fenêtre */
+}
+
+.navbar .nav-logo .logo {
+    max-width: 15vw;             /* Largeur maximale du logo basée sur le viewport */
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+/* Conteneur des liens */
+.navbar .nav-link {
+    display: flex;
+    flex-direction: column;
+    gap: 2vh;                  /* Espacement vertical entre chaque lien */
+    margin-top: 2vh;
+}
+
+/* Style par défaut pour chaque lien */
+.navbar .nav-link a {
+    display: flex;
+    align-items: center;
+    gap: 1vw;                  /* Espacement horizontal entre l'icône et le texte */
+    color: #000;
+    text-decoration: none;
+    padding: 1vh 1vw;          /* Espacement interne vertical/horizontal */
+    border-radius: 1vh;        /* Coins arrondis proportionnels au viewport */
+    font-weight: 600;
+    font-size: 1.45vh;          /* Taille de texte réduite */
+    transition: background-color 0.3s ease;
+}
+
+/* Au survol : simple soulignement du texte */
+.navbar .nav-link a:hover {
+    text-decoration: underline;
+}
+
+/* État "actif" : fond et bordure violets, texte violet */
+.navbar .nav-link a.active {
+    background-color: #EEEBF4;
+    border: 0.2vh solid #775DA6;
+    color: #775DA6;
+}
+
+/* Icônes : taille et transition */
+.navbar .nav-link img {
+    width: 2vh;                /* Taille de l'icône basée sur la hauteur du viewport */
+    height: 2vh;
+    transition: filter 0.3s ease;
+}
+
+/* Icône en état actif : applique un filtre violet */
+.navbar .nav-link a.active img {
+    filter: invert(35%) sepia(77%) saturate(3718%) hue-rotate(223deg) brightness(95%) contrast(90%);
+}
