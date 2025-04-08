@@ -29,7 +29,6 @@ document.addEventListener("DOMContentLoaded", function () {
           // Si on est déjà sur la page cliquée, on empêche le rechargement
           if (href === currentPage) {
             e.preventDefault();
-            console.log("Déjà sur " + href + ", rechargement évité.");
           } else {
             // Sinon, on met à jour la page courante et on applique l'état actif
             currentPage = href;

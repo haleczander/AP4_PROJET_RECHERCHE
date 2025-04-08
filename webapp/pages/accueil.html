@@ -1,0 +1,77 @@
+<div class="schema-container">
+    <!-- Schéma de réaction -->
+    <div class="schema-reaction">
+        <div class="reactifs box">
+            <h3>Réactifs :</h3>
+            <div id="reactifs-liste" class="reactifs-display"></div>
+        </div>
+        
+        <div class="fleche-container">
+            <div class="condition-top">
+                <div id="activation-display" class="condition-box">Activation</div>
+            </div>
+            
+            <div class="fleche"></div>
+            
+            <div class="conditions-bottom">
+                <div id="catalyseur-display" class="condition-box">Catalyseur</div>
+                <div id="solvant-display" class="condition-box">Solvant</div>
+            </div>
+        </div>
+
+        <div class="produits box">
+            <h3>Produits :</h3>
+            <div id="produits-liste" class="produits-display"></div>
+        </div>
+    </div>
+
+    <div class="forms-container">
+        <!-- Ligne pour Activation, Catalyseur et Solvant -->
+        <div class="forms-row">
+            <form class="input-section" id="activation-form">
+                <h3>Activation</h3>
+                <div class="input-group">
+                    <input type="text" id="activation-input" placeholder="Méthode d'activation">
+                    <button type="submit" class="btn-ajouter">Définir</button>
+                </div>
+            </form>
+
+            <form class="input-section" id="catalyseur-form">
+                <h3>Catalyseur</h3>
+                <div class="input-group">
+                    <input type="text" id="catalyseur-input" placeholder="Catalyseur">
+                    <button type="submit" class="btn-ajouter">Définir</button>
+                </div>
+            </form>
+
+            <form class="input-section" id="solvant-form">
+                <h3>Solvant</h3>
+                <div class="input-group">
+                    <input type="text" id="solvant-input" placeholder="Solvant">
+                    <button type="submit" class="btn-ajouter">Définir</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Formulaires Réactifs et Produits -->
+        <form class="input-section" id="reactif-form">
+            <h3>Ajouter un Réactif</h3>
+            <div class="input-group">
+                <input type="number" id="coefficient-reactif" placeholder="Coefficient" min="1">
+                <input type="text" id="nom-reactif" placeholder="Nom du réactif">
+                <input type="number" id="masse-reactif" placeholder="Masse (g)">
+                <button type="submit" class="btn-ajouter">Ajouter</button>
+            </div>
+        </form>
+
+        <form class="input-section" id="produit-form">
+            <h3>Ajouter un Produit</h3>
+            <div class="input-group">
+                <input type="number" id="coefficient-produit" placeholder="Coefficient" min="1">
+                <input type="text" id="nom-produit" placeholder="Nom du produit">
+                <input type="number" id="masse-produit" placeholder="Masse (g)">
+                <button type="submit" class="btn-ajouter">Ajouter</button>
+            </div>
+        </form>
+    </div>
+</div>
