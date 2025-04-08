@@ -10,7 +10,8 @@
     "test": "jest",
     "build": "vite build",
     "watch": "vite build --watch",
-    "start": "serve ."
+    "start": "serve front",
+    "dev": "vite"
   },
   "repository": {
     "type": "git",
