@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schéma Réactionnel</title>
+    <link rel="stylesheet" href="styles/index.css">
+    <link rel="stylesheet" href="styles/navbar.css">
+    <!--<link rel="stylesheet" href="styles/modelisation.css">-->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <script type="module" src="/src/main.js" defer></script>
+    <title>Éditeur de Molécules avec Propriétés</title>
+</head>
+
+<body>
+    <!-- Conteneur pour la navbar, qui sera rempli par le script -->
+    <div id="navbar-container"></div> 
+
+    <!-- Zone principale : barre supérieure + contenu -->
+    <div class="content-area">
+        <!-- Barre supérieure : occupe toute la largeur de la zone de contenu -->
+        <header class="top-bar">
+            <!-- Le champ de recherche centré -->
+            <div class="search-container">
+                <input type="text" placeholder="Rechercher...">
+            </div>
+        </header>
+
+        <!-- Contenu principal en dessous -->
+        <div id="main-content">
+            <h1>Éditeur de Molécules avec Propriétés</h1>
+            <div class="container">
+            <div class="editor-section">
+            <div class="formula-input">
+                <input type="text" id="formulaInput" placeholder="Entrez une formule (ex: H2O, CH3COOH)">
+                <button onclick="handleFormulaSubmit()">Générer</button>
+            </div>
+
+            <div class="formula" id="molecularFormula">Formule: </div>
+
+            <div class="controls">
+                <button onclick="setMode('atom')">Ajouter Atome</button>
+                <button onclick="setMode('bond')">Ajouter Liaison</button>
+                <button onclick="clearCanvas()">Effacer</button>
+                
+                <select id="atomType">
+  <!-- Non-métaux -->
+  <optgroup label="Non-métaux">
+    <option value="H">Hydrogène (H)</option>
+    <option value="C">Carbone (C)</option>
+    <option value="N">Azote (N)</option>
+    <option value="O">Oxygène (O)</option>
+    <option value="F">Fluor (F)</option>
+    <option value="P">Phosphore (P)</option>
+    <option value="S">Soufre (S)</option>
+    <option value="Cl">Chlore (Cl)</option>
+    <option value="Se">Sélénium (Se)</option>
+    <option value="Br">Brome (Br)</option>
+    <option value="I">Iode (I)</option>
+</optgroup>
+<!-- Métaux alcalins -->
+<optgroup label="Métaux alcalins">
+    <option value="Li">Lithium (Li)</option>
+    <option value="Na">Sodium (Na)</option>
+    <option value="K">Potassium (K)</option>
+    <option value="Rb">Rubidium (Rb)</option>
+    <option value="Cs">Césium (Cs)</option>
+    <option value="Fr">Francium (Fr)</option>
+</optgroup>
+<!-- Métaux alcalino-terreux -->
+<optgroup label="Métaux alcalino-terreux">
+    <option value="Be">Béryllium (Be)</option>
+    <option value="Mg">Magnésium (Mg)</option>
+    <option value="Ca">Calcium (Ca)</option>
+    <option value="Sr">Strontium (Sr)</option>
+    <option value="Ba">Baryum (Ba)</option>
+    <option value="Ra">Radium (Ra)</option>
+</optgroup>
+<!-- Métaux de transition -->
+<optgroup label="Métaux de transition">
+    <option value="Sc">Scandium (Sc)</option>
+    <option value="Ti">Titane (Ti)</option>
+    <option value="V">Vanadium (V)</option>
+    <option value="Cr">Chrome (Cr)</option>
+    <option value="Mn">Manganèse (Mn)</option>
+    <option value="Fe">Fer (Fe)</option>
+    <option value="Co">Cobalt (Co)</option>
+    <option value="Ni">Nickel (Ni)</option>
+    <option value="Cu">Cuivre (Cu)</option>
+    <option value="Zn">Zinc (Zn)</option>
+    <option value="Y">Yttrium (Y)</option>
+    <option value="Zr">Zirconium (Zr)</option>
+    <option value="Nb">Niobium (Nb)</option>
+    <option value="Mo">Molybdène (Mo)</option>
+    <option value="Tc">Technétium (Tc)</option>
+    <option value="Ru">Ruthénium (Ru)</option>
+    <option value="Rh">Rhodium (Rh)</option>
+    <option value="Pd">Palladium (Pd)</option>
+    <option value="Ag">Argent (Ag)</option>
+    <option value="Cd">Cadmium (Cd)</option>
+    <option value="Hf">Hafnium (Hf)</option>
+    <option value="Ta">Tantale (Ta)</option>
+    <option value="W">Tungstène (W)</option>
+    <option value="Re">Rhénium (Re)</option>
+    <option value="Os">Osmium (Os)</option>
+    <option value="Ir">Iridium (Ir)</option>
+    <option value="Pt">Platine (Pt)</option>
+    <option value="Au">Or (Au)</option>
+    <option value="Hg">Mercure (Hg)</option>
+</optgroup>
+<!-- Métaux pauvres -->
+<optgroup label="Métaux pauvres">
+    <option value="Al">Aluminium (Al)</option>
+    <option value="Ga">Gallium (Ga)</option>
+    <option value="In">Indium (In)</option>
+    <option value="Sn">Étain (Sn)</option>
+    <option value="Tl">Thallium (Tl)</option>
+    <option value="Pb">Plomb (Pb)</option>
+    <option value="Bi">Bismuth (Bi)</option>
+</optgroup>
+<!-- Lanthanides -->
+<optgroup label="Lanthanides">
+    <option value="La">Lanthane (La)</option>
+    <option value="Ce">Cérium (Ce)</option>
+    <option value="Pr">Praséodyme (Pr)</option>
+    <option value="Nd">Néodyme (Nd)</option>
+    <option value="Pm">Prométhium (Pm)</option>
+    <option value="Sm">Samarium (Sm)</option>
+    <option value="Eu">Europium (Eu)</option>
+    <option value="Gd">Gadolinium (Gd)</option>
+    <option value="Tb">Terbium (Tb)</option>
+    <option value="Dy">Dysprosium (Dy)</option>
+    <option value="Ho">Holmium (Ho)</option>
+    <option value="Er">Erbium (Er)</option>
+    <option value="Tm">Thulium (Tm)</option>
+    <option value="Yb">Ytterbium (Yb)</option>
+    <option value="Lu">Lutécium (Lu)</option>
+</optgroup>
+<!-- Actinides -->
+<optgroup label="Actinides">
+    <option value="Ac">Actinium (Ac)</option>
+    <option value="Th">Thorium (Th)</option>
+    <option value="Pa">Protactinium (Pa)</option>
+    <option value="U">Uranium (U)</option>
+    <option value="Np">Neptunium (Np)</option>
+    <option value="Pu">Plutonium (Pu)</option>
+    <option value="Am">Américium (Am)</option>
+    <option value="Cm">Curium (Cm)</option>
+    <option value="Bk">Berkélium (Bk)</option>
+    <option value="Cf">Californium (Cf)</option>
+    <option value="Es">Einsteinium (Es)</option>
+    <option value="Fm">Fermium (Fm)</option>
+    <option value="Md">Mendélévium (Md)</option>
+    <option value="No">Nobélium (No)</option>
+    <option value="Lr">Lawrencium (Lr)</option>
+</optgroup>
+<!-- Gaz nobles -->
+<optgroup label="Gaz nobles">
+    <option value="He">Hélium (He)</option>
+    <option value="Ne">Néon (Ne)</option>
+    <option value="Ar">Argon (Ar)</option>
+    <option value="Kr">Krypton (Kr)</option>
+    <option value="Xe">Xénon (Xe)</option>
+    <option value="Rn">Radon (Rn)</option>
+</optgroup>
+</select>
+<select id="bondType">
+<option value="single">Simple</option>
+<option value="double">Double</option>
+<option value="triple">Triple</option>
+                </select>
+            </div>
+
+            <canvas id="moleculeCanvas" width="600" height="400"></canvas>
+        </div>
+
+
+    </div>
+    <script src="scripts/navbarLoader.js"></script>
+    <script>
+        // État global
+        const state = {
+            mode: 'atom',
+            atoms: [],
+            bonds: [],
+            selectedAtom: null,
+            tempBond: null
+        };
+
+        // Éléments du DOM
+        const canvas = document.getElementById('moleculeCanvas');
+        const ctx = canvas.getContext('2d');
+        const formulaDisplay = document.getElementById('molecularFormula');
+        const propertiesContent = document.getElementById('propertiesContent');
+
+        // Classes
+        class Atom {
+            constructor(x, y, type) {
+                this.x = x;
+                this.y = y;
+                this.type = type;
+                this.radius = 15;
+                this.connected = new Set();
+            }
+        }
+
+        class Bond {
+            constructor(atom1, atom2, type) {
+                this.atom1 = atom1;
+                this.atom2 = atom2;
+                this.type = type;
+                atom1.connected.add(atom2);
+                atom2.connected.add(atom1);
+            }
+        }
+
+        // Gestionnaires d'événements
+        function setMode(newMode) {
+            state.mode = newMode;
+            state.selectedAtom = null;
+            state.tempBond = null;
+        }
+
+        function clearCanvas() {
+            state.atoms = [];
+            state.bonds = [];
+            state.selectedAtom = null;
+            state.tempBond = null;
+            updateFormula();
+            redraw();
+        }
+
+        function updateFormula() {
+            if (state.atoms.length === 0) {
+                formulaDisplay.textContent = 'Formule: ';
+                return;
+            }
+
+            // Trouver les molécules séparées
+            const visited = new Set();
+            const molecules = [];
+
+            function getConnectedAtoms(startAtom, visited = new Set()) {
+                visited.add(startAtom);
+                const connectedAtoms = Array.from(startAtom.connected);
+                for (const atom of connectedAtoms) {
+                    if (!visited.has(atom)) {
+                        getConnectedAtoms(atom, visited);
+                    }
+                }
+                return visited;
+            }
+
+            for (const atom of state.atoms) {
+                if (!visited.has(atom)) {
+                    const moleculeAtoms = getConnectedAtoms(atom);
+                    molecules.push(Array.from(moleculeAtoms));
+                    moleculeAtoms.forEach(a => visited.add(a));
+                }
+            }
+
+            // Construire la formule pour chaque molécule
+            const moleculeFormulas = molecules.map(moleculeAtoms => {
+                const counts = {};
+                moleculeAtoms.forEach(atom => {
+                    counts[atom.type] = (counts[atom.type] || 0) + 1;
+                });
+
+                // Ordre standard : C, H, O, N, autres
+                const order = ['C', 'H', 'O', 'N'];
+                let moleculeFormula = '';
+
+                order.forEach(element => {
+                    if (counts[element]) {
+                        moleculeFormula += element;
+                        if (counts[element] > 1) {
+                            moleculeFormula += counts[element];
+                        }
+                        delete counts[element];
+                    }
+                });
+
+                Object.entries(counts).forEach(([element, count]) => {
+                    moleculeFormula += element;
+                    if (count > 1) {
+                        moleculeFormula += count;
+                    }
+                });
+
+                return moleculeFormula;
+            });
+
+            formulaDisplay.textContent = 'Formule: ' + moleculeFormulas.join(' + ');
+
+            // Mettre à jour les propriétés pour chaque molécule
+            moleculeFormulas.forEach(formula => {
+                fetchMoleculeProperties(formula);
+            });
+        }
+
+        // Fonctions de dessin
+        function drawAtom(atom) {
+            ctx.beginPath();
+            ctx.arc(atom.x, atom.y, atom.radius, 0, 2 * Math.PI);
+            ctx.fillStyle = 'white';
+            ctx.fill();
+            ctx.strokeStyle = atom === state.selectedAtom ? '#ff4444' : '#000000';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            ctx.fillStyle = 'black';
+            ctx.font = '16px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(atom.type, atom.x, atom.y);
+        }
+
+        function drawBond(bond) {
+            const dx = bond.atom2.x - bond.atom1.x;
+            const dy = bond.atom2.y - bond.atom1.y;
+            const angle = Math.atan2(dy, dx);
+            const spacing = 4;
+
+            const bondCount = bond.type === 'single' ? 1 : (bond.type === 'double' ? 2 : 3);
+            const offset = ((bondCount - 1) * spacing) / 2;
+
+            for (let i = 0; i < bondCount; i++) {
+                const perpX = Math.sin(angle) * (i * spacing - offset);
+                const perpY = -Math.cos(angle) * (i * spacing - offset);
+
+                ctx.beginPath();
+                ctx.moveTo(
+                    bond.atom1.x + perpX,
+                    bond.atom1.y + perpY
+                );
+                ctx.lineTo(
+                    bond.atom2.x + perpX,
+                    bond.atom2.y + perpY
+                );
+                ctx.strokeStyle = 'black';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+            }
+        }
+
+        function redraw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            state.bonds.forEach(drawBond);
+            state.atoms.forEach(drawAtom);
+        }
+
+        // API et gestion des données
+        async function fetchMoleculeProperties(formula) {
+            propertiesContent.innerHTML = '<p class="loading">Chargement des données...</p>';
+
+            try {
+                // Première requête pour obtenir les CIDs
+                let response = await fetch(`https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/formula/${formula}/cids/JSON`);
+                let data = await response.json();
+
+                if (data.Waiting && data.Waiting.ListKey) {
+                    const listKey = data.Waiting.ListKey;
+                    let maxAttempts = 5;
+                    let attempt = 0;
+
+                    while (attempt < maxAttempts) {
+                        await new Promise(resolve => setTimeout(resolve, 1000));
+                        
+                        // Obtenir les CIDs à partir de la ListKey
+                        response = await fetch(`https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/listkey/${listKey}/cids/JSON`);
+                        data = await response.json();
+
+                        if (data.IdentifierList) {
+                            break;
+                        }
+
+                        if (!data.Waiting) {
+                            throw new Error('Format de réponse inattendu');
+                        }
+
+                        attempt++;
+                    }
+
+                    if (attempt >= maxAttempts) {
+                        throw new Error('Délai d\'attente dépassé');
+                    }
+                }
+
+                if (!data.IdentifierList || !data.IdentifierList.CID || data.IdentifierList.CID.length === 0) {
+                    throw new Error('Molécule non trouvée');
+                }
+
+                // Utiliser le premier CID pour obtenir les propriétés
+                const cid = data.IdentifierList.CID[0];
+                
+                // Utiliser les noms de propriétés corrects de PubChem
+                response = await fetch(`https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/${cid}/property/ExactMass,MonoisotopicMass,MolecularFormula,MolecularWeight,CanonicalSMILES,InChI,IUPACName/JSON`);
+                data = await response.json();
+
+                if (!data.PropertyTable || !data.PropertyTable.Properties || !data.PropertyTable.Properties.length) {
+                    throw new Error('Pas de données disponibles pour cette molécule');
+                }
+
+                const properties = data.PropertyTable.Properties[0];
+                displayProperties(properties);
+
+                // Requête supplémentaire pour les propriétés expérimentales
+                try {
+                    const experimentalResponse = await fetch(`https://pubchem.ncbi.nlm.nih.gov/rest/pug_view/data/compound/${cid}/JSON`);
+                    const experimentalData = await experimentalResponse.json();
+                    
+                    if (experimentalData.Record && experimentalData.Record.Section) {
+                        const experimentalProps = extractExperimentalProperties(experimentalData.Record.Section);
+                        displayExperimentalProperties(experimentalProps);
+                    }
+                } catch (error) {
+                    console.log('Pas de données expérimentales disponibles');
+                }
+            } catch (error) {
+                propertiesContent.innerHTML = `
+                    <div class="error">
+                        <p>Erreur : ${error.message}</p>
+                        <p>Vérifiez la formule et réessayez.</p>
+                    </div>
+                `;
+            }
+        }
+
+        function extractExperimentalProperties(sections) {
+            const props = {};
+            
+            function searchSections(sections) {
+                for (const section of sections) {
+                    if (section.TOCHeading === "Experimental Properties") {
+                        for (const subsection of section.Section || []) {
+                            if (subsection.TOCHeading === "Melting Point" || 
+                                subsection.TOCHeading === "Boiling Point" ||
+                                subsection.TOCHeading === "Density") {
+                                props[subsection.TOCHeading] = subsection.Information?.[0]?.Value?.StringWithMarkup?.[0]?.String || 'N/A';
+                            }
+                        }
+                    } else if (section.Section) {
+                        searchSections(section.Section);
+                    }
+                }
+            }
+            
+            searchSections(sections);
+            return props;
+        }
+
+        function displayProperties(properties) {
+            // Fonction pour formater les nombres
+            const formatNumber = (value, decimals = 3) => {
+                if (!value) return 'N/A';
+                const num = parseFloat(value);
+                return isNaN(num) ? value : num.toFixed(decimals);
+            };
+
+            propertiesContent.innerHTML = `
+                <div class="property-item">
+                    <span>Masse molaire :</span>
+                    <span>${formatNumber(properties.MolecularWeight)} g/mol</span>
+                </div>
+                <div class="property-item">
+                    <span>Formule moléculaire :</span>
+                    <span>${properties.MolecularFormula || 'N/A'}</span>
+                </div>
+                <div class="property-item">
+                    <span>Masse exacte :</span>
+                    <span>${formatNumber(properties.ExactMass, 6)} u</span>
+                </div>
+                <div class="property-item">
+                    <span>Masse monoisotopique :</span>
+                    <span>${formatNumber(properties.MonoisotopicMass, 6)} u</span>
+                </div>
+                <div class="property-item">
+                    <span>Nom IUPAC :</span>
+                    <span>${properties.IUPACName || 'N/A'}</span>
+                </div>
+                <div class="property-item">
+                    <span>SMILES :</span>
+                    <span>${properties.CanonicalSMILES || 'N/A'}</span>
+                </div>
+                <div class="property-item">
+                    <span>InChI :</span>
+                    <span>${properties.InChI || 'N/A'}</span>
+                </div>
+                <div id="experimentalProperties"></div>
+            `;
+        }
+
+        function displayExperimentalProperties(properties) {
+            const container = document.getElementById('experimentalProperties');
+            if (!container) return;
+
+            let html = '<h3>Propriétés expérimentales</h3>';
+            
+            if (properties['Melting Point']) {
+                html += `
+                    <div class="property-item">
+                        <span>Point de fusion :</span>
+                        <span>${properties['Melting Point']}</span>
+                    </div>`;
+            }
+            
+            if (properties['Boiling Point']) {
+                html += `
+                    <div class="property-item">
+                        <span>Point d'ébullition :</span>
+                        <span>${properties['Boiling Point']}</span>
+                    </div>`;
+            }
+            
+            if (properties['Density']) {
+                html += `
+                    <div class="property-item">
+                        <span>Densité :</span>
+                        <span>${properties['Density']}</span>
+                    </div>`;
+            }
+
+            container.innerHTML = html;
+        }
+
+        function displayProperties(properties) {
+    propertiesContent.innerHTML = `
+        <div class="property-item">
+            <span>Masse molaire :</span>
+            <span>${parseFloat(properties.MolecularWeight)?.toFixed(2) || 'N/A'} g/mol</span>
+        </div>
+        <div class="property-item">
+            <span>Formule moléculaire :</span>
+            <span>${properties.MolecularFormula || 'N/A'}</span>
+        </div>
+        <div class="property-item">
+            <span>Nom IUPAC :</span>
+            <span>${properties.IUPACName || 'N/A'}</span>
+        </div>
+        <div class="property-item">
+            <span>Poids exact :</span>
+            <span>${parseFloat(properties.ExactMass)?.toFixed(5) || 'N/A'} g/mol</span>
+        </div>
+        <div class="property-item">
+            <span>Poids monoisotopique :</span>
+            <span>${parseFloat(properties.MonoisotopicMass)?.toFixed(5) || 'N/A'} g/mol</span>
+        </div>
+    `;
+}
+
+
+        // Gestionnaire de formule
+        function handleFormulaSubmit() {
+            const formula = document.getElementById('formulaInput').value.trim();
+            if (!formula) return;
+
+            try {
+                parseFormula(formula);
+                fetchMoleculeProperties(formula);
+            } catch (error) {
+                console.error('Erreur lors du traitement de la formule:', error);
+                alert('Format de formule invalide');
+            }
+        }
+
+        function parseFormula(formula) {
+            clearCanvas();
+
+            const elementRegex = /([A-Z][a-z]?)(\d*)/g;
+            let match;
+            let atomsList = [];
+
+            while ((match = elementRegex.exec(formula)) !== null) {
+                const [, element, count] = match;
+                const quantity = count ? parseInt(count) : 1;
+                for (let i = 0; i < quantity; i++) {
+                    atomsList.push(element);
+                }
+            }
+
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            const radius = Math.min(centerX, centerY) * 0.6;
+            const angleStep = (2 * Math.PI) / atomsList.length;
+
+            state.atoms = atomsList.map((element, index) => {
+                const angle = index * angleStep;
+                const x = centerX + radius * Math.cos(angle);
+                const y = centerY + radius * Math.sin(angle);
+                return new Atom(x, y, element);
+            });
+
+            for (let i = 0; i < state.atoms.length - 1; i++) {
+                state.bonds.push(new Bond(state.atoms[i], state.atoms[i + 1], 'single'));
+            }
+
+            if (state.atoms.length > 2 && formula.match(/^C\d+/)) {
+                state.bonds.push(new Bond(state.atoms[state.atoms.length - 1], state.atoms[0], 'single'));
+            }
+
+            formulaDisplay.textContent = `Formule: ${formula}`;
+            redraw();
+        }
+
+        // Événements canvas
+        canvas.addEventListener('click', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            if (state.mode === 'atom') {
+                const atomType = document.getElementById('atomType').value;
+                state.atoms.push(new Atom(x, y, atomType));
+                updateFormula();
+            } else if (state.mode === 'bond') {
+                const clickedAtom = state.atoms.find(atom => 
+                    Math.hypot(atom.x - x, atom.y - y) < atom.radius
+                );
+
+                if (clickedAtom) {
+                    if (!state.selectedAtom) {
+                        state.selectedAtom = clickedAtom;
+                    } else if (state.selectedAtom !== clickedAtom) {
+                        const bondType = document.getElementById('bondType').value;
+                        state.bonds.push(new Bond(state.selectedAtom, clickedAtom, bondType));
+                        state.selectedAtom = null;
+                        updateFormula();
+                    }
+                }
+            }
+
+            redraw();
+        });
+
+        // Initialisation
+        redraw();
+    </script>
+</body>
+</html>
