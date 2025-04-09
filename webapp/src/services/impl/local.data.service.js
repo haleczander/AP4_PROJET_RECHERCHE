@@ -17,7 +17,7 @@ export class LocalDataService extends DataService {
     }
 
     findAllMolecules() {
-        return this._molecules;
+        return [...this._molecules];
     }
 
     findMoleculesByAny(needle) {
