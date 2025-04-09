@@ -1,8 +1,22 @@
 import routes from './routes.js';
 import AssetService from './services/asset.service.js';
 import Router from './router.js';
+import LocalDataService from './services/impl/local.data.service.js';
+import services from './services/services.js';
 
 console.log( 'Je suis bien chargé' );
+
+
+const dataService = new LocalDataService();
+fetch( 'data/db.json' )
+  .then( response => response.json() )
+  .then( data => data.data )
+  .then( ({molecules, activations}) => {
+    dataService.molecules = molecules;
+    dataService.activations = activations;
+  })
+
+services['dataService']=dataService;
 
 const navLinksContainer = document.getElementById('nav-links-container');
 
@@ -31,3 +45,6 @@ function generateNavLink( route ) {
 
 generateNavLinks( routes );
 new Router( routes, document.getElementById('main-content') );
+
+
+
