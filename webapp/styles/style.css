@@ -7,6 +7,8 @@ body {
     line-height: 1.6;
     background-color: #f8f9fa;
     min-height: 100vh;
+    overflow-y: hidden;
+    overflow-x: hidden;
 }
 
 /* Conteneur principal */
@@ -251,18 +253,16 @@ body {
 
 /* Contenu principal */
 #main-content {
-    padding: 1rem;
+    padding: 1rem 0rem 1rem 1rem;
     /* Ajuste selon tes préférences */
 }
-
-
 
 /* Barre de navigation verticale, responsive via vw/vh */
 .navbar {
     width: 10.6vw;               /* Largeur en fonction du viewport */
     min-height: 100vh;           /* Hauteur minimale égale à la hauteur de la fenêtre */
     background-color: #fff;
-    padding: 2vw;                /* Espacement intérieur basé sur le viewport */
+    padding: 2vw;                /*Espacement intérieur basé sur le viewport*/
     display: flex;
     flex-direction: column;
     box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15);
