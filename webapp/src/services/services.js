@@ -1,2 +1,2 @@
-export default services = {
-}
+const services = {}
+export default services;

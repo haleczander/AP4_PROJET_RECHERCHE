@@ -4,7 +4,7 @@ export default class Controller {
         this.container = container;
         this.eventListeners = [];
         this.subscriptions = [];
-        init();
+        this.init();
     }
 
     init() {}

@@ -9,6 +9,7 @@ console.log( 'Je suis bien chargé' );
 
 const dataService = new LocalDataService();
 fetch( 'data/db.json' )
+  .then( response => response.json() )
   .then( data => data.data )
   .then( ({molecules, activations}) => {
     dataService.molecules = molecules;
