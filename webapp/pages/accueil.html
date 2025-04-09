@@ -1,77 +1,333 @@
-<div class="schema-container">
-    <!-- Schéma de réaction -->
-    <div class="schema-reaction">
-        <div class="reactifs box">
-            <h3>Réactifs :</h3>
-            <div id="reactifs-liste" class="reactifs-display"></div>
-        </div>
+<div class="main-calculs">
+    <h2 id="h2-reaction">Réaction</h2>
+    <div class="section-box-reaction">
+
+      <div class="schema-reaction">[...]</div>
+      <div class="forms-container">
+        <div class="form-gauche">
+            <div class="radio-container">
+              <label><input type="radio" name="type" checked /> Réactif</label>
+              <label><input type="radio" name="type" /> Activations</label>
+              <label><input type="radio" name="type" /> Solvant</label>
+              <label><input type="radio" name="type" /> Catalyseur</label>
+              <label><input type="radio" name="type"  /> Produit</label>
+            </div>
         
-        <div class="fleche-container">
-            <div class="condition-top">
-                <div id="activation-display" class="condition-box">Activation</div>
+            <hr />
+        
+            <div class="form-content">
+              <div class="form-row">
+                <div class="quantite-controls">
+                    <button id="btn-plus">+</button>
+                    <div class="quantite-valeur">1</div>
+                    <button id="btn-minus">-</button>
+                  </div>
+        
+                <div class="select-container">
+                  <input type="text" placeholder="🔍 H" />
+                  <div class="suggestions">
+                    <!-- Liste déroulante qui suggère les noms -->
+                  </div>
+                </div>
+        
+                <div class="info-fields">
+                  <div class="field">
+                    <label>%</label>
+                    <input type="text" />
+                  </div>
+                  <div class="field">
+                    <label>Vol</label>
+                    <input type="text" />
+                  </div>
+                  <div class="field">
+                    <label>€</label>
+                    <input type="text" />
+                  </div>
+                  <button class="btn-ajouter">➕</button>
+                </div>
+              </div>
             </div>
-            
-            <div class="fleche"></div>
-            
-            <div class="conditions-bottom">
-                <div id="catalyseur-display" class="condition-box">Catalyseur</div>
-                <div id="solvant-display" class="condition-box">Solvant</div>
-            </div>
+          </div>
+      
+        <div class="form-droite">
+          <div class="bloc-traitement">
+            <h3>Traitement post-réactionnel</h3>
+          </div>
+      
+          <div class="bloc-purification">
+            <h3>Purification</h3>
+          </div>
         </div>
-
-        <div class="produits box">
-            <h3>Produits :</h3>
-            <div id="produits-liste" class="produits-display"></div>
-        </div>
+      </div>
     </div>
-
-    <div class="forms-container">
-        <!-- Ligne pour Activation, Catalyseur et Solvant -->
-        <div class="forms-row">
-            <form class="input-section" id="activation-form">
-                <h3>Activation</h3>
-                <div class="input-group">
-                    <input type="text" id="activation-input" placeholder="Méthode d'activation">
-                    <button type="submit" class="btn-ajouter">Définir</button>
-                </div>
-            </form>
-
-            <form class="input-section" id="catalyseur-form">
-                <h3>Catalyseur</h3>
-                <div class="input-group">
-                    <input type="text" id="catalyseur-input" placeholder="Catalyseur">
-                    <button type="submit" class="btn-ajouter">Définir</button>
-                </div>
-            </form>
-
-            <form class="input-section" id="solvant-form">
-                <h3>Solvant</h3>
-                <div class="input-group">
-                    <input type="text" id="solvant-input" placeholder="Solvant">
-                    <button type="submit" class="btn-ajouter">Définir</button>
-                </div>
-            </form>
-        </div>
-
-        <!-- Formulaires Réactifs et Produits -->
-        <form class="input-section" id="reactif-form">
-            <h3>Ajouter un Réactif</h3>
-            <div class="input-group">
-                <input type="number" id="coefficient-reactif" placeholder="Coefficient" min="1">
-                <input type="text" id="nom-reactif" placeholder="Nom du réactif">
-                <input type="number" id="masse-reactif" placeholder="Masse (g)">
-                <button type="submit" class="btn-ajouter">Ajouter</button>
-            </div>
-        </form>
-
-        <form class="input-section" id="produit-form">
-            <h3>Ajouter un Produit</h3>
-            <div class="input-group">
-                <input type="number" id="coefficient-produit" placeholder="Coefficient" min="1">
-                <input type="text" id="nom-produit" placeholder="Nom du produit">
-                <input type="number" id="masse-produit" placeholder="Masse (g)">
-                <button type="submit" class="btn-ajouter">Ajouter</button>
-            </div>
-        </form>
+  
+    <h2 id="h2-resultat">Résultat</h2>
+    <div class="section-box-resultat">
+      <!-- ici les graphs, bilans, etc. -->
     </div>
-</div>
+  </div>
+
+  <script>
+    const plusBtn = document.getElementById("btn-plus");
+    const minusBtn = document.getElementById("btn-minus");
+    const quantiteDisplay = document.querySelector(".quantite-valeur");
+
+    if (plusBtn && minusBtn && quantiteDisplay) {
+    let quantite = parseInt(quantiteDisplay.textContent);
+
+    plusBtn.addEventListener("click", () => {
+        console.log("Plus cliqué");
+        quantite++;
+        quantiteDisplay.textContent = quantite;
+    });
+
+    minusBtn.addEventListener("click", () => {
+        console.log("Moins cliqué");
+        if (quantite > 0) {
+        quantite--;
+        quantiteDisplay.textContent = quantite;
+        }
+    });
+    } else {
+    console.warn("Les éléments du compteur n'ont pas été trouvés.");
+    }
+  </script>
+  
+  <style>
+    .main-calculs {
+      padding: 0vh 2vw;
+      box-sizing: border-box;
+    }
+  
+    .section-box-reaction {
+      background-color: rgba(119, 93, 166, 0.17); /* Violet à 17% */
+      border: 0.2vh solid #c7bbdc;
+      border-radius: 1.5vh;
+      padding: 2vh 1vw 2vh 1vw;
+      margin-bottom: 0.8vh;
+      box-shadow: 0 0.4vh 1vh rgba(0, 0, 0, 0.05);
+      width: 79vw;
+      height: 40vh;
+    }
+
+    .section-box-resultat {
+      background-color: rgba(119, 93, 166, 0.17); /* Violet à 17% */
+      border: 0.2vh solid #c7bbdc;
+      border-radius: 1.5vh;
+      padding: 2vh 2vw;
+      margin-bottom: 3vh;
+      box-shadow: 0 0.4vh 1vh rgba(0, 0, 0, 0.05);
+      width: 77vw;
+      height: 39vh;
+    }
+  
+    .section-box h2 {
+      margin-top: 0;
+      color: #3f2a56;
+      font-size: 2.2vh;
+      font-weight: 600;
+      letter-spacing: 0.05vw;
+    }
+  
+    .schema-reaction {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: white;
+      padding: 3vh 2vw;
+      border-radius: 1.5vh;
+      box-shadow: 0 0.4vh 1vh rgba(0, 0, 0, 0.1);
+      margin-bottom: 0.8vh;
+      gap: 2vw;
+      position: relative;
+      height: 9vh;
+    }
+  
+    .forms-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2vw;
+      width: 100%;
+    }
+
+    #h2-reaction{
+        margin:0;
+        margin-left: -1vw;
+    }
+
+    #h2-resultat{
+        margin:0;
+        margin-left: -1vw;
+    }
+
+    .form-gauche {
+    flex: 1;
+    background-color: rgba(119, 93, 166, 0.17);
+    border-radius: 1.2vh;
+    padding: 0vh 2vw;
+    border: 0.1vh solid #bbb;
+    height: 25vh;
+    }
+
+    .form-droite {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 0.8vh;
+    flex: 0 0 25vw;
+    }
+
+    .bloc-traitement,
+    .bloc-purification {
+    background-color: white;
+    border: 0.2vh solid #775DA6;
+    border-radius: 1vh;
+    padding: 1vh 1vw;
+    height: 10vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;         /* Centrage horizontal */
+    text-align: center;
+    font-size: 1.3vh;
+    box-shadow: 0 0.2vh 0.5vh rgba(0, 0, 0, 0.1);
+    }
+
+    .bloc-traitement h3,
+    .bloc-purification h3 {
+    margin: 0 0 1vh 0;
+    font-size: 1.7vh;
+    color: black;
+    text-align: center;       /* Centre le texte horizontalement */
+    }
+
+    .radio-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 1vw;
+    font-size: 1.5vh;
+    font-weight: 600;
+    color: #3f2a56;
+    padding-top: 0.5rem;
+    }
+
+    .radio-container label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5vh;
+    }
+
+    hr {
+    border: none;
+    border-top: 0.1vh solid black;
+    margin: 1vh 0;
+    }
+
+    .form-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5vh;
+    }
+
+    .form-row {
+    display: flex;
+    align-items: center;
+    gap: 2vw;
+    }
+
+    /* +/- boutons */
+    .quantite {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 2vh;
+    }
+
+    .quantite button {
+    font-size: 2vh;
+    width: 3vh;
+    height: 3vh;
+    background: none;
+    border: 0.1vh solid black;
+    border-radius: 0.5vh;
+    cursor: pointer;
+    }
+
+    .quantite-valeur {
+    margin: 0.5vh 0;
+    padding-left: 0.25rem;
+    font-weight: bold;
+    }
+
+    /* Recherche et suggestions */
+    .select-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    }
+
+    .select-container input {
+    padding: 0.5vh 1vh;
+    font-size: 1.5vh;
+    border: 0.1vh solid #ccc;
+    border-radius: 0.5vh;
+    }
+
+    .suggestions {
+    background-color: white;
+    border: 0.1vh solid #ccc;
+    border-top: none;
+    font-size: 1.5vh;
+    border-radius: 0 0 0.5vh 0.5vh;
+    overflow: hidden;
+    }
+
+    .suggestions div {
+    padding: 0.5vh 1vh;
+    border-top: 0.1vh solid #eee;
+    }
+
+    .suggestions div:last-child {
+    border-radius: 0 0 0.5vh 0.5vh;
+    }
+
+    /* Infos : %, Vol, € */
+    .info-fields {
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: 1.8rem;
+    gap: 1vw;
+    }
+
+    .field {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    }
+
+    .field label {
+    font-size: 1.8vh;
+    font-weight: bold;
+    margin-bottom: 0.3vh;
+    }
+
+    .field input {
+    width: 5vw;
+    padding: 0.5vh;
+    font-size: 1.5vh;
+    border: 0.1vh solid #333;
+    border-radius: 0.5vh;
+    text-align: center;
+    }
+
+    /* Bouton "+" */
+    .btn-ajouter {
+    background: none;
+    border: none;
+    font-size: 2vh;
+    cursor: pointer;
+    color: #2b964a;
+    }
+
+  </style>
+  
