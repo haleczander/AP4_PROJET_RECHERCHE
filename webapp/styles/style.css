@@ -521,10 +521,7 @@ body {
     filter: invert(35%) sepia(77%) saturate(3718%) hue-rotate(223deg) brightness(95%) contrast(90%);
 }
 
-    padding: 5px;
-    font-size: 0.9rem;
-    color: white;
-  }
+
   
   #caracteristiques-form, #nommage-form {
     width: 100vw;
@@ -553,7 +550,7 @@ body {
     border-radius: 6px;
   }
   
-  .molecule-table {
+  .molecules-table {
     width: 100%;
     border-collapse: collapse;
     font-family: 'Inter', sans-serif;
@@ -561,14 +558,14 @@ body {
     box-shadow: 0 0 4px rgba(0,0,0,0.1);
   }
   
-  .molecule-table th,
-  .molecule-table td {
+  .molecules-table th,
+  .molecules-table td {
     border: 1px solid #ddd;
     padding: 10px;
     text-align: center;
   }
   
-  .molecule-table th {
+  .molecules-table th {
     background-color: #f8f8f8;
     font-weight: 600;
   }

@@ -5,12 +5,13 @@ export default class MoleculesController extends Controller {
 
     constructor( container ) {
         super( container );
-        this.dataService = services.dataService;
-        this.molecules = this.dataService.findAllMolecules();
     }
 
     init() {
+        this.dataService = services.dataService;
+        this.molecules = this.dataService.findAllMolecules();
         this._initTable();
+        this.updateData( this.molecules );
     }
 
 
@@ -41,11 +42,56 @@ export default class MoleculesController extends Controller {
           this.moleculesTableData = document.createElement('tbody');
           this.moleculesTable.appendChild( this.moleculesTableData );
 
-          updateData();
     }
 
-    updateData() {
+    updateData( molecules ) {
+        this.moleculesTableData.innerHTML = '';
+        molecules.forEach( 
+            molecule => this.moleculesTableData.appendChild( this._createRow( molecule ) )
+        )
+    }
 
+    _createRow( molecule ) {
+        const tr = document.createElement('tr');
+        let td;
+
+        td = document.createElement('td');
+        td.textContent = molecule.nom;
+        tr.appendChild(td);
+
+        td = document.createElement('td');
+        td.textContent = molecule.formule;
+        tr.appendChild(td);
+
+        td = document.createElement('td');
+        td.textContent = molecule.masseMolaire;
+        tr.appendChild(td);
+
+        td = document.createElement('td');
+        td.textContent = molecule.nbCarbone;
+        tr.appendChild(td);
+
+        td = document.createElement('td');
+        td.textContent = molecule.nocif ? "\u2713" : "";
+        tr.appendChild(td);
+
+        td = document.createElement('td');
+        td.textContent = molecule.irritant ? "\u2713" : "";
+        tr.appendChild(td);
+
+        td = document.createElement('td');
+        td.textContent = molecule.explosible ? "\u2713" : "";
+        tr.appendChild(td);
+
+        td = document.createElement('td');
+        td.textContent = molecule.toxique ? "\u2713" : "";
+        tr.appendChild(td);
+
+        td = document.createElement('td');
+        td.textContent = molecule.extremementInflammable ? "\u2713" : "";
+        tr.appendChild(td);
+
+        return tr;
     }
 
 
