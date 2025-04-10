@@ -1,4 +1,7 @@
 import DataService from "../data.service";
+import { filterMolecule } from "../../utils/filters.utils";
+import CASComparison from "../../comparisons/impl/CAS.comparison";
+import ContainsIgnoreCaseComparison from "../../comparisons/impl/ContainsIgnoreCase.comparison";
 
 export class LocalDataService extends DataService {
     _molecules = [];
@@ -6,6 +9,8 @@ export class LocalDataService extends DataService {
 
     constructor() {
         super();
+        this.casComp = new CASComparison();
+        this.containsIgnoreCaseComp = new ContainsIgnoreCaseComparison();
     }
 
     set molecules( molecules ) {
@@ -17,44 +22,25 @@ export class LocalDataService extends DataService {
     }
 
     findAllMolecules() {
-        return this._molecules;
+        return [...this._molecules];
     }
 
     findMoleculesByAny(needle) {
-        const filter = (needle, molecule) => {
-            return this._filterCas(needle, molecule) 
-            || this._filterNom(needle, molecule)
-            || this._filterFormule(needle, molecule);
-        };
-
-        return this._molecules.filter(molecule => filter(needle, molecule));
+        return this._molecules.filter(molecule => filterMolecule( needle, molecule ) );
     }
 
     findMoleculesByCas( needle ) {
-        return this._molecules.filter( molecule => this._filterCas( needle, molecule ))
+        return this._molecules.filter( molecule => this.casComp.compare(needle, molecule.cas))
     }
 
     findMoleculesByFormule( needle ) {
-        return this._molecules.filter( molecule => this._filterFormule( needle, molecule ))
+        return this._molecules.filter( molecule => this.containsIgnoreCaseComp.compare(needle, molecule.formule))
     }
 
     findMoleculesByName( needle ) {
-        return this._molecules.filter( molecule => this._filterNom( needle, molecule ))
+        return this._molecules.filter( molecule => this.containsIgnoreCaseComp.compare(needle, molecule.nom))
     }
     
-    _filterCas(needle, molecule) {
-        const sanitizeCas =  cas => cas.replaceAll('-', '');
-
-        return sanitizeCas( molecule.cas ).includes( sanitizeCas( needle ) );
-    }
-
-    _filterNom(needle, molecule) {
-        return molecule.nom.toUpperCase().includes(needle.toUpperCase());
-    }
-
-    _filterFormule(needle, molecule) {
-        return molecule.formule.toUpperCase().includes( needle.toUpperCase());
-    }
 }
 
 export default LocalDataService;

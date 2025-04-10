@@ -1,327 +1,320 @@
-/* Réinitialisation globale */
+/* === RÉINITIALISATION GLOBALE === */
 body {
-    display: flex;
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    background-color: #f8f9fa;
-    min-height: 100vh;
-    overflow-y: hidden;
-    overflow-x: hidden;
+  display: flex;
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+  background-color: #f8f9fa;
+  min-height: 100vh;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  line-height: 1.6;
 }
 
-/* Conteneur principal */
-.schema-container {
-    flex: 1;
-    max-width: 1300px;
-    margin: 0px; /* Réduction de la marge supérieure */
-    padding: 2rem;
-    background-color: #a7a7a75f;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-/* Schéma de réaction */
-.schema-reaction {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: white;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    margin-bottom: 30px; /* Réduction de l'espacement sous le schéma */
-    gap: 2rem;
-    position: relative;
-}
-
-.fleche-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 200px; /* Réduire la largeur de la flèche */
-    flex: 0 1 auto;
-    position: relative;
-    margin-top: 20px; /* Ajout d'une marge pour baisser la flèche */
-}
-
-.fleche {
-    position: relative;
-    top: -10px;
-    width: 200%;
-    height: 10px;
-    background-color: #847494;
-}
-
-.fleche::after {
-    content: '';
-    position: absolute;
-    right: -8px;
-    top: -8px;
-    width: 16px;
-    height: 16px;
-    border-top: 10px solid #847494;
-    border-right: 10px solid #847494;
-    transform: rotate(45deg);
-}
-
-.condition-top {
-    margin-bottom: 15px;
-    position: absolute;
-    top: -55px; /* Ajusté pour suivre la nouvelle position de la flèche */
-    width: 100%;
-    text-align: center;
-}
-
-.conditions-bottom {
-    margin-top: 15px;
-    display: flex;
-    gap: 15px;
-    position: absolute;
-    bottom: -40px; /* Ajusté pour suivre la nouvelle position de la flèche */
-    width: 100%;
-    justify-content: center;
-}
-
-.condition-box {
-    background-color: #3f2a56;
-    padding: 8px 15px;
-    border-radius: 6px;
-    font-size: 0.9em;
-    color: #fff2ee;
-    text-align: center;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-/* Conteneur des cases (Réactifs et Produits) Schéma */
-.box {
-    background-color: white;
-    padding: 15px 20px; /* Ajusté pour plus d'espace visuel */
-    border-radius: 8px;
-    border: 2px solid #847494;
-    min-width: 300px; /* Ajuster la largeur minimale */
-    max-width: 400px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    height: auto;
-    flex: 0 1 auto;
-}
-
-/* Titre des sections (Réactifs et Produits) */
-.box h3 {
-    margin: 0;
-    font-size: 1.2em;
-    line-height: 1.2;
-    color: #3f2a56;
-}
-
-/* Conteneur des formulaires */
-.forms-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    width: 100%;
-}
-
-/* Ligne spécifique pour Activation, Catalyseur et Solvant */
-.forms-row {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-    width: 100%;
-    margin-bottom: 10px;
-}
-
-.forms-row .input-section {
-    flex: 1;
-    max-width: 400px;
-}
-
-/* Style des sections de formulaire */
-.input-section {
-    background-color: white;
-    padding: 10px;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-.input-group {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 10px;
-}
-
-input {
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    flex: 1;
-    font-size: 1rem;
-}
-
-.btn-ajouter {
-    padding: 8px 15px;
-    background-color: #3f2a56;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.btn-ajouter:hover {
-    background-color: white;
-}
-
-.reactifs-display, .produits-display {
-    min-height: 10px;
-    padding: 5px;
-    font-size: 0.9rem;
-    color: white;
-}
-
-/* Styles spécifiques pour Réactifs et Produits */
-#reactif-form,
-#produit-form {
-    flex: 1;
-    width: 100%;
-}
-
-#caracteristiques-form, #nommage-form {
-    width: 100vw;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-}
-
-#molecule-drawing {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(7, 1fr);
-    width: 80vw; /* 80% de la largeur de la fenêtre */
-    height: 40vh; /* 70% de la hauteur de la fenêtre */
-    background-color: #f0f0f0;
-    border: 2px solid #ccc;
-    margin: 20px auto; /* Centre horizontalement */
-}
-
-
-/* Réinitialisation globale */
-body {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    background-color: #f8f9fa;
-
-    /* On place la navbar à gauche et le contenu (top-bar + main) à droite */
-    display: flex;
-    min-height: 100vh;
-}
-
-/* Zone de contenu (à droite) */
+/* === ZONE DE CONTENU === */
 .content-area {
-    flex: 1;                   /* Prend tout l'espace restant */
-    display: flex;
-    flex-direction: column;    /* La top-bar en haut, le contenu en dessous */
+  margin-left: 13.6vw;
+  padding: 2rem;
+  box-sizing: border-box;
 }
 
-/* Barre supérieure occupant toute la largeur de la zone de contenu */
+/* === BARRE SUPÉRIEURE === */
 .top-bar {
-    background-color: #fff;
-    box-shadow: 0 3px 6px -3px rgba(0, 0, 0, 0.1); /* Ombre discrète en bas */
-    padding: 1rem;            /* Espace intérieur autour du contenu */
-    display: flex;
-    align-items: center;
+  background-color: #fff;
+  box-shadow: 0 3px 6px -3px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  display: flex;
+  align-items: center;
 }
 
-/* Conteneur du champ de recherche, centré */
+/* === RECHERCHE === */
 .search-container {
-    width: 16vw;                /* Le champ de recherche fait 8% de la largeur du viewport */
+  width: 16vw;
 }
 
-/* Champ de recherche */
 .search-container input[type="text"] {
-    padding: 0.5rem 1rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 1rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
 }
 
-/* Contenu principal */
-#main-content {
-    padding: 1rem 0rem 1rem 1rem;
-    /* Ajuste selon tes préférences */
+/* === CONTENU PRINCIPAL === */
+#main-content,
+.main-content,
+.main-calculs,
+.main-accueil {
+  padding: 1rem;
+  margin-left: 15.6vw;
+  padding-top: 0.7rem;
+  padding-right: 0.7rem;
+  box-sizing: border-box;
 }
 
-/* Barre de navigation verticale, responsive via vw/vh */
+/* === NAVIGATION === */
 .navbar {
-    width: 10.6vw;               /* Largeur en fonction du viewport */
-    min-height: 100vh;           /* Hauteur minimale égale à la hauteur de la fenêtre */
-    background-color: #fff;
-    padding: 2vw;                /*Espacement intérieur basé sur le viewport*/
-    display: flex;
-    flex-direction: column;
-    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15);
+  width: 10.6vw;
+  min-height: 100vh;
+  background-color: #fff;
+  padding: 2vw;
+  display: flex;
+  position: fixed;
+  flex-direction: column;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15);
 }
 
-/* Logo (en haut) */
 .navbar .nav-logo {
-    margin-bottom: 2vh;          /* Espace sous le logo en fonction de la hauteur de la fenêtre */
+  margin-bottom: 2vh;
 }
 
 .navbar .nav-logo .logo {
-    max-width: 15vw;             /* Largeur maximale du logo basée sur le viewport */
-    height: auto;
-    display: block;
-    margin: 0 auto;
+  max-width: 15vw;
+  height: auto;
+  display: block;
+  margin: 0 auto;
 }
 
-/* Conteneur des liens */
 .navbar .nav-link {
-    display: flex;
-    flex-direction: column;
-    gap: 2vh;                  /* Espacement vertical entre chaque lien */
-    margin-top: 2vh;
+  display: flex;
+  flex-direction: column;
+  gap: 2vh;
+  margin-top: 2vh;
 }
 
-/* Style par défaut pour chaque lien */
 .navbar .nav-link a {
-    display: flex;
-    align-items: center;
-    gap: 1vw;                  /* Espacement horizontal entre l'icône et le texte */
-    color: #000;
-    text-decoration: none;
-    padding: 1vh 1vw;          /* Espacement interne vertical/horizontal */
-    border-radius: 1vh;        /* Coins arrondis proportionnels au viewport */
-    font-weight: 600;
-    font-size: 1.45vh;          /* Taille de texte réduite */
-    transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 1vw;
+  color: #000;
+  text-decoration: none;
+  padding: 1vh 1vw;
+  border-radius: 1vh;
+  font-weight: 600;
+  font-size: 1.45vh;
+  transition: background-color 0.3s ease;
 }
 
-/* Au survol : simple soulignement du texte */
 .navbar .nav-link a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
-/* État "actif" : fond et bordure violets, texte violet */
 .navbar .nav-link a.active {
-    background-color: #EEEBF4;
-    border: 0.2vh solid #775DA6;
-    color: #775DA6;
+  background-color: #EEEBF4;
+  border: 0.2vh solid #775DA6;
+  color: #775DA6;
 }
 
-/* Icônes : taille et transition */
-.navbar .nav-link img {
-    width: 2vh;                /* Taille de l'icône basée sur la hauteur du viewport */
-    height: 2vh;
-    transition: filter 0.3s ease;
-}
-
-/* Icône en état actif : applique un filtre violet */
+.navbar .nav-link img,
 .navbar .nav-link a.active img {
-    filter: invert(35%) sepia(77%) saturate(3718%) hue-rotate(223deg) brightness(95%) contrast(90%);
+  width: 2vh;
+  height: 2vh;
+  transition: filter 0.3s ease;
+}
+
+.navbar .nav-link a.active img {
+  filter: invert(35%) sepia(77%) saturate(3718%) hue-rotate(223deg) brightness(95%) contrast(90%);
+}
+
+/* === TITRES === */
+.page-title,
+.section-box h2 {
+  margin-top: 0;
+  color: #3f2a56;
+  font-size: 1.6rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+/* === BLOCS SECTIONS === */
+.section-box,
+.section-box-reaction {
+  background-color: #eae6f6;
+  border: 2px solid #c7bbdc;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.section-box {
+  padding: 2rem;
+  height: 20.74vh;
+}
+
+.section-box-reaction {
+  padding: 0.7rem;
+  height: 43.74vh;
+}
+
+/* === SCHÉMA === */
+.schema-container,
+.schema-reaction {
+  background-color: #a7a7a75f;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+}
+
+.schema-container {
+  flex: 1;
+  max-width: 1300px;
+  margin: 0;
+}
+
+.schema-reaction {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  height: 14vh;
+  margin-bottom: 30px;
+  gap: 2rem;
+  position: relative;
+  border-radius: 12px;
+}
+
+/* === FLECHES ET CONDITIONS === */
+.reaction-bottom-layout {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.fleche-container,
+.fleche {
+  position: relative;
+  width: 200px;
+  margin-top: 20px;
+}
+
+.fleche-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: #775DA6 solid 4px;
+  gap: 2rem;
+  margin-bottom: 1vh;
+}
+
+.fleche {
+  height: 10px;
+  background-color: #847494;
+  top: -10px;
+}
+
+.fleche::after {
+  content: '';
+  position: absolute;
+  right: -8px;
+  top: -8px;
+  width: 16px;
+  height: 16px;
+  border-top: 10px solid #847494;
+  border-right: 10px solid #847494;
+  transform: rotate(45deg);
+}
+
+.condition-top {
+  position: absolute;
+  top: -55px;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.conditions-bottom {
+  position: absolute;
+  bottom: -40px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.condition-box {
+  background-color: #3f2a56;
+  color: #fff2ee;
+  padding: 8px 15px;
+  border-radius: 6px;
+  font-size: 0.9em;
+  text-align: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* === BLOCS RÉACTIFS / PRODUITS === */
+.box,
+.forms-container {
+  border: 2px solid #847494;
+  min-width: 300px;
+  max-width: 400px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex: 0 1 auto;
+}
+
+.box {
+  background-color: white;
+  padding: 15px 20px;
+  color: #fff2ee;
+}
+
+.box h3,
+.forms-container h3 {
+  margin: 0;
+  font-size: 1.2em;
+  line-height: 1.2;
+  color: #3f2a56;
+}
+
+/* === FORMULAIRES === */
+.forms-container {
+  flex-wrap: wrap;
+  width: 60%;
+  background-color: rgba(119, 93, 166, 0.17);
+  height: 28vh;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+  gap: 2rem;
+  position: relative;
+  border: #775DA6 solid 2px;
+}
+
+.forms-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.forms-row .input-section,
+#reactif-form,
+#produit-form {
+  flex: 1;
+  max-width: 400px;
+  width: 100%;
+}
+
+.input-section {
+  background-color: white;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.input-group {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+input {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  flex: 1;
+  font-size: 1rem;
 }
