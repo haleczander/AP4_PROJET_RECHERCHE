@@ -16,8 +16,6 @@ export class FacteurEnvironnementalMolaireIndicateur extends Indicateur {
       this.reactionService.masseMolaireReactifs(reaction);
     const masseMolaireProduit = getMasseMolaire( reaction.produit );
 
-    console.log(reaction.produit, masseMolaireProduit, reaction.produit.masseMolaire)
-
     return (masseMolaireReactifs - masseMolaireProduit) / masseMolaireProduit;
   }
 

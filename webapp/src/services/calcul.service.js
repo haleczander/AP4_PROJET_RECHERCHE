@@ -1,4 +1,5 @@
 import { Resultat } from "../models/resultat.model";
+import { BILAN_INDICATEURS } from '../settings';
 import { round } from "../utils/math.utils";
 
 export class CalculService {
@@ -34,8 +35,14 @@ export class CalculService {
     return results;
   }
 
+    resultatsBilan( results ) {
+        const bilanKeys = BILAN_INDICATEURS.map( indicateur => new indicateur().code );
+        const filtered = Object.fromEntries( Object.entries( results ).filter(([key]) => bilanKeys.includes(key)) );
+        return filtered;    
+    }
+
   calculBilan(resultats) {
-    const moyenne = Object.values(resultats).reduce(
+    return Object.values(resultats).reduce(
       (a, b, _, arr) => a + b / arr.length,
       0,
     );
@@ -45,6 +52,10 @@ export class CalculService {
     const resultats = new Resultat();
     resultats.complete = this.calculReactionComplete( reaction, ...indicateurs );
     resultats.principale = this.calculReactionPrincipale( reaction, ...indicateurs );
+    const bilanComplete = this.resultatsBilan( resultats.complete );
+    const bilanPrincipale = this.resultatsBilan( resultats.principale );
+    resultats.bilanComplete = this.calculBilan( bilanComplete );
+    resultats.bilanPrincipale = this.calculBilan( bilanPrincipale );
     return resultats;
   }
 }
