@@ -1,3 +1,6 @@
+import AccueilController from "./controllers/AccueilController";
+import AjoutMoleculeController from "./controllers/AjoutMoleculeController";
+import HistoriqueController from "./controllers/HistoriqueController";
 import MoleculesController from "./controllers/MoleculesController";
 
 export const routes = [
@@ -5,7 +8,7 @@ export const routes = [
         nom: 'Accueil',
         chemin: '/',
         cheminHtml: 'accueil.html',
-        controller: null,
+        controller: AccueilController,
         icone: 'ic_dashboard.png'
     },
     {
@@ -19,14 +22,14 @@ export const routes = [
         nom: 'Ajout de molécule',
         chemin: '/ajout-molecule',
         cheminHtml: 'ajout-molecule.html',
-        controller: null,
+        controller: AjoutMoleculeController,
         icone: 'ic_event_note.png'
     }, 
     {
         nom: 'Historique des calculs',
         chemin: '/historique',
         cheminHtml: 'historique.html',
-        controller: null,
+        controller: HistoriqueController,
         icone: 'ic_account_box.png'
     }
 ];

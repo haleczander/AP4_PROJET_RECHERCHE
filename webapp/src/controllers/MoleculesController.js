@@ -3,10 +3,6 @@ import Controller from "./Controller";
 
 export default class MoleculesController extends Controller {
 
-    constructor( container ) {
-        super( container );
-    }
-
     init() {
         this.dataService = services.dataService;
         this.molecules = this.dataService.findAllMolecules();
