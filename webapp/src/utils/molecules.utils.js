@@ -112,7 +112,7 @@ export function getPrixEuro( molecule, purete = false ){
     return masseG * prix;
 }
 
-export function formulaParser( formula ) {
+export function formulaParser( formula, coef = 1 ) {
     const regex = /([A-Z][a-z]*)(\d*)/g;
     const result = {};
     let match;
@@ -120,11 +120,35 @@ export function formulaParser( formula ) {
   
     while ((match = regex.exec(formula)) !== null) {
       const element = match[1];
-      const count = parseInt(match[2]) || 1;
+      const count = ( parseInt(match[2]) || 1 ) * coef;
       result[element] = (result[element] || 0) + count;
     }
   
     return result;
+}
+
+export function moleculeFormulaParser( molecule ) {
+    return formulaParser( molecule.formule, molecule.coefStoechiometrique );
+}
+
+export function atomesDiff( a, b ){
+    const diff = {};
+    for ( const atome of Object.keys({...a,...b} ) ) {
+        const atomeA = a[ atome ] || 0;
+        const atomeB = b[ atome ] || 0;
+        diff[ atome ] = atomeA - atomeB;
+    }
+    return diff;
+}
+
+export function atomesSum( moleculesAtomes ) {
+    const total = {};
+    for (const molecule of moleculesAtomes) {
+      for (const [atome, count] of Object.entries(molecule)) {
+        total[atome] = (total[atome] || 0) + count;
+      }
+    }
+    return total;
 }
 
 export function createMolecule(

@@ -44,4 +44,3 @@ export function getSumMasseRecyclee( molecules ) {
     return getSum( molecules, molecule => molecule.recyclabilite * getMasseG( molecule ) );
 }
 
-
