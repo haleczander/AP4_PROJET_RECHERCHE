@@ -1,7 +1,51 @@
+<div id="main-molecules">
+  <h1 class="page-title">Liste des molécules</h1>
+  <input
+    type="text"
+    id="search-input"
+    placeholder="Rechercher une molécule..."
+  />
+  <table id="molecules-table"></table>
+</div>
+
 <style>
+  #molecules-table {
+    width: 100%;
+    max-width: 100%;
+    border-collapse: collapse;
+    margin: 2vh auto;
+    font-size: 1.4rem;
+    box-shadow: 0 0.3vh 1vh var(--box-shadow-color-molecule);
+  }
 
+  #molecules-table th,
+  #molecules-table td {
+    border: 0.1vh solid var(--border-color-border-molecule-1);
+    padding: 1vh 1vw;
+    text-align: center;
+  }
+
+  #molecules-table th {
+    background-color: var(--background-color-molecule-1);
+    color: var(--txt-white-color);
+    font-weight: bold;
+  }
+
+  #molecules-table tr:nth-child(even) {
+    background-color: var(--background-color-molecule-2);
+  }
+
+  #molecules-table tr:hover {
+    background-color: var(--background-color-molecule-2);
+  }
+
+  #search-input {
+    display: block;
+    padding: 1vh 2vw;
+    font-size: 1.2rem;
+    width: 50vw;
+    border: 0.2vh solid var(--border-color-border-molecule-2);
+    border-radius: 1vh;
+    box-shadow: 0 0.2vh 0.6vh var(--box-shadow-color-molecule);
+  }
 </style>
-
-<h1 class="page-title">Liste des molécules</h1>
-<input type="text" id="search-input" placeholder="Rechercher une molécule..." />
-<table id="molecules-table"></table>

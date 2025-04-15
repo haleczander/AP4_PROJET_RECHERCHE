@@ -42,5 +42,8 @@ function generateNavLink(route) {
   return linkElement;
 }
 
-generateNavLinks(routes);
-new Router(routes, document.getElementById("main-content"));
+generateNavLinks( routes );
+new Router( routes, document.getElementById('main-container') );
+
+
+
