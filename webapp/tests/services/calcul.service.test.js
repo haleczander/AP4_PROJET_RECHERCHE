@@ -19,52 +19,84 @@ import RendementIndicateur from "../../src/indicateurs/impl/rendement.indicateur
 describe("Test du service de calcul", () => {
     let service;
     let reaction;
+    const indicateurs = [];
 
     beforeAll(() => {
         service = new CalculService();
-        service.indicateurs.push(new CoefCMRIndicateur());
-        service.indicateurs.push(new CoefDangerIndicateur());
-        service.indicateurs.push(new CoefToxiciteIndicateur());
-        service.indicateurs.push(new CoutMassiqueIndicateur());
-        service.indicateurs.push(new EconomieAtomesIndicateur());
-        service.indicateurs.push(new EconomieCarboneIndicateur());
-        service.indicateurs.push(new EfficaciteMassiqueIndicateur());
-        service.indicateurs.push(new FacteurEnvMassiqueIndicateur());
-        service.indicateurs.push(new FacteurEnvMolaireIndicateur());
-        service.indicateurs.push(new FacteurStoechiometriqueInverseIndicateur());
-        service.indicateurs.push(new FacteurStoechiometriqueIndicateur());
-        service.indicateurs.push(new MasseDechetsIndicateur());
-        service.indicateurs.push(new PRMmIndicateur());
-        service.indicateurs.push(new RatioReactifMinReactifMaxIndicateur());
-        service.indicateurs.push(new RendementIndicateur());
+        indicateurs.push(new CoefCMRIndicateur());
+        indicateurs.push(new CoefDangerIndicateur());
+        indicateurs.push(new CoefToxiciteIndicateur());
+        indicateurs.push(new CoutMassiqueIndicateur());
+        indicateurs.push(new EconomieAtomesIndicateur());
+        indicateurs.push(new EconomieCarboneIndicateur());
+        indicateurs.push(new EfficaciteMassiqueIndicateur());
+        indicateurs.push(new FacteurEnvMassiqueIndicateur());
+        indicateurs.push(new FacteurEnvMolaireIndicateur());
+        indicateurs.push(new FacteurStoechiometriqueInverseIndicateur());
+        indicateurs.push(new FacteurStoechiometriqueIndicateur());
+        indicateurs.push(new MasseDechetsIndicateur());
+        indicateurs.push(new PRMmIndicateur());
+        indicateurs.push(new RatioReactifMinReactifMaxIndicateur());
+        indicateurs.push(new RendementIndicateur());
 
         reaction = REACTION_BIGINELLI;
     });
 
-    test("test calculReaction", () => {
+    test("test calculReactionPrincipale", () => {
         const expected = {
-        "1/FSt": { complete: 0, principale: 0.807 },
-        "1/Fst,n": { complete: 0, principale: 0.658 },
-        "CMR": { complete: 1, principale: 1 },
-        "Danger": { complete: 0.882, principale: 0.9 },
-        "EA": { complete: 0, principale: 0.878 },
-        "EC": { complete: 0, principale: 1 },
-        "EM": { complete: 0, principale: 0.138 },
-        "EMR": { complete: 0.196, principale: 0.545 },
-        "Em": { complete: 4.103, principale: 0.835 },
-        "FSt": { complete: 3.447, principale: 1.239 },
-        "PRMm": { complete: 0, principale: 0 },
-        "Tox": { complete: 1, principale: 1 },
-        "masseDechets": { complete: 10.257, principale: 2.087 },
-        "ρ": { complete: 0, principale: 0.769 },
-        "€/g": { complete: 0.213, principale: 0.123 },
-        };
+            "1/FSt": 0.807,
+            "1/Fst,n": 0.658,
+            "CMR": 1,
+            "Danger": 0.9,
+            "EA": 0.878,
+            "EC": 1,
+            "EM": 0.138,
+            "EMR": 0.545,
+            "Em": 0.835,
+            "FSt": 1.239,
+            "PRMm": 0,
+            "Tox": 1,
+            "masseDechets": 2.087,
+            "ρ": 0.769,
+            "€/g": 0.123
+          };
+          
 
         expect(
-            service.calculReaction(reaction, 3)
+            service.calculReactionPrincipale(reaction, ...indicateurs)
         ).toStrictEqual(
             expected
         );
     }
+
+    
+
+    
+    );
+
+    test("test calculReactionComplete", () => {
+        const expected = {
+            "CMR": 1,
+            "Danger": 0.882,
+            "EMR": 0.196,
+            "Em": 4.103,
+            "FSt": 3.447,
+            "PRMm": 0,
+            "Tox": 1,
+            "masseDechets": 10.257,
+            "€/g": 0.213
+          }
+          ;
+
+        expect(
+            service.calculReactionComplete(reaction, ...indicateurs)
+        ).toStrictEqual(
+            expected
+        );
+    }
+
+    
+
+    
     );
 });
