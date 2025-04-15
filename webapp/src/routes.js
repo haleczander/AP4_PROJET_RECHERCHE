@@ -1,6 +1,7 @@
 import AccueilController from "./controllers/AccueilController";
 import AjoutMoleculeController from "./controllers/AjoutMoleculeController";
 import HistoriqueController from "./controllers/HistoriqueController";
+import ModelisationController from "./controllers/ModelisationController";
 import MoleculesController from "./controllers/MoleculesController";
 
 export const routes = [
@@ -31,7 +32,14 @@ export const routes = [
         cheminHtml: 'historique.html',
         controller: HistoriqueController,
         icone: 'ic_account_box.png'
-    }
+    },
+    {
+        nom: 'Modélisation de molécules',
+        chemin: '/modelisation-molecules',
+        cheminHtml: 'modelisationMolecules.html',
+        controller: ModelisationController,
+        icone: 'ic_account_box.png'
+    },
 ];
 
 export default routes;
