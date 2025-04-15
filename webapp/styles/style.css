@@ -32,6 +32,11 @@ h3 {
   color: #3f2a56;
 }
 
+h4 {
+  margin: 0;
+  text-decoration: underline;
+}
+
 hr {
   border: none;
   border-top: 0.1vh solid black;
