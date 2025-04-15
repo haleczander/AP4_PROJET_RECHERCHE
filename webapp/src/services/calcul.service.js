@@ -1,24 +1,37 @@
+import { round } from '../utils/math.utils';
+
 export class CalculService {
     indicateurs = []
 
-    constructor() {}
+    constructor( precision = 3 ) {
+        this.precision = precision;
+    }
 
-    calculReaction( reaction, decimales ) {
-        let results = {}
-        this.indicateurs.forEach( indicateur => {
-            const principale = this.round( indicateur.reactionPrincipale(reaction), decimales );
-            const complete = this.round( indicateur.reactionComplete(reaction), decimales );
-            results[ indicateur.code ] = { complete, principale }
-        } );
+    calculReactionPrincipale( reaction, ...indicateurs ) {
+        const results = {};
+        indicateurs.forEach( indicateur => {
+            const resultat = round( indicateur.reactionPrincipale( reaction ), this.precision );
+            results[ indicateur.code ] = 
+                resultat
+            }
+        )
         return results;
-
     }
 
-    round( valeur, decimales ) {
-        const coef = Math.pow(10, decimales);
-        return Math.round( valeur * coef ) / coef;
+    calculReactionComplete( reaction, ...indicateurs ) {
+        const results = {};
+        indicateurs.forEach( indicateur => {
+            const resultat = round( indicateur.reactionComplete( reaction ), this.precision );
+            if ( null !== resultat ) {
+                results[ indicateur.code ] = resultat;
+            }
+         }
+        )
+        return results;
     }
 
-  
+    calculBilan( resultats ) {
+        const moyenne = Object.values(resultats).reduce((a, b, _, arr) => a + b / arr.length, 0);
+    }
 }
 export default CalculService;
