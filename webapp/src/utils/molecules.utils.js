@@ -112,6 +112,21 @@ export function getPrixEuro( molecule, purete = false ){
     return masseG * prix;
 }
 
+export function formulaParser( formula ) {
+    const regex = /([A-Z][a-z]*)(\d*)/g;
+    const result = {};
+    let match;
+
+  
+    while ((match = regex.exec(formula)) !== null) {
+      const element = match[1];
+      const count = parseInt(match[2]) || 1;
+      result[element] = (result[element] || 0) + count;
+    }
+  
+    return result;
+}
+
 export function createMolecule(
     nom, formule, cas, masseMolaire, densite, nbCarbone,
     nocif, irritant, explosible, dangereuxPourEnvironnement, 

@@ -233,4 +233,8 @@ export default class ReactionService {
         const massePure = purete * produit.masseG;
         return massePure / produit.masseMolaire;
     }
+
+    residuReaction( reaction ) {
+        
+    }
 }
