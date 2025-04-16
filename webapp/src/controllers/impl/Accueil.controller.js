@@ -1,71 +1,75 @@
 import services from "../../services/services";
 import Controller from "../Controller";
 import {
-    Purification,
-    ReactionComplete,
-    ReactionPrincipale,
-    TraitementPostReactionnel,
-  } from "../../../src/models/reaction.model";
-  
-import {
   createMoleculeReaction,
-  createProduit,
-  getMasseG,
 } from "../../../src/utils/molecules.utils";
 
 export default class MoleculesController extends Controller {
   init() {
     this.dataService = services.dataService;
     this.molecules = this.dataService.findAllMolecules();
-    
-    this.findAllMoleculesFunction();
+
+    this.remplirToutesLesDatalists();
+    this.ajouterListeners();
   }
-  
 
-  findAllMoleculesFunction() {
-    const input = document.querySelector('.select-container input');
-    const suggestionsContainer = document.querySelector('.suggestions');
-    const radioReactif = document.querySelector('input[name="type"][value="reactif"]');
-    const radioActivation = document.querySelector('input[name="type"][value="activation"]');
-    const radioSolvant = document.querySelector('input[name="type"][value="solvant"]');
-    const radioCatalyseur = document.querySelector('input[name="type"][value="catalyseur"]');
-    const radioProduit = document.querySelector('input[name="type"][value="produit"]');
+  remplirToutesLesDatalists() {
+    this.remplirDatalist("liste-reactifs");
+    this.remplirDatalist("liste-catalyseur");
+    this.remplirDatalist("liste-solvant");
+  }
 
-    if (!input || !suggestionsContainer || !radioReactif) return;
+  remplirDatalist(id) {
+    const datalist = document.getElementById(id);
+    if (!datalist) return;
 
-    input.addEventListener("input", () => {
-        const isValidType = radioReactif.checked || radioSolvant.checked || radioCatalyseur.checked;
-      
-        if (!isValidType) {
-            suggestionsContainer.innerHTML = "";
-            return;
+    datalist.innerHTML = "";
+    this.molecules.forEach((mol) => {
+      const opt = document.createElement("option");
+      opt.value = mol.nom;
+      datalist.appendChild(opt);
+    });
+  }
+
+  ajouterListeners() {
+    const btns = document.querySelectorAll(".btn-ajouter");
+    btns.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const row = btn.closest(".form-row-reactif, .form-row-catalyseur, .form-row-solvant");
+        if (!row) return;
+
+        const input = row.querySelector("input[list]");
+        const nom = input?.value.trim();
+        if (!nom) {
+          console.warn("Aucune molécule saisie.");
+          return;
         }
 
-        const value = input.value.toLowerCase();
-        const filtered = this.molecules.filter((mol) =>
-            mol.nom.toLowerCase().includes(value)
-        );
+        const mol = this.molecules.find(m => m.nom.toLowerCase() === nom.toLowerCase());
+        if (!mol) {
+          console.warn("Molécule non trouvée :", nom);
+          return;
+        }
 
-      suggestionsContainer.innerHTML = "";
-      filtered.forEach((mol) => {
-        const option = document.createElement("div");
-        option.textContent = mol.nom;
-        option.addEventListener("click", () => {
-          input.value = mol.nom;
-          suggestionsContainer.innerHTML = "";
-        });
-        suggestionsContainer.appendChild(option);
+        const molReac = createMoleculeReaction(mol);
+
+        // Valeurs aléatoires pour test
+        molReac.purete = Math.floor(Math.random() * 51) + 50;
+        molReac.volume = parseFloat((Math.random() * 5).toFixed(2));
+        molReac.prixG = parseFloat((Math.random() * 0.05).toFixed(3));
+
+        if (row.classList.contains("form-row-reactif")) {
+          const qteInput = row.querySelector(".quantite-valeur");
+          molReac.coefStoechiometrique = parseInt(qteInput?.value) || 1;
+        }
+
+        if (row.classList.contains("form-row-catalyseur") || row.classList.contains("form-row-solvant")) {
+          molReac.recyclabilite = Math.floor(Math.random() * 100);
+          molReac.densite = parseFloat((0.6 + Math.random()).toFixed(2));
+        }
+
+        console.log("Molécule ajoutée :", molReac);
       });
-    });
-
-    input.addEventListener("focus", () => {
-      input.dispatchEvent(new Event("input"));
-    });
-
-    document.addEventListener("click", (e) => {
-      if (!e.target.closest(".select-container")) {
-        suggestionsContainer.innerHTML = "";
-      }
     });
   }
 }
