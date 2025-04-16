@@ -1,66 +1,66 @@
-/* === RÉINITIALISATION GLOBALE === */
-body {
-  display: flex;
-  margin: 0;
-  padding: 0;
+/* === BODY & ROOT & GLOBAL === */
+:root {
+  --white : #f8f9fa;
+  --light-purple: #C4B7DB;
+  --purple : #775DA6;
+  --dark-purple : #3f2a56;
+  --black-purple: rgba(119, 93, 166, 0.17);
+  --black : black;
+
+  --box-shadow : rgba(0, 0, 0, 0.15);
+
+  --text-color : var(--white);
+
   font-family: 'Inter', sans-serif;
-  background-color: #f8f9fa;
-  min-height: 100vh;
-  overflow-x: hidden;
-  overflow-y: hidden;
   line-height: 1.6;
 }
 
-/* === ZONE DE CONTENU === */
-.content-area {
-  margin-left: 13.6vw;
-  padding: 2rem;
-  box-sizing: border-box;
-}
-
-/* === BARRE SUPÉRIEURE === */
-.top-bar {
-  background-color: #fff;
-  box-shadow: 0 3px 6px -3px rgba(0, 0, 0, 0.1);
-  padding: 1rem;
+body {
   display: flex;
-  align-items: center;
+  flex-direction: row;
+  margin: 0;
+  padding: 0;
 }
 
-/* === RECHERCHE === */
-.search-container {
-  width: 16vw;
+h2 {
+  margin: 0;
 }
 
-.search-container input[type="text"] {
-  padding: 0.5rem 1rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 1rem;
+h3 {
+  margin: 0;
+  font-size: 1.2em;
+  line-height: 1.2;
+  color: var(--dark-purple);
 }
 
-/* === CONTENU PRINCIPAL === */
-#main-content,
-.main-content,
-.main-calculs,
-.main-accueil {
-  padding: 1rem;
-  margin-left: 15.6vw;
-  padding-top: 0.7rem;
-  padding-right: 0.7rem;
-  box-sizing: border-box;
+h4 {
+  margin: 0;
+  text-decoration: underline;
+}
+
+hr {
+  border: none;
+  border-top: 0.1vh solid var(--black);
+  margin: 1vh 0;
+}
+
+#navbar-container {
+  min-width: clamp(100px, 14vw, 300px);
+}
+
+#main-container {
+  padding: 0 2em;
+  width: 100%;
 }
 
 /* === NAVIGATION === */
 .navbar {
-  width: 10.6vw;
   min-height: 100vh;
-  background-color: #fff;
-  padding: 2vw;
+  background-color: var(--white);
+  padding: 0vh 1vw;
   display: flex;
-  position: fixed;
   flex-direction: column;
-  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15);
+  box-shadow: 0.10vw 0 0.41vw var(--box-shadow);
 }
 
 .navbar .nav-logo {
@@ -85,7 +85,7 @@ body {
   display: flex;
   align-items: center;
   gap: 1vw;
-  color: #000;
+  color: var(--black);
   text-decoration: none;
   padding: 1vh 1vw;
   border-radius: 1vh;
@@ -99,9 +99,9 @@ body {
 }
 
 .navbar .nav-link a.active {
-  background-color: #EEEBF4;
-  border: 0.2vh solid #775DA6;
-  color: #775DA6;
+  background-color: var(--white);
+  border: 0.2vh solid var(--purple);
+  color: var(--purple);
 }
 
 .navbar .nav-link img,
@@ -113,208 +113,4 @@ body {
 
 .navbar .nav-link a.active img {
   filter: invert(35%) sepia(77%) saturate(3718%) hue-rotate(223deg) brightness(95%) contrast(90%);
-}
-
-/* === TITRES === */
-.page-title,
-.section-box h2 {
-  margin-top: 0;
-  color: #3f2a56;
-  font-size: 1.6rem;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-}
-
-/* === BLOCS SECTIONS === */
-.section-box,
-.section-box-reaction {
-  background-color: #eae6f6;
-  border: 2px solid #c7bbdc;
-  border-radius: 12px;
-  margin-bottom: 2rem;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-}
-
-.section-box {
-  padding: 2rem;
-  height: 20.74vh;
-}
-
-.section-box-reaction {
-  padding: 0.7rem;
-  height: 43.74vh;
-}
-
-/* === SCHÉMA === */
-.schema-container,
-.schema-reaction {
-  background-color: #a7a7a75f;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  padding: 2rem;
-}
-
-.schema-container {
-  flex: 1;
-  max-width: 1300px;
-  margin: 0;
-}
-
-.schema-reaction {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: white;
-  height: 14vh;
-  margin-bottom: 30px;
-  gap: 2rem;
-  position: relative;
-  border-radius: 12px;
-}
-
-/* === FLECHES ET CONDITIONS === */
-.reaction-bottom-layout {
-  display: flex;
-  gap: 0.5rem;
-}
-
-.fleche-container,
-.fleche {
-  position: relative;
-  width: 200px;
-  margin-top: 20px;
-}
-
-.fleche-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  border: #775DA6 solid 4px;
-  gap: 2rem;
-  margin-bottom: 1vh;
-}
-
-.fleche {
-  height: 10px;
-  background-color: #847494;
-  top: -10px;
-}
-
-.fleche::after {
-  content: '';
-  position: absolute;
-  right: -8px;
-  top: -8px;
-  width: 16px;
-  height: 16px;
-  border-top: 10px solid #847494;
-  border-right: 10px solid #847494;
-  transform: rotate(45deg);
-}
-
-.condition-top {
-  position: absolute;
-  top: -55px;
-  width: 100%;
-  text-align: center;
-  margin-bottom: 15px;
-}
-
-.conditions-bottom {
-  position: absolute;
-  bottom: -40px;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-}
-
-.condition-box {
-  background-color: #3f2a56;
-  color: #fff2ee;
-  padding: 8px 15px;
-  border-radius: 6px;
-  font-size: 0.9em;
-  text-align: center;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-/* === BLOCS RÉACTIFS / PRODUITS === */
-.box,
-.forms-container {
-  border: 2px solid #847494;
-  min-width: 300px;
-  max-width: 400px;
-  border-radius: 8px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-  flex: 0 1 auto;
-}
-
-.box {
-  background-color: white;
-  padding: 15px 20px;
-  color: #fff2ee;
-}
-
-.box h3,
-.forms-container h3 {
-  margin: 0;
-  font-size: 1.2em;
-  line-height: 1.2;
-  color: #3f2a56;
-}
-
-/* === FORMULAIRES === */
-.forms-container {
-  flex-wrap: wrap;
-  width: 60%;
-  background-color: rgba(119, 93, 166, 0.17);
-  height: 28vh;
-  border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  margin-bottom: 30px;
-  gap: 2rem;
-  position: relative;
-  border: #775DA6 solid 2px;
-}
-
-.forms-row {
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-  width: 100%;
-  margin-bottom: 10px;
-}
-
-.forms-row .input-section,
-#reactif-form,
-#produit-form {
-  flex: 1;
-  max-width: 400px;
-  width: 100%;
-}
-
-.input-section {
-  background-color: white;
-  padding: 10px;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-.input-group {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 10px;
-}
-
-input {
-  padding: 8px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  flex: 1;
-  font-size: 1rem;
 }
