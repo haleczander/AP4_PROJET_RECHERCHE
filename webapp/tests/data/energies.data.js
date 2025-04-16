@@ -1,3 +1,3 @@
 import Energie from "../../src/models/energie.model";
 
-export const ELECTRICITE = new Energie("220V", .11);
+export const ELECTRICITE = new Energie("220V", 0.11);

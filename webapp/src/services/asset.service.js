@@ -1,10 +1,9 @@
 export class AssetService {
-    path = '/assets/';
+  path = "/assets/";
 
-    icon( asset ) {
-        return `${this.path}/icon/${asset}`;
-    }
-
+  icon(asset) {
+    return `${this.path}/icon/${asset}`;
+  }
 }
 
 export default AssetService;

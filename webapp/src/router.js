@@ -31,7 +31,7 @@ export class Router {
   handleRoute() {
     this.currentPath = window.location.pathname;
     const route = this.routes.find(
-      (route) => route.chemin === this.currentPath
+      (route) => route.chemin === this.currentPath,
     );
 
     if (!route) {
@@ -40,14 +40,14 @@ export class Router {
       return;
     }
 
-    if (this.controller ) {
+    if (this.controller) {
       this.controller.destroy();
       this.controller = null;
     }
 
     this.setLoading(true);
     this.loadContent(route.cheminHtml)
-      .then( () => this.updateController( route.controller ) )
+      .then(() => this.updateController(route.controller))
       .finally(() => this.setLoading(false));
   }
 
@@ -72,9 +72,8 @@ export class Router {
   }
 
   updateController(controller) {
-    this.controller = controller && new controller( this.contentDiv );
+    this.controller = controller && new controller(this.contentDiv);
   }
-
 }
 
 export default Router;
