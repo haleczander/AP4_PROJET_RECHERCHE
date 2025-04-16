@@ -1,6 +1,6 @@
 import { getPrixEnergie } from "../utils/activations.utils";
 import {
-    atomesDiff,
+  atomesDiff,
   atomesSum,
   formulaParser,
   getCoefCMR,
@@ -60,31 +60,31 @@ export default class ReactionService {
 
   masseSolvants(reaction) {
     return getSum(this.solvants(reaction), (solvant) =>
-      getMasseG(solvant, true)
+      getMasseG(solvant, true),
     );
   }
 
   prixSolvants(reaction) {
     return getSum(this.solvants(reaction), (solvant) =>
-      getPrixEuro(solvant, true)
+      getPrixEuro(solvant, true),
     );
   }
 
   coefDangerSolvants(reaction) {
     return getSum(this.solvants(reaction), (solvant) =>
-      getCoefDanger(solvant, true)
+      getCoefDanger(solvant, true),
     );
   }
 
   coefToxiciteSolvants(reaction) {
     return getSum(this.solvants(reaction), (molecule) =>
-      getCoefToxicite(molecule, true)
+      getCoefToxicite(molecule, true),
     );
   }
 
   coefCMRSolvants(reaction) {
     return getSum(this.solvants(reaction), (molecule) =>
-      getCoefCMR(molecule, true)
+      getCoefCMR(molecule, true),
     );
   }
 
@@ -126,31 +126,31 @@ export default class ReactionService {
 
   massePostTraitement(reaction) {
     return getSum(this.postTraitement(reaction), (molecule) =>
-      getMasseG(molecule, true)
+      getMasseG(molecule, true),
     );
   }
 
   prixPostTraitement(reaction) {
     return getSum(this.postTraitement(reaction), (molecule) =>
-      getPrixEuro(molecule, true)
+      getPrixEuro(molecule, true),
     );
   }
 
   coefDangerPostTraitement(reaction) {
     return getSum(this.postTraitement(reaction), (molecule) =>
-      getCoefDanger(molecule, true)
+      getCoefDanger(molecule, true),
     );
   }
 
   coefToxicitePostTraitement(reaction) {
     return getSum(this.postTraitement(reaction), (molecule) =>
-      getCoefToxicite(molecule, true)
+      getCoefToxicite(molecule, true),
     );
   }
 
   coefCMRPostTraitement(reaction) {
     return getSum(this.postTraitement(reaction), (molecule) =>
-      getCoefCMR(molecule, true)
+      getCoefCMR(molecule, true),
     );
   }
 
@@ -165,31 +165,31 @@ export default class ReactionService {
   coefDangerPurification(reaction) {
     const erreurPurification = true; // ERREUR dans l'excel
     return getSum(this.purification(reaction), (molecule) =>
-      getCoefDanger(molecule, true, erreurPurification)
+      getCoefDanger(molecule, true, erreurPurification),
     );
   }
 
   coefToxicitePurification(reaction) {
     return getSum(this.purification(reaction), (molecule) =>
-      getCoefToxicite(molecule, true)
+      getCoefToxicite(molecule, true),
     );
   }
 
   coefCMRPurification(reaction) {
     return getSum(this.purification(reaction), (molecule) =>
-      getCoefCMR(molecule, true)
+      getCoefCMR(molecule, true),
     );
   }
 
   massePurification(reaction) {
     return getSum(this.purification(reaction), (molecule) =>
-      getMasseG(molecule, true)
+      getMasseG(molecule, true),
     );
   }
 
   prixPurification(reaction) {
     return getSum(this.purification(reaction), (molecule) =>
-      getPrixEuro(molecule, true)
+      getPrixEuro(molecule, true),
     );
   }
 
@@ -300,10 +300,10 @@ export default class ReactionService {
   }
 
   residuReaction(reaction) {
-    const formulesReaction = this.reactifs(reaction).map( moleculeFormulaParser );
-    const atomesReaction = atomesSum( formulesReaction );
-    const atomesProduit = formulaParser( reaction.produit.formule );
+    const formulesReaction = this.reactifs(reaction).map(moleculeFormulaParser);
+    const atomesReaction = atomesSum(formulesReaction);
+    const atomesProduit = formulaParser(reaction.produit.formule);
 
-    return atomesDiff( atomesReaction, atomesProduit );
+    return atomesDiff(atomesReaction, atomesProduit);
   }
 }

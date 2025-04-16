@@ -1,5 +1,3 @@
-import Controller from '../Controller';
+import Controller from "../Controller";
 
-export default class HistoriqueController extends Controller {
-
-}
+export default class HistoriqueController extends Controller {}

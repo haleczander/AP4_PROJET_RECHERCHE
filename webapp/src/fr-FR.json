@@ -1,5 +1,5 @@
 {
-    "exceptions": {
-        "abstract": "La classe est abstraite et ne peut pas être instanciée."
-    }
+  "exceptions": {
+    "abstract": "La classe est abstraite et ne peut pas être instanciée."
+  }
 }

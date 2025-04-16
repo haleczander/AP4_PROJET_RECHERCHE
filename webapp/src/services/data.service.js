@@ -1,9 +1,5 @@
 export class DataService {
-
-    constructor() {}
-
-
-    
+  constructor() {}
 }
 
 export default DataService;

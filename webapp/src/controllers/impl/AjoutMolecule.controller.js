@@ -1,5 +1,3 @@
-import Controller from '../Controller';
+import Controller from "../Controller";
 
-export default class AjoutMoleculeController extends Controller {
-
-}
+export default class AjoutMoleculeController extends Controller {}
