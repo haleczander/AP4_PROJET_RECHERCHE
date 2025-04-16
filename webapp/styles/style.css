@@ -1,16 +1,17 @@
 /* === BODY & ROOT & GLOBAL === */
 :root {
-  --box-shadow-color-molecule : rgba(0, 0, 0, 0.1);
-  --border-color-border-molecule-1 : #ddd;
-  --border-color-border-molecule-2 : #ccc;
-  --background-color-molecule-1 : #775DA6;
-  --background-color-molecule-2 : rgba(119, 93, 166, 0.07);
+  --white : #f8f9fa;
+  --light-purple: #C4B7DB;
+  --purple : #775DA6;
+  --dark-purple : #3f2a56;
+  --black-purple: rgba(119, 93, 166, 0.17);
+  --black : black;
 
-  --txt-white-color : white;
+  --box-shadow : rgba(0, 0, 0, 0.15);
 
-  
+  --text-color : var(--white);
+
   font-family: 'Inter', sans-serif;
-  background-color: #f8f9fa;
   line-height: 1.6;
 }
 
@@ -29,7 +30,7 @@ h3 {
   margin: 0;
   font-size: 1.2em;
   line-height: 1.2;
-  color: #3f2a56;
+  color: var(--dark-purple);
 }
 
 h4 {
@@ -39,7 +40,7 @@ h4 {
 
 hr {
   border: none;
-  border-top: 0.1vh solid black;
+  border-top: 0.1vh solid var(--black);
   margin: 1vh 0;
 }
 
@@ -52,15 +53,14 @@ hr {
   width: 100%;
 }
 
-
 /* === NAVIGATION === */
 .navbar {
   min-height: 100vh;
-  background-color: #fff;
+  background-color: var(--white);
   padding: 0vh 1vw;
   display: flex;
   flex-direction: column;
-  box-shadow: 0.10vw 0 0.41vw rgba(0, 0, 0, 0.15)
+  box-shadow: 0.10vw 0 0.41vw var(--box-shadow);
 }
 
 .navbar .nav-logo {
@@ -85,7 +85,7 @@ hr {
   display: flex;
   align-items: center;
   gap: 1vw;
-  color: #000;
+  color: var(--black);
   text-decoration: none;
   padding: 1vh 1vw;
   border-radius: 1vh;
@@ -99,9 +99,9 @@ hr {
 }
 
 .navbar .nav-link a.active {
-  background-color: #EEEBF4;
-  border: 0.2vh solid #775DA6;
-  color: #775DA6;
+  background-color: var(--white);
+  border: 0.2vh solid var(--purple);
+  color: var(--purple);
 }
 
 .navbar .nav-link img,

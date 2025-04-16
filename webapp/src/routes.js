@@ -25,13 +25,13 @@ export const routes = [
     controller: AjoutMoleculeController,
     icone: "ic_event_note.png",
   },
-  {
-    nom: "Historique des calculs",
-    chemin: "/historique",
-    cheminHtml: "historique.html",
-    controller: HistoriqueController,
-    icone: "ic_account_box.png",
-  },
+  // {
+  //   nom: "Historique des calculs",
+  //   chemin: "/historique",
+  //   cheminHtml: "historique.html",
+  //   controller: HistoriqueController,
+  //   icone: "ic_account_box.png",
+  // },
 ];
 
 export default routes;
