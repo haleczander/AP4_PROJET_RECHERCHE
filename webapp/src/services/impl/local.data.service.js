@@ -48,6 +48,10 @@ export class LocalDataService extends DataService {
       this.containsIgnoreCaseComp.compare(needle, molecule.nom),
     );
   }
+
+  findAllActivations() {
+    return [ ...this._activations ];
+  }
 }
 
 export default LocalDataService;
