@@ -7,7 +7,44 @@ export default class MoleculesController extends Controller {
     this.molecules = this.dataService.findAllMolecules();
     this._initTable();
     this._initSearchBar();
+    this._initExport();
     this.updateData(this.molecules);
+  }
+
+
+  _initExport() {
+    const exportBtn = this.container.querySelector("#export-btn");
+    const downloadFn = (event) => {
+      event.preventDefault();
+    
+
+      const now = new Date();
+      const dateStr = now.toISOString();
+    
+      const exportData = {
+        version: "#.#",
+        date: dateStr,
+        data: {
+          molecules: this.dataService.findAllMolecules(),
+          activations: this.dataService.findAllActivations(),
+        },
+      };
+    
+      const json = JSON.stringify(exportData, null, 2);
+      const blob = new Blob([json], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+    
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `export-molecules-${dateStr}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    }
+
+    this.addListener( exportBtn, "click", downloadFn );
   }
 
   _initSearchBar() {

@@ -1,79 +1,98 @@
 <div id="main-ajout-molecule">
   <h2>Ajout molécule</h2>
   <!-- <div id="molecule-drawing"></div> -->
-  <form id="ajout-molecule molecule-form">
+  <form id="molecule-form">
     <div id="nommage-form">
-      <input type="text" id="nom" placeholder="Nom" />
-      <input type="text" id="cas" placeholder="CAS" />
-      <input type="text" id="masseMolaire" placeholder="M" />
-      <input type="text" id="formule" placeholder="Formule" />
+      <div>
+        <label for="nom">Nom</label>
+        <input type="text" id="nom" name="nom" placeholder="Nom" />
+      </div>
+      <div>
+        <label for="cas">CAS</label>
+        <input type="text" id="cas" name="cas" placeholder="CAS" />
+      </div>
+      <div>
+        <label for="masseMolaire">M</label>
+        <input type="text" id="masseMolaire" name="masseMolaire" placeholder="M" />
+      </div>
+      <div>
+        <label for="formule">Formule</label>
+        <input type="text" id="formule" name="formule" placeholder="Formule" />
+      </div>
     </div>
-    <h4>Caractéristiques</h4>
+
+    <h2>Caractéristiques</h2>
     <div id="caracteristiques-form">
       <div>
-        <label><input type="checkbox" id="stat-nocif" /> Nocif</label>
+        <label for="stat-nocif">Nocif</label>
+        <input type="checkbox" id="stat-nocif" name="stat-nocif" />
       </div>
       <div>
-        <label><input type="checkbox" id="stat-irritant" /> Irritant</label>
+        <label for="stat-irritant">Irritant</label>
+        <input type="checkbox" id="stat-irritant" name="stat-irritant" />
       </div>
       <div>
-        <label><input type="checkbox" id="stat-explosible" /> Explosible</label>
+        <label for="stat-explosible">Explosible</label>
+        <input type="checkbox" id="stat-explosible" name="stat-explosible" />
       </div>
       <div>
-        <label><input type="checkbox" id="stat-toxique" /> Toxique</label>
+        <label for="stat-toxique">Toxique</label>
+        <input type="checkbox" id="stat-toxique" name="stat-toxique" />
       </div>
       <div>
-        <label
-          ><input type="checkbox" id="stat-tres-toxique" /> Très toxique</label
-        >
+        <label for="stat-tres-toxique">Très toxique</label>
+        <input type="checkbox" id="stat-tres-toxique" name="stat-tres-toxique" />
       </div>
       <div>
-        <label
-          ><input type="checkbox" id="stat-danger-environnement" /> Danger
-          environnement</label
-        >
+        <label for="stat-danger-environnement">Danger environnement</label>
+        <input type="checkbox" id="stat-danger-environnement" name="stat-danger-environnement" />
       </div>
       <div>
-        <label
-          ><input type="checkbox" id="stat-facilement-inflammable" /> Facilement
-          inflammable</label
-        >
+        <label for="stat-facilement-inflammable">Facilement inflammable</label>
+        <input type="checkbox" id="stat-facilement-inflammable" name="stat-facilement-inflammable" />
       </div>
       <div>
-        <label
-          ><input type="checkbox" id="stat-extremement-inflammable" />
-          Extrêmement inflammable</label
-        >
+        <label for="stat-extremement-inflammable">Extrêmement inflammable</label>
+        <input type="checkbox" id="stat-extremement-inflammable" name="stat-extremement-inflammable" />
       </div>
       <div>
-        <label><input type="checkbox" id="stat-r40" /> R40</label>
+        <label for="stat-r40">R40</label>
+        <input type="checkbox" id="stat-r40" name="stat-r40" />
       </div>
       <div>
-        <label><input type="checkbox" id="stat-r45" /> R45</label>
+        <label for="stat-r45">R45</label>
+        <input type="checkbox" id="stat-r45" name="stat-r45" />
       </div>
       <div>
-        <label><input type="checkbox" id="stat-r46" /> R46</label>
+        <label for="stat-r46">R46</label>
+        <input type="checkbox" id="stat-r46" name="stat-r46" />
       </div>
       <div>
-        <label><input type="checkbox" id="stat-r49" /> R49</label>
+        <label for="stat-r49">R49</label>
+        <input type="checkbox" id="stat-r49" name="stat-r49" />
       </div>
       <div>
-        <label><input type="checkbox" id="stat-r60" /> R60</label>
+        <label for="stat-r60">R60</label>
+        <input type="checkbox" id="stat-r60" name="stat-r60" />
       </div>
       <div>
-        <label><input type="checkbox" id="stat-r61" /> R61</label>
+        <label for="stat-r61">R61</label>
+        <input type="checkbox" id="stat-r61" name="stat-r61" />
       </div>
       <div>
-        <label><input type="checkbox" id="stat-r62" /> R62</label>
+        <label for="stat-r62">R62</label>
+        <input type="checkbox" id="stat-r62" name="stat-r62" />
       </div>
       <div>
-        <label><input type="checkbox" id="stat-r63" /> R63</label>
+        <label for="stat-r63">R63</label>
+        <input type="checkbox" id="stat-r63" name="stat-r63" />
       </div>
     </div>
-    <button type="button" class="import-btn">Import BDD</button>
-    <button type="submit" class="add-btn">Ajouter</button>
+
+    <button type="submit" id="submit-btn" class="add-btn">Ajouter</button>
   </form>
 </div>
+
 
 <style>
   #ajout-molecule {

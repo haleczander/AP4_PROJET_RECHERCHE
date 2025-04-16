@@ -17,6 +17,14 @@ export class LocalDataService extends DataService {
     this._molecules = molecules;
   }
 
+  addMolecule( molecule ) {
+    this._molecules.push( molecule );
+  }
+
+  addActivation( activation ) {
+    this._activations.push( activation );
+  }
+
   set activations(activations) {
     this._activations = activations;
   }
@@ -47,6 +55,10 @@ export class LocalDataService extends DataService {
     return this._molecules.filter((molecule) =>
       this.containsIgnoreCaseComp.compare(needle, molecule.nom),
     );
+  }
+
+  findAllActivations() {
+    return [...this._activations];
   }
 }
 

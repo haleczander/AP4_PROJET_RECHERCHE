@@ -43,7 +43,8 @@ function generateNavLink(route) {
 }
 
 generateNavLinks( routes );
-new Router( routes, document.getElementById('main-container') );
+const router = new Router( routes, document.getElementById('main-container') );
+services[ "router" ] = router;
 
 
 
