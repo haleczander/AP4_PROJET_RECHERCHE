@@ -1,6 +1,7 @@
 import Molecule from "../models/molecule.model";
 import MoleculeReaction from "../models/molecule.reaction.model";
 import Produit from "../models/molecule.produit.model";
+import { REGEX_FORMULA_PARSER } from "../constants";
 
 function getCoef(molecule, indicateursFn, purete = false) {
   const masseG = purete ? getMassePureteG(molecule) : getMasseG(molecule);
@@ -121,11 +122,10 @@ export function getPrixEuro(molecule, purete = false) {
 }
 
 export function formulaParser(formula, coef = 1) {
-  const regex = /([A-Z][a-z]*)(\d*)/g;
   const result = {};
   let match;
 
-  while ((match = regex.exec(formula)) !== null) {
+  while ((match = REGEX_FORMULA_PARSER.exec(formula)) !== null) {
     const element = match[1];
     const count = (parseInt(match[2]) || 1) * coef;
     result[element] = (result[element] || 0) + count;

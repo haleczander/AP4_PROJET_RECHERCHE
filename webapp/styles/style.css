@@ -7,6 +7,8 @@
   --black-purple: rgba(119, 93, 166, 0.17);
   --black : black;
 
+  --alert: red;
+
   --box-shadow : rgba(0, 0, 0, 0.15);
 
   --text-color : var(--white);
@@ -113,4 +115,8 @@ hr {
 
 .navbar .nav-link a.active img {
   filter: invert(35%) sepia(77%) saturate(3718%) hue-rotate(223deg) brightness(95%) contrast(90%);
+}
+
+input.error, .error-message {
+  color: var(--alert) !important;
 }
