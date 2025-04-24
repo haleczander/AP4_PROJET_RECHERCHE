@@ -95,7 +95,7 @@ export default class AjoutMoleculeController extends Controller {
 
   get valid() {
     let valid = true;
-    this.validators.event(({ element }) =>
+    this.validators.forEach(({ element, validators }) =>
       validators.forEach((validator) => {
         validator.validate(element);
         updateErrors(element, element.parentElement);
