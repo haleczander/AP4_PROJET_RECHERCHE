@@ -58,7 +58,7 @@ export class LocalDataService extends DataService {
   }
 
   findAllActivations() {
-    return [...this._activations];
+    return [ ...this._activations ];
   }
 }
 
