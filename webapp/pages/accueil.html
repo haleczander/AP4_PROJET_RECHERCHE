@@ -14,6 +14,10 @@
                   <input list="liste-reactifs" id="input-reactif" placeholder="Recherche réactif">
                   <datalist id="liste-reactifs"></datalist>
                 </div>
+
+                <input class="purete-valeur" type="number" placeholder="Pureté (%)">
+                <input class="volume-valeur" type="number" placeholder="Volume (mL)">
+                <input class="prix-valeur" type="number" placeholder="Prix/g (€)">
               
                 <button class="btn-ajouter">+</button>
               </div>
@@ -21,34 +25,43 @@
                 <!-- Catalyseur -->
                 <div class="form-row-catalyseur">
                   <div class="select-container">
-                    <input list="liste-catalyseur" id="input-reactif" placeholder="Recherche réactif">
+                    <input list="liste-catalyseur" id="input-reactif" placeholder="Recherche catalyseur">
                     <datalist id="liste-catalyseur"></datalist>
                   </div>
+
+                  <input class="purete-valeur" type="number" placeholder="Pureté (%)">
+                  <input class="volume-valeur" type="number" placeholder="Volume (mL)">
+                  <input class="prix-valeur" type="number" placeholder="Prix/g (€)">
+
                   <button class="btn-ajouter">+</button>
                 </div>
 
                 <!-- Solvant -->
                 <div class="form-row-solvant">
                   <div class="select-container">
-                    <input list="liste-solvant" id="input-reactif" placeholder="Recherche réactif">
+                    <input list="liste-solvant" id="input-reactif" placeholder="Recherche solvant">
                     <datalist id="liste-solvant"></datalist>
                   </div>
+
+                  <input class="purete-valeur" type="number" placeholder="Pureté (%)">
+                  <input class="volume-valeur" type="number" placeholder="Volume (mL)">
+                  <input class="prix-valeur" type="number" placeholder="Prix/g (€)">
+
                   <button class="btn-ajouter">+</button>
                 </div>
-        
-                <div class="info-fields">
-                  <!-- <div class="field">
-                    <label>%</label>
-                    <input type="text" />
+
+                <!-- Activation -->
+                <div class="form-row-activation">
+                  <div class="select-container">
+                    <input list="liste-activations" id="input-reactif" placeholder="Recherche activations">
+                    <datalist id="liste-activations"></datalist>
                   </div>
-                  <div class="field">
-                    <label>Vol</label>
-                    <input type="text" />
-                  </div>
-                  <div class="field">
-                    <label>€</label>
-                    <input type="text" />
-                  </div> -->
+
+                  <input class="duree-valeur" type="number" placeholder="Durée (min)">
+                  <input class="puissance-valeur" type="number" placeholder="Puissance (W)">
+                  <input class="energie-valeur" type="number" placeholder="Energie (Kw/h)">
+
+                  <button class="btn-ajouter">+</button>
                 </div>
               </div>
         </div>     
@@ -68,35 +81,8 @@
       <!-- ici les graphs, bilans, etc. -->
     </div>
   </div>
-
-  <script>
-    const plusBtn = document.getElementById("btn-plus");
-    const minusBtn = document.getElementById("btn-minus");
-    const quantiteDisplay = document.querySelector(".quantite-valeur");
-
-    if (plusBtn && minusBtn && quantiteDisplay) {
-    let quantite = parseInt(quantiteDisplay.textContent);
-
-    plusBtn.addEventListener("click", () => {
-        console.log("Plus cliqué");
-        quantite++;
-        quantiteDisplay.textContent = quantite;
-    });
-
-    minusBtn.addEventListener("click", () => {
-        console.log("Moins cliqué");
-        if (quantite > 0) {
-        quantite--;
-        quantiteDisplay.textContent = quantite;
-        }
-    });
-    } else {
-    console.warn("Les éléments du compteur n'ont pas été trouvés.");
-    }
-  </script>
   
 <style>
-  
 .section-box {
   background-color: var(--black-purple); /* Violet à 17% */
   border: 0.2vh solid var(--purple);
@@ -170,7 +156,6 @@ gap: 1vw;
   background-color: rgba(119, 93, 166, 0.17);
   border-radius: 12px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  gap: 25rem;
   position: relative;
   border: #775DA6 solid 2px;
   align-items: stretch;
@@ -233,7 +218,7 @@ gap: 1vw;
 
 /* Cache le bloc quantité pour les autres types */
 .form-row-catalyseur .quantite-controls-catalyseur,
-.form-row-solvant .quantite-controls-solvant {
+.form-row-solvant, .form-row-activation, .quantite-controls-solvant {
   display: none;
 }
 
@@ -279,7 +264,8 @@ gap: 1vw;
 /* TRÈS IMPORTANT : forcer les autres lignes à avoir un z-index plus bas */
 .form-row-reactif,
 .form-row-catalyseur,
-.form-row-solvant {
+.form-row-solvant,
+.form-row-activation {
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -297,5 +283,26 @@ gap: 1vw;
   font-weight: bold;
 }
 
+.purete-valeur,
+.volume-valeur,
+.prix-valeur{
+  width: 5.5vw;             /* plus petit que les champs texte */
+  font-size: 1.4vh;
+  padding: 0.5vh 0.8vw;
+  border-radius: 0.5vh;
+  border: 0.1vh solid #ccc;
+  text-align: center;
+}
+
+.duree-valeur,
+.puissance-valeur,
+.energie-valeur {
+  width: 6vw;             /* plus petit que les champs texte */
+  font-size: 1.4vh;
+  padding: 0.5vh 0.8vw;
+  border-radius: 0.5vh;
+  border: 0.1vh solid #ccc;
+  text-align: center;
+}
 
 </style>

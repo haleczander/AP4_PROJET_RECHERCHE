@@ -1,75 +1,104 @@
 import services from "../../services/services";
 import Controller from "../Controller";
 import {
-  createMoleculeReaction,
+    createMoleculeReaction,
+    createProduit,
+    getMasseG,
 } from "../../../src/utils/molecules.utils";
 
 export default class MoleculesController extends Controller {
-  init() {
-    this.dataService = services.dataService;
-    this.molecules = this.dataService.findAllMolecules();
+    init() {
+        this.dataService = services.dataService;
+        this.molecules = this.dataService.findAllMolecules();
+        this.activations = this.dataService.findAllActivations();
 
-    this.remplirToutesLesDatalists();
-    this.ajouterListeners();
-  }
+        this.remplirDatalists();
+        this.setupAjouts();
+    }
 
-  remplirToutesLesDatalists() {
-    this.remplirDatalist("liste-reactifs");
-    this.remplirDatalist("liste-catalyseur");
-    this.remplirDatalist("liste-solvant");
-  }
+    remplirDatalists() {
+        const remplir = (liste, tableau, champ) => {
+            const datalist = document.getElementById(liste);
+            if (!datalist) return;
+            datalist.innerHTML = "";
+            tableau.forEach((el) => {
+                const opt = document.createElement("option");
+                opt.value = el[champ];
+                datalist.appendChild(opt);
+            });
+        };
 
-  remplirDatalist(id) {
-    const datalist = document.getElementById(id);
-    if (!datalist) return;
+        remplir("liste-reactifs", this.molecules, "nom");
+        remplir("liste-catalyseur", this.molecules, "nom");
+        remplir("liste-solvant", this.molecules, "nom");
+        remplir("liste-activations", this.activations, "nom");
+    }
 
-    datalist.innerHTML = "";
-    this.molecules.forEach((mol) => {
-      const opt = document.createElement("option");
-      opt.value = mol.nom;
-      datalist.appendChild(opt);
-    });
-  }
+    setupAjouts() {
+        document.querySelectorAll(".btn-ajouter").forEach((btn) => {
+            btn.addEventListener("click", () => {
+                const ligne = btn.closest(".form-row-reactif, .form-row-catalyseur, .form-row-solvant, .form-row-activation");
+                if (!ligne) return;
 
-  ajouterListeners() {
-    const btns = document.querySelectorAll(".btn-ajouter");
-    btns.forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const row = btn.closest(".form-row-reactif, .form-row-catalyseur, .form-row-solvant");
-        if (!row) return;
+                const nom = ligne.querySelector("input[list]")?.value.trim();
+                const type = ligne.classList.contains("form-row-reactif")
+                    ? "reactif"
+                    : ligne.classList.contains("form-row-catalyseur")
+                    ? "catalyseur"
+                    : ligne.classList.contains("form-row-solvant")
+                    ? "solvant"
+                    : "activation";
 
-        const input = row.querySelector("input[list]");
-        const nom = input?.value.trim();
-        if (!nom) {
-          console.warn("Aucune molécule saisie.");
-          return;
-        }
+                const highlightIfEmpty = (input) => {
+                    if (!input || !input.value.trim()) {
+                        input.style.borderColor = "red";
+                        return false;
+                    }
+                    input.style.borderColor = "#ccc";
+                    return true;
+                };
 
-        const mol = this.molecules.find(m => m.nom.toLowerCase() === nom.toLowerCase());
-        if (!mol) {
-          console.warn("Molécule non trouvée :", nom);
-          return;
-        }
+                const allInputs = ligne.querySelectorAll("input[type='number'], input[list]");
+                let valid = true;
+                allInputs.forEach((input) => {
+                    if (!highlightIfEmpty(input)) valid = false;
+                });
+                if (!valid) return;
 
-        const molReac = createMoleculeReaction(mol);
+                if (type === "activation") {
+                    const serial = this.activations.find(a => a.nom === nom)?.serial;
+                    const duree = parseFloat(ligne.querySelector(".duree-valeur").value);
+                    const puissance = parseFloat(ligne.querySelector(".puissance-valeur").value);
+                    const energie = parseFloat(ligne.querySelector(".energie-valeur").value);
 
-        // Valeurs aléatoires pour test
-        molReac.purete = Math.floor(Math.random() * 51) + 50;
-        molReac.volume = parseFloat((Math.random() * 5).toFixed(2));
-        molReac.prixG = parseFloat((Math.random() * 0.05).toFixed(3));
+                    const activation = { serial, nom, duree, puissance, energie };
+                    console.log("Activation ajoutée :", activation);
+                    return;
+                }
 
-        if (row.classList.contains("form-row-reactif")) {
-          const qteInput = row.querySelector(".quantite-valeur");
-          molReac.coefStoechiometrique = parseInt(qteInput?.value) || 1;
-        }
+                const mol = this.molecules.find(m => m.nom === nom);
+                if (!mol) return;
 
-        if (row.classList.contains("form-row-catalyseur") || row.classList.contains("form-row-solvant")) {
-          molReac.recyclabilite = Math.floor(Math.random() * 100);
-          molReac.densite = parseFloat((0.6 + Math.random()).toFixed(2));
-        }
+                const molecule = createMoleculeReaction(mol);
 
-        console.log("Molécule ajoutée :", molReac);
-      });
-    });
-  }
+                molecule.purete = parseFloat(ligne.querySelector(".purete-valeur").value);
+                molecule.volume = parseFloat(ligne.querySelector(".volume-valeur").value);
+                molecule.prixG = parseFloat(ligne.querySelector(".prix-valeur").value);
+
+                if (type === "reactif") {
+                    molecule.quantite = parseFloat(ligne.querySelector(".quantite-valeur").value);
+                    console.log("Réactif ajouté :", molecule);
+                } else if (type === "catalyseur") {
+                    molecule.irritant = mol.irritant;
+                    molecule.recyclabilite = 0;
+                    console.log("Catalyseur ajouté :", molecule);
+                } else if (type === "solvant") {
+                    molecule.nocif = mol.nocif;
+                    molecule.densite = 1;
+                    molecule.recyclabilite = 0;
+                    console.log("Solvant ajouté :", molecule);
+                }
+            });
+        });
+    }
 }
