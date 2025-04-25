@@ -1,104 +1,221 @@
 import services from "../../services/services";
 import Controller from "../Controller";
-import {
-    createMoleculeReaction,
-    createProduit,
-    getMasseG,
-} from "../../../src/utils/molecules.utils";
+import { createMoleculeReaction } from "../../../src/utils/molecules.utils";
+import { populateDatalist } from "../../../src/utils/form.utils";
+import { ReactionComplete } from "../../models/reaction.model";
+import { createActivationReaction } from "../../utils/activations.utils";
+import Energie from "../../models/energie.model";
+import { Resultat } from "../../models/resultat.model";
+import { INDICATEURS } from "../../../src/settings"
 
 export default class MoleculesController extends Controller {
-    init() {
-        this.dataService = services.dataService;
-        this.molecules = this.dataService.findAllMolecules();
-        this.activations = this.dataService.findAllActivations();
+  init() {
+    this.dataService = services.dataService;
+    this.calculService = services.calculService;
+    this.molecules = this.dataService.findAllMolecules();
+    this.activations = this.dataService.findAllActivations();
 
-        this.remplirDatalists();
-        this.setupAjouts();
+    this.reaction = new ReactionComplete();
+    this.resultats = new Resultat();
+
+    this._initDataLists();
+    this._initForms();
+  }
+
+  _moleculeDisplay(molecule) {
+    return `${molecule.nom} (${molecule.formule})`;
+  }
+
+  _activationDisplay(activation) {
+    return `${activation.nom}`;
+  }
+
+  _moleculeByDisplay(display) {
+    return this.molecules.find((molecule) => {
+      return this._moleculeDisplay(molecule) === display;
+    });
+  }
+
+  _initDataLists() {
+    populateDatalist(
+      "datalist-molecules",
+      this.molecules,
+      this._moleculeDisplay,
+    );
+    populateDatalist(
+      "datalist-activations",
+      this.activations,
+      this._activationDisplay,
+    );
+  }
+
+  _reactionSubmit( event ) {
+    event.preventDefault();
+    this.resultats = this.calculService.resultats( this.reaction, INDICATEURS.map(i => new i()) );
+    console.log(this.reaction, this.resultats)
+  }
+
+  _initForms() {
+    const reactionForm = this.container.querySelector("#form-reaction");
+    this.addListener(reactionForm, "submit", event => this._reactionSubmit( event ))
+    
+
+    const reactionprincipaleContainer = this.container.querySelector("#container-reaction-principale")
+
+    const rpReactifForm = reactionprincipaleContainer.querySelector(
+      "#form-reactif-reaction-principale",
+    );
+
+    this.addListener(rpReactifForm, "submit", (event) =>
+      this._addFormMolecule(event, this.reaction.reactionPrincipale.reactifs),
+    );
+
+    const rpCatalyseurForm = reactionprincipaleContainer.querySelector(
+      "#form-catalyseur-reaction-principale",
+    );
+    this.addListener(rpCatalyseurForm, "submit", (event) =>
+      this._addFormMolecule(
+        event,
+        this.reaction.reactionPrincipale.catalyseurs,
+      ),
+    );
+
+    const rpSolvantForm = reactionprincipaleContainer.querySelector(
+      "#form-solvant-reaction-principale",
+    );
+    this.addListener(rpSolvantForm, "submit", (event) =>
+      this._addFormMolecule(event, this.reaction.reactionPrincipale.solvants),
+    );
+
+    const rpActivationForm = reactionprincipaleContainer.querySelector(
+      "#form-activation-reaction-principale",
+    );
+    this.addListener(rpActivationForm, "submit", (event) =>
+      this._addFormActivation(
+        event,
+        this.reaction.reactionPrincipale.activations,
+      ),
+    );
+
+    const postTraitementContainer = this.container.querySelector(
+      "#container-post-traitement",
+    );
+
+    const ptReactifForm = postTraitementContainer.querySelector(
+      "#form-reactif-post-traitement",
+    );
+    this.addListener(ptReactifForm, "submit", (event) =>
+      this._addFormMolecule(
+        event,
+        this.reaction.traitementPostReactionnel.reactifs,
+      ),
+    );
+
+    const ptActivationForm = postTraitementContainer.querySelector(
+      "#form-activation-post-traitement",
+    );
+    this.addListener(ptActivationForm, "submit", (event) =>
+      this._addFormMolecule(
+        event,
+        this.reaction.traitementPostReactionnel.activations,
+      ),
+    );
+
+    const purificationContainer = this.container.querySelector(
+      "#container-purification",
+    );
+
+    const purifReactifForm = purificationContainer.querySelector(
+      "#form-reactif-purification",
+    );
+    this.addListener(purifReactifForm, "submit", (event) =>
+      this._addFormMolecule(event, this.reaction.purification.reactifs),
+    );
+
+    const purifActivationForm = purificationContainer.querySelector(
+      "#form-activation-purification",
+    );
+    this.addListener(purifActivationForm, "submit", (event) =>
+      this._addFormMolecule(event, this.reaction.purification.activations),
+    );
+
+    const produitContainer = this.container.querySelector("#container-produit");
+
+    const produitForm = produitContainer.querySelector(
+      "#form-produit",
+    );
+    this.addListener(produitForm, "submit", (event) =>
+      this._addProduit(event, this.reaction ),
+    );
+  }
+
+  _createMoleculeReaction(formData) {
+    const coefStoechiometrique = parseFloat(
+      formData.get("coefStoechiometrique"),
+    );
+    const moleculeDisplay = formData.get("molecule");
+    const purete = parseFloat(formData.get("purete"));
+    const volume = parseFloat(formData.get("volume"));
+    const prixG = parseFloat(formData.get("prixG"));
+
+    const molecule = this._moleculeByDisplay(moleculeDisplay);
+
+    if (!molecule) {
+      console.error("Molécule introuvable:", moleculeDisplay);
+      return;
     }
 
-    remplirDatalists() {
-        const remplir = (liste, tableau, champ) => {
-            const datalist = document.getElementById(liste);
-            if (!datalist) return;
-            datalist.innerHTML = "";
-            tableau.forEach((el) => {
-                const opt = document.createElement("option");
-                opt.value = el[champ];
-                datalist.appendChild(opt);
-            });
-        };
+    return {
+      ...createMoleculeReaction(molecule),
+      coefStoechiometrique,
+      purete,
+      volume,
+      prixG,
+    };
+  }
 
-        remplir("liste-reactifs", this.molecules, "nom");
-        remplir("liste-catalyseur", this.molecules, "nom");
-        remplir("liste-solvant", this.molecules, "nom");
-        remplir("liste-activations", this.activations, "nom");
+  _addFormMolecule(event, list) {
+    event.preventDefault();
+    const molecule = this._createMoleculeReaction(new FormData(event.target));
+    list.push(molecule);
+  }
+
+  _createActivationReaction(formData) {
+    const activationNomDisplay = formData.get("activationNom");
+    const activationDuree = parseFloat(formData.get("activationDuree"));
+    const activationPuissance = parseFloat(formData.get("activationPuissance"));
+    const prixEnergie = parseFloat(formData.get("prixEnergie"));
+
+    const activation = this.activations.find(
+      (activation) =>
+        this._activationDisplay(activation) === activationNomDisplay,
+    );
+
+    if (!activation) {
+      console.error("Activation introuvable:", activationNomDisplay);
+      return;
     }
 
-    setupAjouts() {
-        document.querySelectorAll(".btn-ajouter").forEach((btn) => {
-            btn.addEventListener("click", () => {
-                const ligne = btn.closest(".form-row-reactif, .form-row-catalyseur, .form-row-solvant, .form-row-activation");
-                if (!ligne) return;
+    return {
+      ...createActivationReaction(activation),
+      dureeM: activationDuree,
+      puissanceW: activationPuissance,
+      energie: new Energie("", prixEnergie),
+    };
+  }
 
-                const nom = ligne.querySelector("input[list]")?.value.trim();
-                const type = ligne.classList.contains("form-row-reactif")
-                    ? "reactif"
-                    : ligne.classList.contains("form-row-catalyseur")
-                    ? "catalyseur"
-                    : ligne.classList.contains("form-row-solvant")
-                    ? "solvant"
-                    : "activation";
+  _addFormActivation(event, list) {
+    event.preventDefault();
+    const activation = this._createActivationReaction(
+      new FormData(event.target),
+    );
+    list.push(activation);
+  }
 
-                const highlightIfEmpty = (input) => {
-                    if (!input || !input.value.trim()) {
-                        input.style.borderColor = "red";
-                        return false;
-                    }
-                    input.style.borderColor = "#ccc";
-                    return true;
-                };
+  _addProduit(event, reaction) {
+    event.preventDefault();
+    const produit = this._createMoleculeReaction(new FormData(event.target));
+    reaction.produit = produit;
+  }
 
-                const allInputs = ligne.querySelectorAll("input[type='number'], input[list]");
-                let valid = true;
-                allInputs.forEach((input) => {
-                    if (!highlightIfEmpty(input)) valid = false;
-                });
-                if (!valid) return;
-
-                if (type === "activation") {
-                    const serial = this.activations.find(a => a.nom === nom)?.serial;
-                    const duree = parseFloat(ligne.querySelector(".duree-valeur").value);
-                    const puissance = parseFloat(ligne.querySelector(".puissance-valeur").value);
-                    const energie = parseFloat(ligne.querySelector(".energie-valeur").value);
-
-                    const activation = { serial, nom, duree, puissance, energie };
-                    console.log("Activation ajoutée :", activation);
-                    return;
-                }
-
-                const mol = this.molecules.find(m => m.nom === nom);
-                if (!mol) return;
-
-                const molecule = createMoleculeReaction(mol);
-
-                molecule.purete = parseFloat(ligne.querySelector(".purete-valeur").value);
-                molecule.volume = parseFloat(ligne.querySelector(".volume-valeur").value);
-                molecule.prixG = parseFloat(ligne.querySelector(".prix-valeur").value);
-
-                if (type === "reactif") {
-                    molecule.quantite = parseFloat(ligne.querySelector(".quantite-valeur").value);
-                    console.log("Réactif ajouté :", molecule);
-                } else if (type === "catalyseur") {
-                    molecule.irritant = mol.irritant;
-                    molecule.recyclabilite = 0;
-                    console.log("Catalyseur ajouté :", molecule);
-                } else if (type === "solvant") {
-                    molecule.nocif = mol.nocif;
-                    molecule.densite = 1;
-                    molecule.recyclabilite = 0;
-                    console.log("Solvant ajouté :", molecule);
-                }
-            });
-        });
-    }
 }

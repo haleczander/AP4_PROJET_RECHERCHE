@@ -10,7 +10,7 @@
     "test": "jest",
     "build": "vite build",
     "watch": "vite build --watch",
-    "start": "serve .",
+    "start": "npx serve .",
     "dev": "vite",
     "pretty": "prettier --write \"./**/*.{js,jsx,mjs,cjs,ts,tsx,json}\""
   },
