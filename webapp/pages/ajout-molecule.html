@@ -1,220 +1,157 @@
-<div id="main-ajout-molecule">
-  <h2>Ajout molécule</h2>
-  <!-- <div id="molecule-drawing"></div> -->
-  <form id="molecule-form">
-    <div id="nommage-form">
+<h2>Ajout Molécule</h2>
+  <form id="ajout-molecule-form">
+    <fieldset id="ajout-molecule">
+
+      <!-- Champs texte -->
       <div>
         <label for="nom">Nom</label>
-        <input type="text" id="nom" name="nom" placeholder="Nom" />
+        <input type="text" id="nom" name="nom" placeholder="Nom*" required autocomplete="off" />
       </div>
+
       <div>
         <label for="cas">CAS</label>
-        <input type="text" id="cas" name="cas" placeholder="CAS" />
+        <input type="text" id="cas" name="cas" placeholder="XXXXX-XX-X*" title="Format attendu : XXXXX-XX-X" autocomplete="off" />
       </div>
+
       <div>
-        <label for="masseMolaire">M</label>
-        <input type="text" id="masseMolaire" name="masseMolaire" placeholder="M" />
+        <label for="masseMolaire">Masse Molaire</label>
+        <input type="number" id="masseMolaire" name="masseMolaire" placeholder="M*" required min="0" step="0.1" autocomplete="off" />
       </div>
+
       <div>
         <label for="formule">Formule</label>
-        <input type="text" id="formule" name="formule" placeholder="Formule" />
+        <input type="text" id="formule" name="formule" placeholder="Formule*" required autocomplete="off" />
       </div>
-    </div>
 
-    <h2>Caractéristiques</h2>
-    <div id="caracteristiques-form">
-      <div>
-        <label for="stat-nocif">Nocif</label>
-        <input type="checkbox" id="stat-nocif" name="stat-nocif" />
-      </div>
-      <div>
-        <label for="stat-irritant">Irritant</label>
-        <input type="checkbox" id="stat-irritant" name="stat-irritant" />
-      </div>
-      <div>
-        <label for="stat-explosible">Explosible</label>
-        <input type="checkbox" id="stat-explosible" name="stat-explosible" />
-      </div>
-      <div>
-        <label for="stat-toxique">Toxique</label>
-        <input type="checkbox" id="stat-toxique" name="stat-toxique" />
-      </div>
-      <div>
-        <label for="stat-tres-toxique">Très toxique</label>
-        <input type="checkbox" id="stat-tres-toxique" name="stat-tres-toxique" />
-      </div>
-      <div>
-        <label for="stat-danger-environnement">Danger environnement</label>
-        <input type="checkbox" id="stat-danger-environnement" name="stat-danger-environnement" />
-      </div>
-      <div>
-        <label for="stat-facilement-inflammable">Facilement inflammable</label>
-        <input type="checkbox" id="stat-facilement-inflammable" name="stat-facilement-inflammable" />
-      </div>
-      <div>
-        <label for="stat-extremement-inflammable">Extrêmement inflammable</label>
-        <input type="checkbox" id="stat-extremement-inflammable" name="stat-extremement-inflammable" />
-      </div>
-      <div>
-        <label for="stat-r40">R40</label>
-        <input type="checkbox" id="stat-r40" name="stat-r40" />
-      </div>
-      <div>
-        <label for="stat-r45">R45</label>
-        <input type="checkbox" id="stat-r45" name="stat-r45" />
-      </div>
-      <div>
-        <label for="stat-r46">R46</label>
-        <input type="checkbox" id="stat-r46" name="stat-r46" />
-      </div>
-      <div>
-        <label for="stat-r49">R49</label>
-        <input type="checkbox" id="stat-r49" name="stat-r49" />
-      </div>
-      <div>
-        <label for="stat-r60">R60</label>
-        <input type="checkbox" id="stat-r60" name="stat-r60" />
-      </div>
-      <div>
-        <label for="stat-r61">R61</label>
-        <input type="checkbox" id="stat-r61" name="stat-r61" />
-      </div>
-      <div>
-        <label for="stat-r62">R62</label>
-        <input type="checkbox" id="stat-r62" name="stat-r62" />
-      </div>
-      <div>
-        <label for="stat-r63">R63</label>
-        <input type="checkbox" id="stat-r63" name="stat-r63" />
-      </div>
-    </div>
+      <!-- Checkboxes -->
+      <label>Nocif <input type="checkbox" name="stat-nocif" /></label>
+      <label>Irritant <input type="checkbox" name="stat-irritant" /></label>
+      <label>Toxique <input type="checkbox" name="stat-toxique" /></label>
+      <label>Très toxique <input type="checkbox" name="stat-tres-toxique" /></label>
+      <label>Danger environnement <input type="checkbox" name="stat-danger-environnement" /></label>
+      <label>Explosible <input type="checkbox" name="stat-explosible" /></label>
+      <label>Facilement inflammable <input type="checkbox" name="stat-facilement-inflammable" /></label>
+      <label>Extrêmement inflammable <input type="checkbox" name="stat-extremement-inflammable" /></label>
+      <label>R40 <input type="checkbox" name="stat-r40" /></label>
+      <label>R45 <input type="checkbox" name="stat-r45" /></label>
+      <label>R49 <input type="checkbox" name="stat-r49" /></label>
+      <label>R46 <input type="checkbox" name="stat-r46" /></label>
+      <label>R60 <input type="checkbox" name="stat-r60" /></label>
+      <label>R61 <input type="checkbox" name="stat-r61" /></label>
+      <label>R62 <input type="checkbox" name="stat-r62" /></label>
+      <label>R63 <input type="checkbox" name="stat-r63" /></label>
+    </fieldset>
 
-    <button type="submit" id="submit-btn" class="add-btn">Ajouter</button>
+    <!-- Bouton Ajouter -->
+    <div class="ajouter-wrapper">
+      <button type="submit" id="ajouter-btn">
+        Ajouter
+        <span class="btn-icon">+</span>
+      </button>
+    </div>
   </form>
-</div>
-
 
 <style>
+  #ajout-molecule-form{
+    padding: 1.1em 0.5em;
+  } 
+
   #ajout-molecule {
-    margin: 0;
-    padding: 0;
-    background-color: #f7f3ff;
-    border: solid 1vw transparent;
-    border-radius: 0.95vw;
-  }
-
-  #molecule-drawing {
-    margin: 0;
-    padding: 0;
-    border: solid #949497 0.16vw;
-    background-color: white;
-    padding-top: 25%;
-    border-radius: 3vw;
-    margin-bottom: 2vh;
-  }
-
-  #nommage-form {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-    gap: 2vw;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(18vw, 1fr));
+    gap: 2vw 1.5vh;
     padding: 2vh;
-    border: 0.2vh solid black;
+    background-color: var(--ultra-light-purple);
     border-radius: 1vh;
-    background-color: white;
-    margin-bottom: 2vh;
+    border: 0.2vh solid var(--purple);
   }
 
-  #nommage-form input {
-    background-color: var(--violet-principal, #775da6);
-    color: white;
+  #ajout-molecule > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  #ajout-molecule label {
+    padding: 1vh 1.5vw;
+    border-radius: 1vh;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1vw;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  #ajout-molecule input[type="text"],
+  #ajout-molecule input[type="number"] {
+    background-color: var(--white);
+    color: var(--text-color-dark);
     font-size: 1.1rem;
     text-align: center;
     border: none;
     border-radius: 1vh;
     padding: 1.2vh 2vw;
-    box-shadow: var(--shadow-sm, 0 0.2vh 0.6vh rgba(0, 0, 0, 0.1));
+    border: solid 0.20em var(--purple);
+    width: 100%;
+    box-sizing: border-box;
   }
 
-  /* Tailles spécifiques selon champ */
-  #nom {
-    flex: 0 0 20vw;
-    max-width: 16vw;
-  }
-
-  #cas {
-    flex: 0 0 12vw;
-    max-width: 9vw;
-  }
-
-  #masseMolaire {
-    flex: 0 0 8vw;
-    max-width: 7vw;
-  }
-
-  #formule {
-    flex: 0 0 18vw;
-    max-width: 16vw;
-  }
-
-  #nommage-form input::placeholder {
-    color: rgba(255, 255, 255, 0.7); /* blanc un peu transparent */
-    font-weight: 500;
+  #ajout-molecule input::placeholder {
+    color: var(--black);
+    opacity: 0.8;
     font-style: italic;
+    font-weight: 400;
   }
 
-  #caracteristiques-form {
+  #ajout-molecule input[type="checkbox"] {
+    width: 1.2vw;
+    height: 1.2vw;
+    accent-color: var(--light-purple);
+    margin-left: 0.5vw;
+  }
+
+  label:has(input[type="checkbox"]:checked) {
+    background-color: var(--green) !important;
+    font-weight: bold;
+  }
+
+  .ajouter-wrapper {
     display: flex;
-    flex-wrap: wrap;
-    gap: 2vw;
-    padding: 2vh;
-    border: 0.2vh solid black;
-    border-radius: 1vh;
-    background-color: rgba(119, 93, 166, 0.2); /* violet clair transparent */
-    justify-content: space-evenly;
+    justify-content: flex-end;
+    margin-top: 2vh;
+    margin-right: 2vw;
   }
 
-  #caracteristiques-form div {
-    background-color: white;
-    padding: 1vh 2vw;
-    border-radius: 1vh;
+  #ajouter-btn {
     display: flex;
     align-items: center;
     gap: 1vw;
-    font-size: 1.2rem;
-    box-shadow: 0 0.2vh 0.6vh rgba(0, 0, 0, 0.1);
-  }
-
-  /* --- Custom switch --- */
-  #caracteristiques-form input[type="checkbox"] {
-    appearance: none;
-    width: 3vw;
-    height: 1.8vw;
-    background-color: #ccc;
-    border-radius: 1vw;
-    position: relative;
+    padding: 1vh 2vw;
+    font-size: 1.1rem;
+    font-weight: 500;
+    border: 0.2vh solid var(--black);
+    border-radius: 1vh;
+    background-color: var(--white);
     cursor: pointer;
     transition: background-color 0.3s ease;
-    outline: none;
   }
 
-  #caracteristiques-form input[type="checkbox"]::before {
-    content: "";
-    position: absolute;
-    width: 1.4vw;
-    height: 1.4vw;
-    top: 0.2vw;
-    left: 0.2vw;
-    background-color: white;
-    border-radius: 50%;
-    transition: transform 0.3s ease;
+  #ajouter-btn:hover {
+    background-color: var(--ultra-light-purple);
   }
 
-  #caracteristiques-form input[type="checkbox"]:checked {
-    background-color: #2ecc71; /* vert */
-  }
-
-  #caracteristiques-form input[type="checkbox"]:checked::before {
-    transform: translateX(1.2vw);
+  .btn-icon {
+    background-color: var(--light-purple);
+    color: var(--black);
+    border-radius: 1.5vh;
+    padding: 0.4vh 0.9vh;
+    font-size: 1.2rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 </style>

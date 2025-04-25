@@ -4,14 +4,16 @@
   --light-purple: #C4B7DB;
   --purple : #775DA6;
   --dark-purple : #3f2a56;
-  --black-purple: rgba(119, 93, 166, 0.17);
+  --ultra-light-purple: rgba(119, 93, 166, 0.17);
   --black : black;
+  --green : #2ecc71;
 
   --alert: red;
 
   --box-shadow : rgba(0, 0, 0, 0.15);
 
   --text-color : var(--white);
+  --text-color-dark : var(--black);
 
   font-family: 'Inter', sans-serif;
   line-height: 1.6;
