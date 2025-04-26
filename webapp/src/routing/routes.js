@@ -1,7 +1,6 @@
-import AccueilController from "./controllers/impl/Accueil.controller";
-import AjoutMoleculeController from "./controllers/impl/AjoutMolecule.controller";
-import HistoriqueController from "./controllers/impl/Historique.controller";
-import MoleculesController from "./controllers/impl/Molecules.controller";
+import AccueilController from "../controllers/impl/Accueil.controller";
+import AjoutMoleculeController from "../controllers/impl/AjoutMolecule.controller";
+import MoleculesController from "../controllers/impl/Molecules.controller";
 
 export const routes = [
   {
@@ -25,13 +24,6 @@ export const routes = [
     controller: AjoutMoleculeController,
     icone: "ic_event_note.png",
   },
-  // {
-  //   nom: "Historique des calculs",
-  //   chemin: "/historique",
-  //   cheminHtml: "historique.html",
-  //   controller: HistoriqueController,
-  //   icone: "ic_account_box.png",
-  // },
 ];
 
 export default routes;
