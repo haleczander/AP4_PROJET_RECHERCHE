@@ -13,7 +13,8 @@
     "watch": "vite build --watch",
     "start": "node server.js",
     "pretty": "prettier --write \"./**/*.{js,jsx,mjs,cjs,ts,tsx,json}\"",
-    "pkg": "pkg ."
+    "pkg": "pkg .",
+    "test:coverage": "jest --coverage"
   },
   "repository": {
     "type": "git",
