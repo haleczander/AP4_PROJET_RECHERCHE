@@ -1,3 +1,4 @@
+import { Resultat } from "../models/resultat.model";
 import { getPrixEnergie } from "../utils/activations.utils";
 import {
   atomesDiff,

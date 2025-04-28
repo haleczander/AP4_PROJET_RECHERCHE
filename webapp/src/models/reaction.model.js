@@ -18,5 +18,10 @@ export class ReactionComplete {
   produit;
   sousProduits;
 
-  constructor() {}
+  constructor() {
+    this.reactionPrincipale = new ReactionPrincipale();
+    this.traitementPostReactionnel = new TraitementPostReactionnel();
+    this.purification = new Purification();
+    
+  }
 }

@@ -1,268 +1,508 @@
 <div id="main-calculs">
-    <h2 id="h2-reaction">Réaction</h2>
-    <div class="section-box">
+  <h2 id="h2-reaction">Réaction</h2>
+  <div class="section-box">
+    <datalist id="datalist-molecules"></datalist>
+    <datalist id="datalist-activations"></datalist>
 
-      <div class="schema-reaction">[...]</div>
-      <div class="forms-container">
-        <div class="form-gauche">
-            <div class="radio-container">
-              <label><input type="radio" name="type" checked /> Réactif</label>
-              <label><input type="radio" name="type" /> Activations</label>
-              <label><input type="radio" name="type" /> Solvant</label>
-              <label><input type="radio" name="type" /> Catalyseur</label>
-              <label><input type="radio" name="type"  /> Produit</label>
-            </div>
-        
-            <hr />
-        
-            <div class="form-content">
-              <div class="form-row">
-                <div class="quantite-controls">
-                    <button id="btn-plus">+</button>
-                    <div class="quantite-valeur">1</div>
-                    <button id="btn-minus">-</button>
-                  </div>
-        
-                <div class="select-container">
-                  <input type="text" placeholder="Recherche" />
-                  <div class="suggestions">
-                    <!-- Liste déroulante qui suggère les noms -->
-                  </div>
-                </div>
-        
-                <div class="info-fields">
-                  <div class="field">
-                    <label>%</label>
-                    <input type="text" />
-                  </div>
-                  <div class="field">
-                    <label>Vol</label>
-                    <input type="text" />
-                  </div>
-                  <div class="field">
-                    <label>€</label>
-                    <input type="text" />
-                  </div>
-                  <button class="btn-ajouter">+</button>
-                </div>
-              </div>
-            </div>
+    <div class="schema-reaction">[...]</div>
+
+    <div class="forms-container">
+      <div id="container-reaction-principale">
+        <h3>Réaction principale</h3>
+        <!-- Réactif -->
+        <form id="form-reactif-reaction-principale">
+          <div>
+            <label for="coefStoechiometrique"
+              >Coefficient stœchiométrique</label
+            >
+            <input
+              type="number"
+              id="coefStoechiometrique"
+              name="coefStoechiometrique"
+              value="1"
+            />
           </div>
-      
-        <div class="form-droite">
-          <div class="bloc-traitement">
-            <h3>Traitement post-réactionnel</h3>
+
+          <div>
+            <label for="molecule">Molécule</label>
+            <input
+              list="datalist-molecules"
+              id="molecule"
+              name="molecule"
+              placeholder="Recherche réactif"
+            />
           </div>
-      
-          <div class="bloc-purification">
-            <h3>Purification</h3>
+
+          <div>
+            <label for="purete">Pureté (%)</label>
+            <input
+              type="number"
+              id="purete"
+              name="purete"
+              placeholder="Pureté (%)"
+            />
           </div>
-        </div>
+
+          <div>
+            <label for="volume">Volume (mL)</label>
+            <input
+              type="number"
+              id="volume"
+              name="volume"
+              placeholder="Volume (mL)"
+            />
+          </div>
+
+          <div>
+            <label for="prixG">Prix/g (€)</label>
+            <input
+              type="number"
+              id="prixG"
+              name="prixG"
+              placeholder="Prix/g (€)"
+            />
+          </div>
+
+          <input type="submit" value="+" />
+        </form>
+
+        <!-- Catalyseur -->
+        <form id="form-catalyseur-reaction-principale">
+          <div>
+            <label for="molecule">Recherche catalyseur</label>
+            <input
+              list="datalist-molecules"
+              id="molecule"
+              name="molecule"
+              placeholder="Recherche catalyseur"
+            />
+          </div>
+
+          <div>
+            <label for="catalyseurPurete">Pureté (%)</label>
+            <input
+              type="number"
+              id="catalyseurPurete"
+              name="catalyseurPurete"
+              placeholder="Pureté (%)"
+            />
+          </div>
+
+          <div>
+            <label for="catalyseurVolume">Volume (mL)</label>
+            <input
+              type="number"
+              id="catalyseurVolume"
+              name="catalyseurVolume"
+              placeholder="Volume (mL)"
+            />
+          </div>
+
+          <div>
+            <label for="catalyseurPrixG">Prix/g (€)</label>
+            <input
+              type="number"
+              id="catalyseurPrixG"
+              name="catalyseurPrixG"
+              placeholder="Prix/g (€)"
+            />
+          </div>
+
+          <input type="submit" value="+" />
+        </form>
+
+        <!-- Solvant -->
+        <form id="form-solvant-reaction-principale">
+          <div>
+            <label for="molecule">Recherche solvant</label>
+            <input
+              list="datalist-molecules"
+              id="molecule"
+              name="molecule"
+              placeholder="Recherche solvant"
+            />
+          </div>
+
+          <div>
+            <label for="solvantPurete">Pureté (%)</label>
+            <input
+              type="number"
+              id="solvantPurete"
+              name="solvantPurete"
+              placeholder="Pureté (%)"
+            />
+          </div>
+
+          <div>
+            <label for="solvantVolume">Volume (mL)</label>
+            <input
+              type="number"
+              id="solvantVolume"
+              name="solvantVolume"
+              placeholder="Volume (mL)"
+            />
+          </div>
+
+          <div>
+            <label for="solvantPrixG">Prix/g (€)</label>
+            <input
+              type="number"
+              id="solvantPrixG"
+              name="solvantPrixG"
+              placeholder="Prix/g (€)"
+            />
+          </div>
+
+          <input type="submit" value="+" />
+        </form>
+
+        <!-- Activation -->
+        <form id="form-activation-reaction-principale">
+          <div>
+            <label for="activationNom">Recherche activation</label>
+            <input
+              list="datalist-activations"
+              id="activationNom"
+              name="activationNom"
+              placeholder="Recherche activations"
+            />
+          </div>
+
+          <div>
+            <label for="activationDuree">Durée (min)</label>
+            <input
+              type="number"
+              id="activationDuree"
+              name="activationDuree"
+              placeholder="Durée (min)"
+            />
+          </div>
+
+          <div>
+            <label for="activationPuissance">Puissance (W)</label>
+            <input
+              type="number"
+              id="activationPuissance"
+              name="activationPuissance"
+              placeholder="Puissance (W)"
+            />
+          </div>
+
+          <div>
+            <label for="prixEnergie"> Prix du kWh (€)</label>
+            <input
+              type="number"
+              name="prixEnergie"
+              id="prixEnergie"
+              step=".001"
+            />
+            <!-- <label for="activationEnergie">Énergie (kWh)</label>
+            <input type="number" id="activationEnergie" name="activationEnergie" placeholder="Énergie (kWh)"> -->
+          </div>
+
+          <input type="submit" value="+" />
+        </form>
+      </div>
+      <div id="container-post-traitement">
+        <h3>Traitement post-réactionnel</h3>
+        <form id="form-reactif-post-traitement">
+          <div>
+            <label for="coefStoechiometrique"
+              >Coefficient stœchiométrique</label
+            >
+            <input
+              type="number"
+              id="coefStoechiometrique"
+              name="coefStoechiometrique"
+              value="1"
+            />
+          </div>
+
+          <div>
+            <label for="molecule">Molécule</label>
+            <input
+              list="datalist-molecules"
+              id="molecule"
+              name="molecule"
+              placeholder="Recherche réactif"
+            />
+          </div>
+
+          <div>
+            <label for="purete">Pureté (%)</label>
+            <input
+              type="number"
+              id="purete"
+              name="purete"
+              placeholder="Pureté (%)"
+            />
+          </div>
+
+          <div>
+            <label for="volume">Volume (mL)</label>
+            <input
+              type="number"
+              id="volume"
+              name="volume"
+              placeholder="Volume (mL)"
+            />
+          </div>
+
+          <div>
+            <label for="prixG">Prix/g (€)</label>
+            <input
+              type="number"
+              id="prixG"
+              name="prixG"
+              placeholder="Prix/g (€)"
+              step=".001"
+            />
+          </div>
+
+          <input type="submit" value="+" />
+        </form>
+
+        <form id="form-activation-post-traitement">
+          <div>
+            <label for="activationNom">Recherche activation</label>
+            <input
+              list="datalist-activations"
+              id="activationNom"
+              name="activationNom"
+              placeholder="Recherche activations"
+            />
+          </div>
+
+          <div>
+            <label for="activationDuree">Durée (min)</label>
+            <input
+              type="number"
+              id="activationDuree"
+              name="activationDuree"
+              placeholder="Durée (min)"
+            />
+          </div>
+
+          <div>
+            <label for="activationPuissance">Puissance (W)</label>
+            <input
+              type="number"
+              id="activationPuissance"
+              name="activationPuissance"
+              placeholder="Puissance (W)"
+            />
+          </div>
+
+          <div>
+            <label for="prixEnergie"> Prix du kWh (€)</label>
+            <input
+              type="number"
+              name="prixEnergie"
+              id="prixEnergie"
+              step=".001"
+            />
+            <!-- <label for="activationEnergie">Énergie (kWh)</label>
+            <input type="number" id="activationEnergie" name="activationEnergie" placeholder="Énergie (kWh)"> -->
+          </div>
+
+          <input type="submit" value="+" />
+        </form>
+      </div>
+      <div id="container-purification">
+        <h3>Purification</h3>
+        <form id="form-reactif-purification">
+          <div>
+            <label for="coefStoechiometrique"
+              >Coefficient stœchiométrique</label
+            >
+            <input
+              type="number"
+              id="coefStoechiometrique"
+              name="coefStoechiometrique"
+              value="1"
+            />
+          </div>
+
+          <div>
+            <label for="molecule">Molécule</label>
+            <input
+              list="datalist-molecules"
+              id="molecule"
+              name="molecule"
+              placeholder="Recherche réactif"
+            />
+          </div>
+
+          <div>
+            <label for="purete">Pureté (%)</label>
+            <input
+              type="number"
+              id="purete"
+              name="purete"
+              placeholder="Pureté (%)"
+            />
+          </div>
+
+          <div>
+            <label for="volume">Volume (mL)</label>
+            <input
+              type="number"
+              id="volume"
+              name="volume"
+              placeholder="Volume (mL)"
+            />
+          </div>
+
+          <div>
+            <label for="prixG">Prix/g (€)</label>
+            <input
+              type="number"
+              id="prixG"
+              name="prixG"
+              placeholder="Prix/g (€)"
+            />
+          </div>
+
+          <input type="submit" value="+" />
+        </form>
+
+        <form id="form-activation-purification">
+          <div>
+            <label for="activationNom">Recherche activation</label>
+            <input
+              list="datalist-activations"
+              id="activationNom"
+              name="activationNom"
+              placeholder="Recherche activations"
+            />
+          </div>
+
+          <div>
+            <label for="activationDuree">Durée (min)</label>
+            <input
+              type="number"
+              id="activationDuree"
+              name="activationDuree"
+              placeholder="Durée (min)"
+            />
+          </div>
+
+          <div>
+            <label for="activationPuissance">Puissance (W)</label>
+            <input
+              type="number"
+              id="activationPuissance"
+              name="activationPuissance"
+              placeholder="Puissance (W)"
+            />
+          </div>
+
+          <div>
+            <label for="prixEnergie"> Prix du kWh (€)</label>
+            <input
+              type="number"
+              name="prixEnergie"
+              id="prixEnergie"
+              step=".001"
+            />
+            <!-- <label for="activationEnergie">Énergie (kWh)</label>
+            <input type="number" id="activationEnergie" name="activationEnergie" placeholder="Énergie (kWh)"> -->
+          </div>
+
+          <input type="submit" value="+" />
+        </form>
+      </div>
+      <div id="container-produit">
+        <h3>Produit</h3>
+        <form id="form-produit">
+          <div>
+            <label for="coefStoechiometrique"
+              >Coefficient stœchiométrique</label
+            >
+            <input
+              type="number"
+              id="coefStoechiometrique"
+              name="coefStoechiometrique"
+              value="1"
+            />
+          </div>
+
+          <div>
+            <label for="molecule">Molécule</label>
+            <input
+              list="datalist-molecules"
+              id="molecule"
+              name="molecule"
+              placeholder="Recherche réactif"
+            />
+          </div>
+
+          <div>
+            <label for="purete">Pureté (%)</label>
+            <input
+              type="number"
+              id="purete"
+              name="purete"
+              placeholder="Pureté (%)"
+            />
+          </div>
+
+          <div>
+            <label for="volume">Volume (mL)</label>
+            <input
+              type="number"
+              id="volume"
+              name="volume"
+              placeholder="Volume (mL)"
+            />
+          </div>
+
+          <div>
+            <label for="prixG">Prix/g (€)</label>
+            <input
+              type="number"
+              id="prixG"
+              name="prixG"
+              placeholder="Prix/g (€)"
+              step=".001"
+            />
+          </div>
+
+          <input type="submit" value="+" />
+        </form>
       </div>
     </div>
-  
-    <h2 id="h2-resultat">Résultat</h2>
-    <div class="section-box">
-      <!-- ici les graphs, bilans, etc. -->
-    </div>
+    <form id="form-reaction">
+      <input type="submit" value="Calculer" />
+    </form>
   </div>
 
-  <script>
-    const plusBtn = document.getElementById("btn-plus");
-    const minusBtn = document.getElementById("btn-minus");
-    const quantiteDisplay = document.querySelector(".quantite-valeur");
+  <h2 id="h2-resultat">Résultat</h2>
+  <div class="section-box">
+    <!-- ici les graphs, bilans, etc. -->
+  </div>
+</div>
 
-    if (plusBtn && minusBtn && quantiteDisplay) {
-    let quantite = parseInt(quantiteDisplay.textContent);
-
-    plusBtn.addEventListener("click", () => {
-        console.log("Plus cliqué");
-        quantite++;
-        quantiteDisplay.textContent = quantite;
-    });
-
-    minusBtn.addEventListener("click", () => {
-        console.log("Moins cliqué");
-        if (quantite > 0) {
-        quantite--;
-        quantiteDisplay.textContent = quantite;
-        }
-    });
-    } else {
-    console.warn("Les éléments du compteur n'ont pas été trouvés.");
-    }
-  </script>
-  
 <style>
-  
-.section-box {
-  background-color: var(--black-purple); /* Violet à 17% */
-  border: 0.2vh solid var(--purple);
-  border-radius: 1.5vh;
-  padding: 2vh 1vw 2vh 1vw;
-  margin-bottom: 0.8vh;
-  box-shadow: 0 0.4vh 1vh var(--box-shadow);
-}
+  .section-box {
+    background-color: var(--black-purple);
+    border: 0.2vh solid var(--purple);
+    border-radius: 1.5vh;
+    padding: 2vh 1vw 2vh 1vw;
+    margin-bottom: 0.8vh;
+    box-shadow: 0 0.4vh 1vh var(--box-shadow);
+  }
 
-.schema-reaction {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: var(--white);
-  padding: 6.5vh 2vw;
-  border-radius: 1.5vh;
-  box-shadow: 0 0.4vh 1vh var(--box-shadow);
-  margin-bottom: 1.8vh;
-  gap: 2vw;
-  position: relative;
-}
-
-.btn-ajouter {
-background: none;
-border: none;
-font-size: 2vh;
-cursor: pointer;
-color: #2b964a;
-}
-
-.field {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.field label {
-  font-size: 1.8vh;
-  font-weight: bold;
-  margin-bottom: 0.3vh;
-}
-
-.field input {
-  width: 5vw;
-  padding: 0.5vh;
-  font-size: 1.5vh;
-  border: 0.1vh solid #333;
-  border-radius: 0.5vh;
-  text-align: center;
-}    
-
-/* Infos : %, Vol, € */
-.info-fields {
-display: flex;
-align-items: flex-end;
-padding-bottom: 1.8rem;
-gap: 1vw;
-}
-
-.suggestions {
-  background-color: white;
-  border: 0.1vh solid #ccc;
-  border-top: none;
-  font-size: 1.5vh;
-  border-radius: 0 0 0.5vh 0.5vh;
-  overflow: hidden;
-}
-
-.suggestions div {
-  padding: 0.5vh 1vh;
-  border-top: 0.1vh solid #eee;
-}
-
-.suggestions div:last-child {
-  border-radius: 0 0 0.5vh 0.5vh;
-}
-
-.select-container {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-}
-    
-.select-container input {
-  padding: 0.5vh 1vh;
-  font-size: 1.5vh;
-  border: 0.1vh solid #ccc;
-  border-radius: 0.5vh;
- }
-
-.quantite-valeur {
-  margin: 0.5vh 0;
-  padding-left: 0.25rem;
-  font-weight: bold;
-}
-
-.forms-container {
-  display: flex;
-  flex-wrap: wrap;
-  background-color: rgba(119, 93, 166, 0.17);
-  border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  gap: 2rem;
-  position: relative;
-  border: #775DA6 solid 2px;
-  align-items: stretch;
-}
-
-.form-gauche {
-  flex: 1;
-  background-color: rgba(119, 93, 166, 0.17);
-  border-radius: 1.2vh;
-  padding: 0vh 2vw;
-  border: 0.1vh solid #bbb;
-  height: 25vh;
-}
-
-.form-droite {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 0.8vh;
-  flex: 0 0 25vw;
-  padding-right: 1.25vw;
-}
-
-.bloc-traitement,
-.bloc-purification {
-  background-color: white;
-  border: 0.2vh solid #775DA6;
-  border-radius: 1vh;
-  padding: 0.25vh 1vw;
-  height: 10vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;         /* Centrage horizontal */
-  text-align: center;
-  font-size: 1.3vh;
-  box-shadow: 0 0.2vh 0.5vh rgba(0, 0, 0, 0.1);
-}
-
-.form-content {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5vh;
-}
-
-.form-row {
-  display: flex;
-  align-items: center;
-  gap: 2vw;
-}
-
-.radio-container {
-  display: flex;
-  justify-content: space-between;
-  gap: 1vw;
-  font-size: 1.5vh;
-  font-weight: 600;
-  color: #3f2a56;
-  padding-top: 0.5rem;
-}
-
-.radio-container label {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5vh;
-}
-
+  .schema-reaction {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--white);
+    padding: 6.5vh 2vw;
+    border-radius: 1.5vh;
+    box-shadow: 0 0.4vh 1vh var(--box-shadow);
+    margin-bottom: 1.8vh;
+    gap: 2vw;
+    position: relative;
+  }
 </style>

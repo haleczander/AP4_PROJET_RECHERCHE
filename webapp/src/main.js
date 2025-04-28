@@ -3,8 +3,8 @@ import AssetService from "./services/asset.service.js";
 import Router from "./router.js";
 import LocalDataService from "./services/impl/local.data.service.js";
 import services from "./services/services.js";
+import CalculService from "./services/calcul.service.js";
 
-console.log("Je suis bien chargé");
 
 const dataService = new LocalDataService();
 fetch("data/db.json")
@@ -16,6 +16,7 @@ fetch("data/db.json")
   });
 
 services["dataService"] = dataService;
+services["calculService"] = new CalculService();
 
 const navLinksContainer = document.getElementById("nav-links-container");
 
@@ -46,5 +47,4 @@ generateNavLinks( routes );
 const router = new Router( routes, document.getElementById('main-container') );
 services[ "router" ] = router;
 
-
-
+console.log("Je suis bien chargé");
