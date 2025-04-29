@@ -1,11 +1,10 @@
-import ReactionService from "../../services/reaction.service";
 import { getNParMmol } from "../../utils/molecules.utils";
 import Indicateur from "../indicateur";
 
-export class ratioNreactifsMinSurMaxIndicateur extends Indicateur {
+export class RatioNreactifsMinSurMaxIndicateur extends Indicateur {
   constructor() {
     super("nréactif min / nréactif max", "1/Fst,n");
-    this.reactionService = new ReactionService();
+
   }
 
   reactionPrincipale(reaction) {
@@ -27,4 +26,4 @@ export class ratioNreactifsMinSurMaxIndicateur extends Indicateur {
   }
 }
 
-export default ratioNreactifsMinSurMaxIndicateur;
+export default RatioNreactifsMinSurMaxIndicateur;

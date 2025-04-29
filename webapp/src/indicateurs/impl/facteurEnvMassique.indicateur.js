@@ -1,11 +1,10 @@
-import ReactionService from "../../services/reaction.service";
 import Indicateur from "../indicateur";
 import MasseDechetsIndicateur from "./masseDechets.indicateur";
 
 export class FacteurEnvironnementalMassiqueIndicateur extends Indicateur {
   constructor() {
     super("Facteur Environnemental Massique", "Em");
-    this.reactionService = new ReactionService();
+
     this.indicateurMasseDechets = new MasseDechetsIndicateur();
   }
   // masse déchets / masse produit

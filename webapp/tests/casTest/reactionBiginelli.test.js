@@ -1,5 +1,5 @@
 import MasseDechetsIndicateur from "../../src/indicateurs/impl/masseDechets.indicateur";
-import ReactionService from "../../src/services/reaction.service";
+import { ReactionService } from "../../src/services";
 import {
   atomesSum,
   formulaParser,

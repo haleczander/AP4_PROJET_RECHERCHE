@@ -1,11 +1,10 @@
-import ReactionService from "../../services/reaction.service";
 import Indicateur from "../indicateur";
 import FacteurEnvironnementalMassiqueIndicateur from "./facteurEnvMassique.indicateur";
 
 export class EfficaciteMassiqueReactionIndicateur extends Indicateur {
   constructor() {
     super("Efficacité Massique de la Réaction", "EMR");
-    this.reactionService = new ReactionService();
+
     this.indicateurEm = new FacteurEnvironnementalMassiqueIndicateur();
   }
 

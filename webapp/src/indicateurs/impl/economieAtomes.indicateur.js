@@ -1,10 +1,8 @@
-import ReactionService from "../../services/reaction.service";
 import Indicateur from "../indicateur";
 
 export class EconomieAtomesIndicateur extends Indicateur {
   constructor() {
     super("Économie d'atomes", "EA");
-    this.reactionService = new ReactionService();
   }
 
   reactionPrincipale(reaction) {

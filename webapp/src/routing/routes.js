@@ -1,6 +1,4 @@
-import AccueilController from "../controllers/impl/Accueil.controller";
-import AjoutMoleculeController from "../controllers/impl/AjoutMolecule.controller";
-import MoleculesController from "../controllers/impl/Molecules.controller";
+import { AccueilController, MoleculesController, AjoutMoleculeController } from "./controllers";
 
 export const routes = [
   {

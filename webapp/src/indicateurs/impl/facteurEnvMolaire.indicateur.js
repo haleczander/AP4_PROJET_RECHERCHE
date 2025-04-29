@@ -1,10 +1,9 @@
-import ReactionService from "../../services/reaction.service";
 import Indicateur from "../indicateur";
 
 export class FacteurEnvironnementalMolaireIndicateur extends Indicateur {
   constructor() {
     super("Facteur Environnemental Molaire", "EM");
-    this.reactionService = new ReactionService();
+
   }
 
   reactionPrincipale(reaction) {

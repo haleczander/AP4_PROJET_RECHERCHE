@@ -1,10 +1,9 @@
-import ReactionService from "../../services/reaction.service";
 import Indicateur from "../indicateur";
 
 export class CoutMassiqueIndicateur extends Indicateur {
   constructor() {
     super("Cout massique du produit", "€/g");
-    this.reactionService = new ReactionService();
+
   }
 
   // Cout de la réaction / masse du produit

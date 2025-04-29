@@ -1,10 +1,8 @@
-import ReactionService from "../../services/reaction.service";
 import Indicateur from "../indicateur";
 
 export class CoefCMRIndicateur extends Indicateur {
   constructor() {
     super("Coefficient CMR", "CMR");
-    this.reactionService = new ReactionService();
   }
 
   reactionPrincipale(reaction) {

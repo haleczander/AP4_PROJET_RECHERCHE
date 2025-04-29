@@ -1,9 +1,7 @@
 import routes from "./routing/routes.js";
-import AssetService from "./services/asset.service.js";
+import {AssetService, LocalDataService, CalculService} from "./services";
 import Router from "./routing/router.js";
-import LocalDataService from "./services/impl/local.data.service.js";
 import services from "./services/services.js";
-import CalculService from "./services/calcul.service.js";
 
 
 const dataService = new LocalDataService();

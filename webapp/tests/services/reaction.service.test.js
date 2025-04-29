@@ -1,4 +1,4 @@
-import ReactionService from "../../src/services/reaction.service";
+import { ReactionService } from "../../src/services";
 import REACTION_BIGINELLI from "../data/reactions/biginelli.reaction";
 
 describe("test reaction.service ", () => {

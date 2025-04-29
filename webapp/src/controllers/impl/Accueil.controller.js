@@ -8,7 +8,7 @@ import Energie from "../../models/energie.model";
 import { Resultat } from "../../models/resultat.model";
 import { INDICATEURS } from "../../../src/settings"
 
-export default class MoleculesController extends Controller {
+export default class AccueilController extends Controller {
   init() {
     this.dataService = services.dataService;
     this.calculService = services.calculService;

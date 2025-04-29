@@ -1,6 +1,6 @@
 import { Resultat } from "../models/resultat.model";
 import { round } from "../utils/math.utils";
-import ReactionService from "./reaction.service";
+import { ReactionService } from ".";
 
 export class CalculService {
   indicateurs = [];

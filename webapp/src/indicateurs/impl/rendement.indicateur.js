@@ -1,11 +1,10 @@
-import ReactionService from "../../services/reaction.service";
 import { getNParMmol } from "../../utils/molecules.utils";
 import Indicateur from "../indicateur";
 
 export class RendementIndicateur extends Indicateur {
   constructor() {
     super("Rendement", "ρ");
-    this.reactionService = new ReactionService();
+
   }
 
   reactionPrincipale(reaction) {
