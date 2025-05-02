@@ -23,7 +23,7 @@ export default class ReactionMVCController {
         } );
     }
 
-    updateStoechiometrie( molecule, stoechimetrie, liste ) {
+    updateCoef( molecule, stoechimetrie, liste ) {
         molecule.coefStoechiometrique += stoechimetrie;
         if ( molecule.coefStoechiometrique <= 0 ) {
             const index = liste.indexOf( molecule );

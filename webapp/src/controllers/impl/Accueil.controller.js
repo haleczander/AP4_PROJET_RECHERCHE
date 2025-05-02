@@ -7,7 +7,7 @@ import { createActivationReaction } from "../../utils/activations.utils";
 import Energie from "../../models/energie.model";
 import { Resultat } from "../../models/resultat.model";
 import { INDICATEURS } from "../../../src/settings"
-import ReactionMVCController from "../../mvc/reaction/reactioN.mvc.controller";
+import ReactionMVCController from "../../mvc/reaction/reaction.mvc.controller";
 import CanvasReactionMVCView from "../../mvc/reaction/impl/canvas.reaction.mvc.view";
 import BIGINELLI  from "../../../tests/data/reactions/biginelli.reaction"
 import CalculService from "../../services/calcul.service";

@@ -1,108 +1,184 @@
 import ReactionMVCView from "../reaction.mvc.view";
 
+
+class ClickableZone {
+    constructor(x, y, w, h, callback) {
+        this.x = x;
+        this.y = y;
+        this.w = w;
+        this.h = h;
+        this.callback = callback;
+    }
+
+    contains(x, y) {
+        return x >= this.x && x <= this.x + this.w && y >= this.y && y <= this.y + this.h;
+    }
+
+    event(event, x, y) {
+        if (this.contains(x, y)) {
+            this.callback(event);
+        }
+    }
+}
 export default class CanvasReactionMVCView extends ReactionMVCView {
 
-    listeners = [];
+    clickableZones = [];
 
-    constructor( controller, canvas ) {
-        super( controller )
+    constructor(controller, canvas) {
+        super(controller)
         this.canvas = canvas;
-        this.ctx = this.canvas.getContext( "2d" );
+        this.canvas.width = 800;
+        this._initCtx();
+
+        this.canvas.addEventListener('contextmenu', (event) => event.preventDefault());
+        this.canvas.addEventListener("mousedown", (event) => this._onClick(event));
     }
 
-    clear() {
-        this.listeners.forEach( listener => {
-            this.canvas.removeEventListener( "mousedown", listener );
-        }   );
-        this.listeners = [];
-            
+    _initCtx() {
+        this.ctx = this.canvas.getContext("2d")
+        this._initCtxVars();
+
+        this.ctx.fillStyle = "black";
+        this.ctx.font = this.font;
+        this.ctx.textAlign = "left";
+        this.ctx.textBaseline = "middle";
+    }
+
+    _initCtxVars() {
+        this.font = "16px Arial";
+        this.boldFont = `bold ${this.font}`;
+
+        this.fontHeight = 20;
+
+    }
+
+
+
+    reset() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.clickableZones = [];
     }
 
-    reactionComplete( reactionComplete ) {
-        this.clear();
-        super.reactionComplete( reactionComplete );
+    _onClick(event) {
+        event.preventDefault();
+        const rect = this.canvas.getBoundingClientRect();
+        const x = event.clientX - rect.left;
+        const y = event.clientY - rect.top;
+
+        this.clickableZones.forEach(zone => {
+            zone.event(event, x, y);
+        });
+    }
+
+    reactionComplete(reactionComplete) {
+        this.reset();
+        super.reactionComplete(reactionComplete);
+    }
+
+    writeText(text, x, y, bold = false) {
+        this.ctx.font = bold ? this.boldFont : this.font;
+        this.ctx.fillText(text, x, y);
+        const w = this.ctx.measureText(text).width;
+        this.ctx.font = this.font;
+        return w;
     }
 
 
-    rpReactifs( reactifs ) {
+
+    rpReactifs(reactifs) {
         let x = 10;
         const y = 50;
-        const spacing = 20;
-        
-        // Stocke les positions des zones cliquables
-        const zonesCliquables = [];
-        
-        reactifs.forEach(reactif => {
-            const text = `${reactif.coefStoechiometrique} ${reactif.formule}`;
-            this.ctx.fillText(text, x, y);
-            const textWidth = this.ctx.measureText(text).width;
-        
-            zonesCliquables.push({
-                reactif: reactif,
-                xStart: x,
-                xEnd: x + textWidth,
-                yStart: y - 10,
-                yEnd: y + 10
-            });
-        
-            x += textWidth + spacing;
+        const h = this.fontHeight / 2;
+        const spacing = 5;
+
+
+        reactifs.forEach((reactif, index) => {
+            let w = this.writeText(reactif.coefStoechiometrique, x, y, true);
+            x += w;
+            w += this.writeText(reactif.formule, x, y);
+
+            const callback = (event) => {
+                const toAdd = event.button === 0 ? 1 : -1;
+                this.controller.updateCoef(reactif, toAdd, reactifs);
+            }
+
+            this.clickableZones.push(new ClickableZone(x, y - h, w, this.fontHeight, callback));
+
+            x += w + spacing;
+            if (index < reactifs.length - 1) {
+                x += 2 * this.writeText("+", x, y, true);
+                x += spacing;
+            }
         });
-        
-        // Un seul listener ajouté
-        const onClick = (event) => {
-            event.preventDefault();
-            const rect = this.canvas.getBoundingClientRect();
-            const clickX = event.clientX - rect.left;
-            const clickY = event.clientY - rect.top;
-        
-            zonesCliquables.forEach(zone => {
-                if (clickX >= zone.xStart && clickX <= zone.xEnd &&
-                    clickY >= zone.yStart && clickY <= zone.yEnd) {
-                    const toAdd = event.button === 0 ? 1 : -1;
-                    this.controller.updateStoechiometrie(zone.reactif, toAdd, reactifs);
-                }
-            });
-        }
-        this.canvas.addEventListener("mousedown", onClick);
-        this.listeners.push(onClick);
-        
+
     }
 
-    _reactif( reactif, x, y ) {
-        console.log( "Not implemented" );
+    rpSolvants(solvants) {
+        let x = 250;
+        const y = 30;
+        const h = this.fontHeight / 2;
+
+
+        solvants.forEach((solvant, index) => {
+            let w = this.writeText(solvant.formule, x, y);
+
+            const callback = (event) => {
+                if (event.button !== 0) {this.controller.updateCoef(solvant, -1, solvants);}
+            }
+
+            this.clickableZones.push(new ClickableZone(x, y - h, w, this.fontHeight, callback));
+
+            x += w;
+            if (index < solvants.length - 1) {
+                x += this.writeText(", ", x, y, true);
+            }
+        });
     }
 
-    rpSolvants( solvants ) {
-        console.log( "Not implemented" );
+    rpCatalyseurs(catalyseurs) {
+        let x = 250;
+        const y = 10;
+        const h = this.fontHeight / 2;
+
+
+        catalyseurs.forEach((catalyseur, index) => {
+            let w = this.writeText(catalyseur.formule, x, y);
+
+            const callback = (event) => {
+                if (event.button !== 0) {this.controller.updateCoef(catalyseur, -1, catalyseurs);}
+            }
+
+            this.clickableZones.push(new ClickableZone(x, y - h, w, this.fontHeight, callback));
+
+            x += w;
+            if (index < catalyseurs.length - 1) {
+                x += this.writeText(", ", x, y, true);
+            }
+        });
     }
 
-    rpCatalyseurs( catalyseurs ) {
-        console.log( "Not implemented" );
+    rpActivations(activations) {
+        console.log("Not implemented");
     }
 
-    rpActivations( activations ) {
-        console.log( "Not implemented" );
+    ptReactifs(reactifs) {
+        console.log("Not implemented");
     }
 
-    ptReactifs( reactifs ) {
-        console.log( "Not implemented" );
+    ptActivations(activations) {
+        console.log("Not implemented");
     }
 
-    ptActivations( activations ) {
-        console.log( "Not implemented" );
+    purifReactifs(reactifs) {
+        console.log("Not implemented");
     }
 
-    purifReactifs( reactifs ) {
-        console.log( "Not implemented" );
+    purifActivations(activations) {
+        console.log("Not implemented");
     }
 
-    purifActivations( activations ) {
-        console.log( "Not implemented" );
+    produit(produit) {
+        console.log("Not implemented");
     }
 
-    produit( produit ) {
-        console.log( "Not implemented" );
-    }
-    
 }
