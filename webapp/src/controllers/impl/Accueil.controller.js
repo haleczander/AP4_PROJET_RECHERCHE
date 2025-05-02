@@ -7,6 +7,9 @@ import { createActivationReaction } from "../../utils/activations.utils";
 import Energie from "../../models/energie.model";
 import { Resultat } from "../../models/resultat.model";
 import { INDICATEURS } from "../../../src/settings"
+import ReactionMVCController from "../../mvc/reaction/reactioN.mvc.controller";
+import CanvasReactionMVCView from "../../mvc/reaction/impl/canvas.reaction.mvc.view";
+import BIGINELLI  from "../../../tests/data/reactions/biginelli.reaction"
 
 export default class MoleculesController extends Controller {
   init() {
@@ -15,8 +18,12 @@ export default class MoleculesController extends Controller {
     this.molecules = this.dataService.findAllMolecules();
     this.activations = this.dataService.findAllActivations();
 
-    this.reaction = new ReactionComplete();
+    this.reaction = BIGINELLI;//new ReactionComplete();
     this.resultats = new Resultat();
+
+    this.mvcController = new ReactionMVCController(this.reaction);
+    const canvasView = new CanvasReactionMVCView(this.mvcController, this.container.querySelector("#canvas-reaction"));
+    this.mvcController.addView(canvasView);
 
     this._initDataLists();
     this._initForms();
