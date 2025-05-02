@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Outil de calcul automatisé des métriques de la chimie verte",
   "main": "index.js",
+  "bin": "server.js",
   "directories": {
     "doc": "doc"
   },
@@ -10,9 +11,9 @@
     "test": "jest",
     "build": "vite build",
     "watch": "vite build --watch",
-    "start": "npx serve .",
-    "dev": "vite",
-    "pretty": "prettier --write \"./**/*.{js,jsx,mjs,cjs,ts,tsx,json}\""
+    "start": "node server.js",
+    "pretty": "prettier --write \"./**/*.{js,jsx,mjs,cjs,ts,tsx,json}\"",
+    "pkg": "pkg ."
   },
   "repository": {
     "type": "git",
@@ -25,12 +26,33 @@
   },
   "homepage": "https://github.com/haleczander/AP4_PROJET_RECHERCHE#readme",
   "dependencies": {
-    "kekule": "^1.0.2"
+  },
+  "pkg": {
+    "scripts": "server.js",
+    "assets": [
+      "assets/**/*",
+      "pages/**/*",
+      "index.html",
+      "dist/**/*",
+      "styles/**/*",
+      "data/**/*"
+    ],
+    "targets": [
+      "node16-win-x64",
+      "node16-macos-x64",
+      "node16-linux-x64",
+      "node16-alpine-x64",
+      "node16-macos-arm64",
+      "node16-linux-arm64"
+    ],
+    "outputPath": "exe",
+    "compress": "Brotli"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.26.0",
     "jest": "^29.7.0",
     "prettier": "^3.5.3",
-    "vite": "^6.0.7"
+    "vite": "^6.0.7",
+    "pkg": "5.8.1"
   }
 }
