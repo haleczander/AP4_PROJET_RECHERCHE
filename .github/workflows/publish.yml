@@ -1,0 +1,227 @@
+name: Publish Executables
+on:
+  push:
+    branches:
+      - "release/**"
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        working-directory: webapp
+        run: npm install
+
+      - name: Extract version
+        id: extract_version
+        run: |
+          # Si déclenchée par tag, utiliser le tag comme version
+          if [[ "${{ github.ref }}" == refs/tags/* ]]; then
+            VERSION=${GITHUB_REF#refs/tags/}
+          # Sinon, utiliser la date et le hash court du commit
+          else
+            VERSION=$(date +'%Y%m%d')-$(git rev-parse --short HEAD)
+          fi
+          echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+          echo "Version: $VERSION"
+
+      - name: Build project
+        working-directory: webapp
+        run: npm run build
+
+      - name: Build executables
+        working-directory: webapp
+        run: npm run pkg
+
+      - name: List built executables
+        working-directory: webapp
+        run: |
+          echo "Executables generated:"
+          find ./exe -type f -name "*" | sort
+          mkdir -p release_assets
+
+      # Renommer les exécutables avec une version pour faciliter la gestion
+      - name: Prepare release assets
+        working-directory: webapp
+        run: |
+          VERSION="${{ steps.extract_version.outputs.VERSION }}"
+          APP_NAME="myapp" # Remplacez par le nom de votre application
+
+          # Crée le répertoire pour les assets
+          mkdir -p release_assets
+
+          # Pour Windows
+          if [ -f "./exe/server-win-x64.exe" ]; then
+            cp "./exe/server-win-x64.exe" "release_assets/${APP_NAME}-${VERSION}-windows-x64.exe"
+          fi
+
+          # Pour macOS Intel
+          if [ -f "./exe/server-macos-x64" ]; then
+            cp "./exe/server-macos-x64" "release_assets/${APP_NAME}-${VERSION}-macos-x64"
+          fi
+
+          # Pour macOS ARM
+          if [ -f "./exe/server-macos-arm64" ]; then
+            cp "./exe/server-macos-arm64" "release_assets/${APP_NAME}-${VERSION}-macos-arm64"
+          fi
+
+          # Pour Linux x64
+          if [ -f "./exe/server-linux-x64" ]; then
+            cp "./exe/server-linux-x64" "release_assets/${APP_NAME}-${VERSION}-linux-x64"
+          fi
+
+          # Pour Linux ARM64
+          if [ -f "./exe/server-linux-arm64" ]; then
+            cp "./exe/server-linux-arm64" "release_assets/${APP_NAME}-${VERSION}-linux-arm64"
+          fi
+
+          # Pour Alpine
+          if [ -f "./exe/server-alpine-x64" ]; then
+            cp "./exe/server-alpine-x64" "release_assets/${APP_NAME}-${VERSION}-alpine-x64"
+          fi
+
+          # Liste les fichiers préparés
+          echo "Release assets prepared:"
+          ls -la release_assets/
+
+      # Upload les artefacts individuels pour Actions
+      - name: Upload Windows x64 artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-windows-x64
+          path: ./webapp/exe/*win-x64*
+          if-no-files-found: ignore
+          retention-days: 90
+
+      - name: Upload macOS Intel artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-macos-x64
+          path: ./webapp/exe/*macos-x64*
+          if-no-files-found: ignore
+          retention-days: 90
+
+      - name: Upload macOS ARM artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-macos-arm64
+          path: ./webapp/exe/*macos-arm64*
+          if-no-files-found: ignore
+          retention-days: 90
+
+      - name: Upload Linux x64 artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-linux-x64
+          path: ./webapp/exe/*linux-x64*
+          if-no-files-found: ignore
+          retention-days: 90
+
+      - name: Upload Linux ARM64 artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-linux-arm64
+          path: ./webapp/exe/*linux-arm64*
+          if-no-files-found: ignore
+          retention-days: 90
+
+      - name: Upload Alpine Linux artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-alpine-x64
+          path: ./webapp/exe/*alpine-x64*
+          if-no-files-found: ignore
+          retention-days: 90
+
+      # Créer une release GitHub
+      - name: Create GitHub Release
+        id: create_release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ steps.extract_version.outputs.VERSION }}
+          name: Release ${{ steps.extract_version.outputs.VERSION }}
+          draft: false
+          prerelease: false
+          files: ./webapp/release_assets/*
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN:
+            ${{ secrets.GITHUB_TOKEN }}
+
+            # Mettre à jour le README avec les liens de téléchargement - avec débogage
+      - name: Update README with download links
+        if: success()
+        run: |
+          echo "Current branch: ${{ github.ref }}"
+
+          # Vérifier si le fichier README.md existe
+          if [ ! -f "README.md" ]; then
+            echo "README.md not found, creating it"
+            touch README.md
+          fi
+
+          VERSION="${{ steps.extract_version.outputs.VERSION }}"
+          APP_NAME="myapp" # Remplacez par le nom de votre application
+          REPO_URL="https://github.com/${{ github.repository }}"
+
+          echo "Generating download section for version: $VERSION"
+
+          # Créer une section de badges pour le README
+          cat > download_section.md << EOL
+          ## Téléchargements
+
+          [![Windows x64](https://img.shields.io/badge/Windows%20x64-Télécharger-blue)](${REPO_URL}/releases/latest/download/${APP_NAME}-${VERSION}-windows-x64.exe)
+          [![macOS Intel](https://img.shields.io/badge/macOS%20Intel-Télécharger-blue)](${REPO_URL}/releases/latest/download/${APP_NAME}-${VERSION}-macos-x64)
+          [![macOS Apple Silicon](https://img.shields.io/badge/macOS%20Apple%20Silicon-Télécharger-blue)](${REPO_URL}/releases/latest/download/${APP_NAME}-${VERSION}-macos-arm64)
+          [![Linux x64](https://img.shields.io/badge/Linux%20x64-Télécharger-blue)](${REPO_URL}/releases/latest/download/${APP_NAME}-${VERSION}-linux-x64)
+          [![Linux ARM64](https://img.shields.io/badge/Linux%20ARM64-Télécharger-blue)](${REPO_URL}/releases/latest/download/${APP_NAME}-${VERSION}-linux-arm64)
+          [![Alpine Linux](https://img.shields.io/badge/Alpine-Télécharger-blue)](${REPO_URL}/releases/latest/download/${APP_NAME}-${VERSION}-alpine-x64)
+
+          Dernière version: [${VERSION}](${REPO_URL}/releases/tag/${VERSION})
+          EOL
+
+          # Vérifier si la section de téléchargement existe déjà
+          if grep -q "## Téléchargements" README.md; then
+            echo "Found existing download section, replacing it"
+            # Créer un fichier temporaire sans la section de téléchargement
+            grep -v -E "## Téléchargements|Windows x64|macOS Intel|macOS Apple Silicon|Linux x64|Linux ARM64|Alpine Linux|Dernière version:" README.md > README.tmp
+            mv README.tmp README.md
+          else
+            echo "No existing download section found, adding new one"
+          fi
+
+          # Ajouter la section à la fin
+          cat download_section.md >> README.md
+
+          # Afficher le contenu actuel du README
+          echo "Current README content:"
+          cat README.md
+
+      - name: Commit README changes
+        if: success()
+        run: |
+          echo "Current branch: ${{ github.ref }}"
+
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+
+          git add README.md
+
+          # Check if there are changes to commit
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            echo "Committing README changes"
+            git commit -m "docs: update download links for version ${{ steps.extract_version.outputs.VERSION }}"
+            git push
+          fi
