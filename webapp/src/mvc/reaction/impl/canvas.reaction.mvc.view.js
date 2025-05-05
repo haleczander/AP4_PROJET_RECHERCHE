@@ -27,7 +27,7 @@ export default class CanvasReactionMVCView extends ReactionMVCView {
     constructor(controller, canvas) {
         super(controller)
         this.canvas = canvas;
-        this.canvas.width = 800;
+        this.canvas.width = 700;
         this._initCtx();
 
         this.canvas.addEventListener('contextmenu', (event) => event.preventDefault());
@@ -51,8 +51,6 @@ export default class CanvasReactionMVCView extends ReactionMVCView {
         this.fontHeight = 20;
 
     }
-
-
 
     reset() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -158,27 +156,148 @@ export default class CanvasReactionMVCView extends ReactionMVCView {
     }
 
     rpActivations(activations) {
-        console.log("Not implemented");
-    }
+        let x = 250;
+        const y = 70;
+        const h = this.fontHeight / 2;
+        const spacing = 5;
+    
+        activations.forEach((activation, index) => {
+            let w = this.writeText(activation.formule, x, y);
+    
+            const callback = (event) => {
+                const toAdd = event.button === 0 ? 1 : -1;
+                this.controller.updateCoef(activation, toAdd, activations);
+            }
+    
+            this.clickableZones.push(new ClickableZone(x, y - h, w, this.fontHeight, callback));
+    
+            x += w + spacing;
+            if (index < activations.length - 1) {
+                x += this.writeText(", ", x, y, true);
+            }
+        });
+    }    
 
     ptReactifs(reactifs) {
-        console.log("Not implemented");
+        let x = 10;
+        const y = 130;
+        const h = this.fontHeight / 2;
+        const spacing = 5;
+
+        reactifs.forEach((reactif, index) => {
+            let w = this.writeText(reactif.coefStoechiometrique, x, y, true);
+            x += w;
+            w += this.writeText(reactif.formule, x, y);
+
+            const callback = (event) => {
+                const toAdd = event.button === 0 ? 1 : -1;
+                this.controller.updateCoef(reactif, toAdd, reactifs);
+            }
+
+            this.clickableZones.push(new ClickableZone(x, y - h, w, this.fontHeight, callback));
+
+            x += w + spacing;
+            if (index < reactifs.length - 1) {
+                x += 2 * this.writeText("+", x, y, true);
+                x += spacing;
+            }
+        });
     }
 
     ptActivations(activations) {
-        console.log("Not implemented");
+        let x = 250;
+        const y = 150;
+        const h = this.fontHeight / 2;
+
+        activations.forEach((activation, index) => {
+            let w = this.writeText(activation.formule, x, y);
+            const callback = (event) => {
+                if (event.button !== 0) {
+                    this.controller.updateCoef(activation, -1, activations);
+                }
+            }
+
+            this.clickableZones.push(new ClickableZone(x, y - h, w, this.fontHeight, callback));
+
+            x += w;
+            if (index < activations.length - 1) {
+                x += this.writeText(", ", x, y, true);
+            }
+        });
     }
 
     purifReactifs(reactifs) {
-        console.log("Not implemented");
+        let x = 10;
+        const y = 210;
+        const h = this.fontHeight / 2;
+        const spacing = 5;
+
+        reactifs.forEach((reactif, index) => {
+            let w = this.writeText(reactif.coefStoechiometrique, x, y, true);
+            x += w;
+            w += this.writeText(reactif.formule, x, y);
+
+            const callback = (event) => {
+                const toAdd = event.button === 0 ? 1 : -1;
+                this.controller.updateCoef(reactif, toAdd, reactifs);
+            }
+
+            this.clickableZones.push(new ClickableZone(x, y - h, w, this.fontHeight, callback));
+
+            x += w + spacing;
+            if (index < reactifs.length - 1) {
+                x += 2 * this.writeText("+", x, y, true);
+                x += spacing;
+            }
+        });
     }
 
     purifActivations(activations) {
-        console.log("Not implemented");
+        let x = 250;
+        const y = 230;
+        const h = this.fontHeight / 2;
+
+        activations.forEach((activation, index) => {
+            let w = this.writeText(activation.formule, x, y);
+            const callback = (event) => {
+                if (event.button !== 0) {
+                    this.controller.updateCoef(activation, -1, activations);
+                }
+            }
+
+            this.clickableZones.push(new ClickableZone(x, y - h, w, this.fontHeight, callback));
+
+            x += w;
+            if (index < activations.length - 1) {
+                x += this.writeText(", ", x, y, true);
+            }
+        });
     }
 
-    produit(produit) {
-        console.log("Not implemented");
+    produit(produits) {
+        if (!Array.isArray(produits)) {
+            produits = [produits];
+        }
+    
+        let x = 600;
+        const y = 50;
+        const h = this.fontHeight / 2;
+        const spacing = 5;
+    
+        produits.forEach((produit, index) => {
+            let w = this.writeText(produit.formule, x, y);
+            const callback = (event) => {
+                const toAdd = event.button === 0 ? 1 : -1;
+                this.controller.updateCoef(produit, toAdd, produits);
+            };
+    
+            this.clickableZones.push(new ClickableZone(x, y - h, w, this.fontHeight, callback));
+    
+            x += w + spacing;
+            if (index < produits.length - 1) {
+                x += this.writeText("+", x, y, true) + spacing;
+            }
+        });
     }
 
 }
