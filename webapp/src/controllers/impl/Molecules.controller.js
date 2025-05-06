@@ -60,16 +60,23 @@ export default class MoleculesController extends Controller {
       { label: "Nocif", key: "nocif" },
       { label: "Irritant", key: "irritant" },
       { label: "Explosible", key: "explosible" },
-      { label: "Toxique", key: "toxique" },
+      { label: "GHS-pictogram-skull.svg", key: "toxique" },
       { label: "Inflammable", key: "extremementInflammable" },
     ];
 
     this.headers.forEach(({ label, key }) => {
       const th = document.createElement("th");
-      th.textContent = label;
       th.style.cursor = "pointer";
       th.dataset.key = key;
-      th.addEventListener("click", () => this._toggleSort(key, th));
+  
+      const img = document.createElement("img");
+      img.src = `/webapp/assets/icon/${label}`;
+      img.alt = key;
+      img.title = key;
+      img.style.height = "1.2em";
+      img.style.verticalAlign = "middle";
+  
+      th.appendChild(img);
       row.appendChild(th);
     });
 
@@ -111,10 +118,10 @@ export default class MoleculesController extends Controller {
     const tr = document.createElement("tr");
     this.headers.forEach(({ key }) => {
       const td = document.createElement("td");
-      const val = molecule[key];
-      td.textContent = typeof val === "boolean" ? (val ? "\u2713" : "") : val;
+      td.textContent = molecule[key] || "";
       tr.appendChild(td);
     });
+
     return tr;
   }
 }
