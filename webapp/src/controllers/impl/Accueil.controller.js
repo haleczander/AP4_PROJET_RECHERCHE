@@ -170,6 +170,7 @@ export default class AccueilController extends Controller {
     } else {
       existing.volume += molecule.volume;
     }
+    this.mvcController.updateViews();
     event.target.reset();
   }
 
@@ -194,13 +195,16 @@ export default class AccueilController extends Controller {
       new FormData(event.target)
     );
       list.push(activation);
+      this.mvcController.updateViews();
       event.target.reset();
   }
 
   _addProduit(event, reaction) {
     event.preventDefault();
     const produit = this._createMoleculeReaction(new FormData(event.target));
-    reaction.produit = produit;
+    if (produit) reaction.produit = produit;
+    this.mvcController.updateViews();
+
   }
 
 }

@@ -25,11 +25,20 @@ export default class ReactionMVCController {
 
     updateCoef( molecule, stoechimetrie, liste ) {
         molecule.coefStoechiometrique += stoechimetrie;
+        
         if ( molecule.coefStoechiometrique <= 0 ) {
             const index = liste.indexOf( molecule );
             if ( index > -1 ) {
                 liste.splice( index, 1 );
             }
+        }
+        this.updateViews();
+    }
+
+    removeElement( element, elements ) {
+        const index = elements.indexOf( element );
+        if ( index > -1 ) {
+            elements.splice( index, 1 );
         }
         this.updateViews();
     }

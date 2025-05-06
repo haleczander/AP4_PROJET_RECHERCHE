@@ -27,9 +27,10 @@ export default class CanvasReactionMVCView extends ReactionMVCView {
     constructor(controller, canvas) {
         super(controller)
         this.canvas = canvas;
-        this.canvas.width = 700;
+        this.canvas.width = 1000;
+        this.canvas.height = 200;
         this._initCtx();
-
+        this.currentY = 0;
         this.canvas.addEventListener('contextmenu', (event) => event.preventDefault());
         this.canvas.addEventListener("mousedown", (event) => this._onClick(event));
     }
@@ -82,108 +83,183 @@ export default class CanvasReactionMVCView extends ReactionMVCView {
     }
 
 
-
     rpReactifs(reactifs) {
         let x = 10;
-        const y = 50;
+        let y = 100;
         const h = this.fontHeight / 2;
         const spacing = 5;
-
+        const maxPerLine = 3;
+    
+        // On garde en mémoire les positions pour calcul du nombre de lignes
+        let baseY = y;
+        this.writeText("Réaction principale :", 0, 10, true);
 
         reactifs.forEach((reactif, index) => {
-            let w = this.writeText(reactif.coefStoechiometrique, x, y, true);
-            x += w;
-            w += this.writeText(reactif.formule, x, y);
-
+            if (index > 0 && index % maxPerLine === 0) {
+                y += this.fontHeight + 10;
+                x = 10;
+            }
+    
+            if (x !== 10) {
+                x += this.writeText("+", x, y, true);
+                x += spacing;
+            }
+    
+            let wCoef = this.writeText(reactif.coefStoechiometrique, x, y, true);
+            x += wCoef;
+            let wFormule = this.writeText(reactif.formule, x, y);
+    
             const callback = (event) => {
                 const toAdd = event.button === 0 ? 1 : -1;
                 this.controller.updateCoef(reactif, toAdd, reactifs);
-            }
-
-            this.clickableZones.push(new ClickableZone(x, y - h, w, this.fontHeight, callback));
-
-            x += w + spacing;
-            if (index < reactifs.length - 1) {
-                x += 2 * this.writeText("+", x, y, true);
-                x += spacing;
-            }
+            };
+    
+            this.clickableZones.push(new ClickableZone(x, y - h, wFormule, this.fontHeight, callback));
+            x += wFormule + spacing;
         });
-
+    
+        // Détermination du nombre total de lignes
+        const totalLines = Math.ceil(reactifs.length / maxPerLine);
+        const lineSpacing = this.fontHeight + 10;
+    
+        // Flèche centrée verticalement selon le nombre de lignes
+        const arrowY = baseY + ((totalLines - 1) * lineSpacing) / 2;
+    
+        // X fixe pour la flèche
+        const arrowX = 300;
+        const arrowLength = 100;
+    
+        this.drawArrow(arrowX, arrowY, arrowLength);
+        this.lastArrowX = arrowX;
+        this.lastArrowY = arrowY;
+        this.arrowLength = arrowLength;
     }
 
     rpSolvants(solvants) {
-        let x = 250;
-        const y = 30;
+        if (!this.lastArrowX || !this.arrowLength) return;
+    
+        const centerX = this.lastArrowX + this.arrowLength / 2;
+        const y = this.lastArrowY + 20; // position en dessous de la flèche
         const h = this.fontHeight / 2;
-
-
+    
+        let x = centerX;
+    
+        // Mesurer la largeur totale pour centrage
+        let totalWidth = 0;
+        solvants.forEach((solvant, index) => {
+            totalWidth += this.ctx.measureText(solvant.formule).width;
+            if (index < solvants.length - 1) {
+                totalWidth += this.ctx.measureText(", ").width;
+            }
+        });
+    
+        x -= totalWidth / 2; // centrer
+    
         solvants.forEach((solvant, index) => {
             let w = this.writeText(solvant.formule, x, y);
-
+    
             const callback = (event) => {
-                if (event.button !== 0) {this.controller.updateCoef(solvant, -1, solvants);}
-            }
-
+                if (event.button !== 0) {
+                    this.controller.removeElement(solvant, solvants);
+                }
+            };
+    
             this.clickableZones.push(new ClickableZone(x, y - h, w, this.fontHeight, callback));
-
+    
             x += w;
             if (index < solvants.length - 1) {
                 x += this.writeText(", ", x, y, true);
             }
         });
     }
+    
 
     rpCatalyseurs(catalyseurs) {
-        let x = 250;
-        const y = 10;
+        if (!this.lastArrowX || !this.arrowLength) return;
+    
+        const centerX = this.lastArrowX + this.arrowLength / 2;
+        const y = this.lastArrowY - 20; // position au-dessus de la flèche
         const h = this.fontHeight / 2;
-
-
+    
+        let x = centerX;
+    
+        // Mesurer la largeur totale pour centrage
+        let totalWidth = 0;
+        catalyseurs.forEach((cat, index) => {
+            totalWidth += this.ctx.measureText(cat.formule).width;
+            if (index < catalyseurs.length - 1) {
+                totalWidth += this.ctx.measureText(", ").width;
+            }
+        });
+    
+        x -= totalWidth / 2; // centrer
+    
         catalyseurs.forEach((catalyseur, index) => {
             let w = this.writeText(catalyseur.formule, x, y);
-
+    
             const callback = (event) => {
-                if (event.button !== 0) {this.controller.updateCoef(catalyseur, -1, catalyseurs);}
-            }
-
+                if (event.button !== 0) {
+                    this.controller.removeElement(catalyseur, catalyseurs);
+                }
+            };
+    
             this.clickableZones.push(new ClickableZone(x, y - h, w, this.fontHeight, callback));
-
+    
             x += w;
             if (index < catalyseurs.length - 1) {
                 x += this.writeText(", ", x, y, true);
             }
         });
     }
+    
+rpActivations(activations) {
+    if (!this.lastArrowX || !this.arrowLength || !this.lastArrowY) return;
 
-    rpActivations(activations) {
-        let x = 250;
-        const y = 70;
-        const h = this.fontHeight / 2;
-        const spacing = 5;
-    
-        activations.forEach((activation, index) => {
-            let w = this.writeText(activation.formule, x, y);
-    
-            const callback = (event) => {
-                const toAdd = event.button === 0 ? 1 : -1;
-                this.controller.updateCoef(activation, toAdd, activations);
-            }
-    
-            this.clickableZones.push(new ClickableZone(x, y - h, w, this.fontHeight, callback));
-    
-            x += w + spacing;
-            if (index < activations.length - 1) {
-                x += this.writeText(", ", x, y, true);
-            }
-        });
-    }    
+    const centerX = this.lastArrowX + this.arrowLength / 2;
+    const y = this.lastArrowY + 50; // position sous les solvants
+    const h = this.fontHeight / 2;
+    const spacing = 5;
 
+    let x = centerX;
+
+    // Créer les textes complets des activations avec toutes les infos
+    const activationTexts = activations.map(activation =>
+        `${activation.nom} (${activation.dureeM} min, ${activation.puissanceW} W)`
+    );
+
+    // Mesurer la largeur totale pour centrage
+    let totalWidth = 0;
+    activationTexts.forEach((text, index) => {
+        totalWidth += this.ctx.measureText(text).width;
+        if (index < activationTexts.length - 1) {
+            totalWidth += this.ctx.measureText(", ").width;
+        }
+    });
+
+    x -= totalWidth / 2; // centrer horizontalement
+
+    activationTexts.forEach((text, index) => {
+        let w = this.writeText(text, x, y);
+
+        const callback = (event) => {
+            this.controller.removeElement(activations[index], activations);
+        };
+
+        this.clickableZones.push(new ClickableZone(x, y - h, w, this.fontHeight, callback));
+
+        x += w + spacing;
+        if (index < activationTexts.length - 1) {
+            x += this.writeText(", ", x, y, true);
+        }
+    });
+}
+   
     ptReactifs(reactifs) {
-        let x = 10;
-        const y = 130;
+        let x = 700;
+        const y = 80;
         const h = this.fontHeight / 2;
         const spacing = 5;
-
+        this.writeText(" Traitement post-réactionnel :", 690, 10, true);  
         reactifs.forEach((reactif, index) => {
             let w = this.writeText(reactif.coefStoechiometrique, x, y, true);
             x += w;
@@ -204,33 +280,42 @@ export default class CanvasReactionMVCView extends ReactionMVCView {
         });
     }
 
-    ptActivations(activations) {
-        let x = 250;
-        const y = 150;
-        const h = this.fontHeight / 2;
+ptActivations(activations) {
+    let x = 700;
+    let y = 35;  // Position initiale verticale
+    const h = this.fontHeight / 2;
+    const spacing = 5;
 
-        activations.forEach((activation, index) => {
-            let w = this.writeText(activation.formule, x, y);
-            const callback = (event) => {
-                if (event.button !== 0) {
-                    this.controller.updateCoef(activation, -1, activations);
-                }
-            }
+    activations.forEach((activation, index) => {
+        // Construction du texte avec nom, durée et puissance
+        const activationText = `${activation.nom} (${activation.dureeM} min, ${activation.puissanceW} W)`;
 
-            this.clickableZones.push(new ClickableZone(x, y - h, w, this.fontHeight, callback));
+        let w = this.writeText(activationText, x, y);
 
-            x += w;
-            if (index < activations.length - 1) {
-                x += this.writeText(", ", x, y, true);
-            }
-        });
-    }
+        const callback = (event) => {
+            const toAdd = event.button === 0 ? 1 : -1;
+            this.controller.removeElement(activation, activations);
+        };
+
+        this.clickableZones.push(new ClickableZone(x, y - h, w, this.fontHeight, callback));
+
+        // Mise à jour de la position verticale pour le prochain élément
+        y += this.fontHeight;
+
+        if (index < activations.length - 1) {
+            // Si c'est pas le dernier élément, on ajoute une virgule
+            x += this.writeText("", x, y, true);
+        }
+    });
+}
+
 
     purifReactifs(reactifs) {
-        let x = 10;
-        const y = 210;
+        let x = 700;
+        const y = 195;
         const h = this.fontHeight / 2;
         const spacing = 5;
+        this.writeText(" Purification :", 690, 125, true);
 
         reactifs.forEach((reactif, index) => {
             let w = this.writeText(reactif.coefStoechiometrique, x, y, true);
@@ -252,39 +337,56 @@ export default class CanvasReactionMVCView extends ReactionMVCView {
         });
     }
 
-    purifActivations(activations) {
-        let x = 250;
-        const y = 230;
-        const h = this.fontHeight / 2;
+  purifActivations(activations) {
+    let x = 700;
+    let y = 150;  // Position initiale verticale
+    const h = this.fontHeight / 2;
+    const spacing = 5;
 
-        activations.forEach((activation, index) => {
-            let w = this.writeText(activation.formule, x, y);
-            const callback = (event) => {
-                if (event.button !== 0) {
-                    this.controller.updateCoef(activation, -1, activations);
-                }
-            }
+    activations.forEach((activation, index) => {
+        // Construction du texte avec nom, durée et puissance
+        const activationText = `${activation.nom} (${activation.dureeM} min, ${activation.puissanceW} W)`;
 
-            this.clickableZones.push(new ClickableZone(x, y - h, w, this.fontHeight, callback));
+        let w = this.writeText(activationText, x, y);
 
-            x += w;
-            if (index < activations.length - 1) {
-                x += this.writeText(", ", x, y, true);
-            }
-        });
-    }
+        const callback = (event) => {
+            const toAdd = event.button === 0 ? 1 : -1;
+            this.controller.removeElement(activation, activations);
+        };
+
+        this.clickableZones.push(new ClickableZone(x, y - h, w, this.fontHeight, callback));
+
+        // Mise à jour de la position verticale pour le prochain élément
+        y += this.fontHeight;
+
+        if (index < activations.length - 1) {
+            // Si ce n'est pas le dernier élément, on ajoute une virgule
+            x += this.writeText("", x, y, true);
+        }
+    });
+}
+
 
     produit(produits) {
         if (!Array.isArray(produits)) {
             produits = [produits];
         }
     
-        let x = 600;
-        const y = 50;
         const h = this.fontHeight / 2;
         const spacing = 5;
+        const maxPerLine = 3;
+    
+        const lineSpacing = this.fontHeight + 10;
+        let baseY = this.lastArrowY; // récupère la position définie par les réactifs
+        let x = 450;
+        let y = baseY;
     
         produits.forEach((produit, index) => {
+            if (index > 0 && index % maxPerLine === 0) {
+                y += lineSpacing;
+                x = 450;
+            }
+    
             let w = this.writeText(produit.formule, x, y);
             const callback = (event) => {
                 const toAdd = event.button === 0 ? 1 : -1;
@@ -292,12 +394,36 @@ export default class CanvasReactionMVCView extends ReactionMVCView {
             };
     
             this.clickableZones.push(new ClickableZone(x, y - h, w, this.fontHeight, callback));
-    
             x += w + spacing;
+    
             if (index < produits.length - 1) {
                 x += this.writeText("+", x, y, true) + spacing;
             }
         });
+    
+        // Mise à jour de currentY pour les blocs suivants
+        this.currentY = y + lineSpacing;
     }
+    
+    
 
-}
+    drawArrow(x, y, length = 100, height = 10, lineWidth = 3) {
+        const ctx = this.ctx;
+        const headLength = 10; // longueur de la tête de flèche
+    
+        // Ligne principale
+        ctx.beginPath();
+        ctx.lineWidth = lineWidth;
+        ctx.moveTo(x, y);
+        ctx.lineTo(x + length - headLength, y);
+        ctx.stroke();
+    
+        // Tête de flèche (triangle plein)
+        ctx.beginPath();
+        ctx.moveTo(x + length - headLength, y - height);
+        ctx.lineTo(x + length, y);
+        ctx.lineTo(x + length - headLength, y + height);
+        ctx.closePath();
+        ctx.fill(); // remplit le triangle
+    }
+}   
