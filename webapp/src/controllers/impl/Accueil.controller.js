@@ -126,15 +126,8 @@ export default class AccueilController extends Controller {
         this.reaction.traitementPostReactionnel.reactifs,
       ),
     );
-
-    const ptActivationForm = postTraitementContainer.querySelector(
-      "#form-activation-post-traitement",
-    );
-    this.addListener(ptActivationForm, "submit", (event) =>
-      this._addFormMolecule(
-        event,
-        this.reaction.traitementPostReactionnel.activations,
-      ),
+    this.addListener(form("#form-activation-post-traitement"), "submit", (e) =>
+      this._addFormActivation(e, this.reaction.traitementPostReactionnel.activations)
     );
 
     const purificationContainer = this.container.querySelector(
@@ -147,12 +140,8 @@ export default class AccueilController extends Controller {
     this.addListener(purifReactifForm, "submit", (event) =>
       this._addFormMolecule(event, this.reaction.purification.reactifs),
     );
-
-    const purifActivationForm = purificationContainer.querySelector(
-      "#form-activation-purification",
-    );
-    this.addListener(purifActivationForm, "submit", (event) =>
-      this._addFormMolecule(event, this.reaction.purification.activations),
+    this.addListener(form("#form-activation-purification"), "submit", (e) =>
+      this._addFormActivation(e, this.reaction.purification.activations)
     );
 
     const produitContainer = this.container.querySelector("#container-produit");
@@ -193,7 +182,9 @@ export default class AccueilController extends Controller {
   _addFormMolecule(event, list) {
     event.preventDefault();
     const molecule = this._createMoleculeReaction(new FormData(event.target));
-    list.push(molecule);
+    if (molecule) list.push(molecule);
+    this.mvcController.updateViews();
+
   }
 
   _createActivationReaction(formData) {
@@ -222,16 +213,17 @@ export default class AccueilController extends Controller {
 
   _addFormActivation(event, list) {
     event.preventDefault();
-    const activation = this._createActivationReaction(
-      new FormData(event.target),
-    );
-    list.push(activation);
+    const activation = this._createActivationReaction(new FormData(event.target));
+    if (activation) list.push(activation);
+    this.mvcController.updateViews();
   }
 
   _addProduit(event, reaction) {
     event.preventDefault();
     const produit = this._createMoleculeReaction(new FormData(event.target));
-    reaction.produit = produit;
+    if (produit) reaction.produit = produit;
+    this.mvcController.updateViews();
+
   }
 
 }
