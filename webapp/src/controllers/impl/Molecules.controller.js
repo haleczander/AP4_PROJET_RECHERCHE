@@ -6,7 +6,7 @@ export default class MoleculesController extends Controller {
   init() {
     this.dataService = services.dataService;
     this.molecules = this.dataService.findAllMolecules();
-    this.sortState = { key: null, direction: null }; // null | 'asc' | 'desc'
+    this.sortState = { key: null, direction: null };
     this._initTable();
     this._initSearchBar();
     this._initExport();
@@ -68,6 +68,7 @@ export default class MoleculesController extends Controller {
       const th = document.createElement("th");
       th.textContent = label;
       th.style.cursor = "pointer";
+      th.dataset.key = key;
       th.addEventListener("click", () => this._toggleSort(key, th));
       row.appendChild(th);
     });
@@ -80,28 +81,15 @@ export default class MoleculesController extends Controller {
 
   _toggleSort(key, th) {
     const state = this.sortState;
-    const headers = this.moleculesTable.querySelectorAll("th");
+    const ths = this.moleculesTable.querySelectorAll("th");
 
-    // Reset all headers
-    headers.forEach(h => h.textContent = this.headers.find(col => col.key === h.textContent || h.textContent.includes(col.label))?.label);
+    ths.forEach((h, i) => h.textContent = this.headers[i].label);
 
     if (state.key === key) {
-      if (state.direction === "asc") {
-        state.direction = "desc";
-        th.textContent += " ▼";
-      } else if (state.direction === "desc") {
-        state.key = null;
-        state.direction = null;
-        this.updateData(this.molecules);
-        return;
-      } else {
-        state.direction = "asc";
-        th.textContent += " ▲";
-      }
+      state.direction = state.direction === "asc" ? "desc" : "asc";
     } else {
       state.key = key;
       state.direction = "asc";
-      th.textContent += " ▲";
     }
 
     const sorted = [...this.molecules].sort((a, b) => {
@@ -119,18 +107,14 @@ export default class MoleculesController extends Controller {
     mols.forEach(m => this.moleculesTableData.appendChild(this._createRow(m)));
   }
 
-  _createRow(m) {
+  _createRow(molecule) {
     const tr = document.createElement("tr");
-    const vals = [
-      m.nom, m.formule, m.masseMolaire, m.nbCarbone,
-      m.nocif, m.irritant, m.explosible, m.toxique, m.extremementInflammable,
-    ];
-    vals.forEach(v => {
+    this.headers.forEach(({ key }) => {
       const td = document.createElement("td");
-      td.textContent = typeof v === "boolean" ? (v ? "✓" : "") : v;
+      const val = molecule[key];
+      td.textContent = typeof val === "boolean" ? (val ? "\u2713" : "") : val;
       tr.appendChild(td);
     });
     return tr;
   }
 }
-  
