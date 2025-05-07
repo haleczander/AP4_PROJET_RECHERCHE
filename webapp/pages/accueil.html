@@ -12,55 +12,29 @@
         <!-- Réactif -->
         <form id="form-reactif-reaction-principale">
           <div>
-            <label for="coefStoechiometrique"
-              >Coefficient stœchiométrique</label
-            >
-            <input
-              type="number"
-              id="coefStoechiometrique"
-              name="coefStoechiometrique"
-              value="1"
-            />
+            <label for="coefStoechiometrique">Coefficient stœchiométrique</label>
+            <input type="number" id="coefStoechiometrique" name="coefStoechiometrique" value="1" />
           </div>
 
           <div>
             <label for="molecule">Molécule</label>
-            <input
-              list="datalist-molecules"
-              id="molecule"
-              name="molecule"
-              placeholder="Recherche réactif"
-            />
+            <input list="datalist-molecules" autocomplete="off" id="molecule" name="molecule"
+              placeholder="Recherche réactif" />
           </div>
 
           <div>
             <label for="purete">Pureté (%)</label>
-            <input
-              type="number"
-              id="purete"
-              name="purete"
-              placeholder="Pureté (%)"
-            />
+            <input type="number" id="purete" name="purete" placeholder="Pureté (%)" />
           </div>
 
           <div>
             <label for="volume">Volume (mL)</label>
-            <input
-              type="number"
-              id="volume"
-              name="volume"
-              placeholder="Volume (mL)"
-            />
+            <input type="number" id="volume" name="volume" placeholder="Volume (mL)" />
           </div>
 
           <div>
             <label for="prixG">Prix/g (€)</label>
-            <input
-              type="number"
-              id="prixG"
-              name="prixG"
-              placeholder="Prix/g (€)"
-            />
+            <input type="number" id="prixG" name="prixG" placeholder="Prix/g (€)" />
           </div>
 
           <input type="submit" value="+" />
@@ -70,42 +44,23 @@
         <form id="form-catalyseur-reaction-principale">
           <div>
             <label for="molecule">Recherche catalyseur</label>
-            <input
-              list="datalist-molecules"
-              id="molecule"
-              name="molecule"
-              placeholder="Recherche catalyseur"
-            />
+            <input list="datalist-molecules" autocomplete="off" id="molecule" name="molecule"
+              placeholder="Recherche catalyseur" />
           </div>
 
           <div>
             <label for="catalyseurPurete">Pureté (%)</label>
-            <input
-              type="number"
-              id="catalyseurPurete"
-              name="catalyseurPurete"
-              placeholder="Pureté (%)"
-            />
+            <input type="number" id="catalyseurPurete" name="catalyseurPurete" placeholder="Pureté (%)" />
           </div>
 
           <div>
             <label for="catalyseurVolume">Volume (mL)</label>
-            <input
-              type="number"
-              id="catalyseurVolume"
-              name="catalyseurVolume"
-              placeholder="Volume (mL)"
-            />
+            <input type="number" id="catalyseurVolume" name="catalyseurVolume" placeholder="Volume (mL)" />
           </div>
 
           <div>
             <label for="catalyseurPrixG">Prix/g (€)</label>
-            <input
-              type="number"
-              id="catalyseurPrixG"
-              name="catalyseurPrixG"
-              placeholder="Prix/g (€)"
-            />
+            <input type="number" id="catalyseurPrixG" name="catalyseurPrixG" placeholder="Prix/g (€)" />
           </div>
 
           <input type="submit" value="+" />
@@ -115,42 +70,23 @@
         <form id="form-solvant-reaction-principale">
           <div>
             <label for="molecule">Recherche solvant</label>
-            <input
-              list="datalist-molecules"
-              id="molecule"
-              name="molecule"
-              placeholder="Recherche solvant"
-            />
+            <input list="datalist-molecules" autocomplete="off" id="molecule" name="molecule"
+              placeholder="Recherche solvant" />
           </div>
 
           <div>
             <label for="solvantPurete">Pureté (%)</label>
-            <input
-              type="number"
-              id="solvantPurete"
-              name="solvantPurete"
-              placeholder="Pureté (%)"
-            />
+            <input type="number" id="solvantPurete" name="solvantPurete" placeholder="Pureté (%)" />
           </div>
 
           <div>
             <label for="solvantVolume">Volume (mL)</label>
-            <input
-              type="number"
-              id="solvantVolume"
-              name="solvantVolume"
-              placeholder="Volume (mL)"
-            />
+            <input type="number" id="solvantVolume" name="solvantVolume" placeholder="Volume (mL)" />
           </div>
 
           <div>
             <label for="solvantPrixG">Prix/g (€)</label>
-            <input
-              type="number"
-              id="solvantPrixG"
-              name="solvantPrixG"
-              placeholder="Prix/g (€)"
-            />
+            <input type="number" id="solvantPrixG" name="solvantPrixG" placeholder="Prix/g (€)" />
           </div>
 
           <input type="submit" value="+" />
@@ -160,42 +96,23 @@
         <form id="form-activation-reaction-principale">
           <div>
             <label for="activationNom">Recherche activation</label>
-            <input
-              list="datalist-activations"
-              id="activationNom"
-              name="activationNom"
-              placeholder="Recherche activations"
-            />
+            <input list="datalist-activations" autocomplete="off" id="activationNom" name="activationNom"
+              placeholder="Recherche activations" />
           </div>
 
           <div>
             <label for="activationDuree">Durée (min)</label>
-            <input
-              type="number"
-              id="activationDuree"
-              name="activationDuree"
-              placeholder="Durée (min)"
-            />
+            <input type="number" id="activationDuree" name="activationDuree" placeholder="Durée (min)" />
           </div>
 
           <div>
             <label for="activationPuissance">Puissance (W)</label>
-            <input
-              type="number"
-              id="activationPuissance"
-              name="activationPuissance"
-              placeholder="Puissance (W)"
-            />
+            <input type="number" id="activationPuissance" name="activationPuissance" placeholder="Puissance (W)" />
           </div>
 
           <div>
             <label for="prixEnergie"> Prix du kWh (€)</label>
-            <input
-              type="number"
-              name="prixEnergie"
-              id="prixEnergie"
-              step=".001"
-            />
+            <input type="number" name="prixEnergie" id="prixEnergie" step=".001" />
             <!-- <label for="activationEnergie">Énergie (kWh)</label>
             <input type="number" id="activationEnergie" name="activationEnergie" placeholder="Énergie (kWh)"> -->
           </div>
@@ -207,56 +124,29 @@
         <h3>Traitement post-réactionnel</h3>
         <form id="form-reactif-post-traitement">
           <div>
-            <label for="coefStoechiometrique"
-              >Coefficient stœchiométrique</label
-            >
-            <input
-              type="number"
-              id="coefStoechiometrique"
-              name="coefStoechiometrique"
-              value="1"
-            />
+            <label for="coefStoechiometrique">Coefficient stœchiométrique</label>
+            <input type="number" id="coefStoechiometrique" name="coefStoechiometrique" value="1" />
           </div>
 
           <div>
             <label for="molecule">Molécule</label>
-            <input
-              list="datalist-molecules"
-              id="molecule"
-              name="molecule"
-              placeholder="Recherche réactif"
-            />
+            <input list="datalist-molecules" autocomplete="off" id="molecule" name="molecule"
+              placeholder="Recherche réactif" />
           </div>
 
           <div>
             <label for="purete">Pureté (%)</label>
-            <input
-              type="number"
-              id="purete"
-              name="purete"
-              placeholder="Pureté (%)"
-            />
+            <input type="number" id="purete" name="purete" placeholder="Pureté (%)" />
           </div>
 
           <div>
             <label for="volume">Volume (mL)</label>
-            <input
-              type="number"
-              id="volume"
-              name="volume"
-              placeholder="Volume (mL)"
-            />
+            <input type="number" id="volume" name="volume" placeholder="Volume (mL)" />
           </div>
 
           <div>
             <label for="prixG">Prix/g (€)</label>
-            <input
-              type="number"
-              id="prixG"
-              name="prixG"
-              placeholder="Prix/g (€)"
-              step=".001"
-            />
+            <input type="number" id="prixG" name="prixG" placeholder="Prix/g (€)" step=".001" />
           </div>
 
           <input type="submit" value="+" />
@@ -265,42 +155,23 @@
         <form id="form-activation-post-traitement">
           <div>
             <label for="activationNom">Recherche activation</label>
-            <input
-              list="datalist-activations"
-              id="activationNom"
-              name="activationNom"
-              placeholder="Recherche activations"
-            />
+            <input list="datalist-activations" autocomplete="off" id="activationNom" name="activationNom"
+              placeholder="Recherche activations" />
           </div>
 
           <div>
             <label for="activationDuree">Durée (min)</label>
-            <input
-              type="number"
-              id="activationDuree"
-              name="activationDuree"
-              placeholder="Durée (min)"
-            />
+            <input type="number" id="activationDuree" name="activationDuree" placeholder="Durée (min)" />
           </div>
 
           <div>
             <label for="activationPuissance">Puissance (W)</label>
-            <input
-              type="number"
-              id="activationPuissance"
-              name="activationPuissance"
-              placeholder="Puissance (W)"
-            />
+            <input type="number" id="activationPuissance" name="activationPuissance" placeholder="Puissance (W)" />
           </div>
 
           <div>
             <label for="prixEnergie"> Prix du kWh (€)</label>
-            <input
-              type="number"
-              name="prixEnergie"
-              id="prixEnergie"
-              step=".001"
-            />
+            <input type="number" name="prixEnergie" id="prixEnergie" step=".001" />
             <!-- <label for="activationEnergie">Énergie (kWh)</label>
             <input type="number" id="activationEnergie" name="activationEnergie" placeholder="Énergie (kWh)"> -->
           </div>
@@ -312,55 +183,29 @@
         <h3>Purification</h3>
         <form id="form-reactif-purification">
           <div>
-            <label for="coefStoechiometrique"
-              >Coefficient stœchiométrique</label
-            >
-            <input
-              type="number"
-              id="coefStoechiometrique"
-              name="coefStoechiometrique"
-              value="1"
-            />
+            <label for="coefStoechiometrique">Coefficient stœchiométrique</label>
+            <input type="number" id="coefStoechiometrique" name="coefStoechiometrique" value="1" />
           </div>
 
           <div>
             <label for="molecule">Molécule</label>
-            <input
-              list="datalist-molecules"
-              id="molecule"
-              name="molecule"
-              placeholder="Recherche réactif"
-            />
+            <input list="datalist-molecules" autocomplete="off" id="molecule" name="molecule"
+              placeholder="Recherche réactif" />
           </div>
 
           <div>
             <label for="purete">Pureté (%)</label>
-            <input
-              type="number"
-              id="purete"
-              name="purete"
-              placeholder="Pureté (%)"
-            />
+            <input type="number" id="purete" name="purete" placeholder="Pureté (%)" />
           </div>
 
           <div>
             <label for="volume">Volume (mL)</label>
-            <input
-              type="number"
-              id="volume"
-              name="volume"
-              placeholder="Volume (mL)"
-            />
+            <input type="number" id="volume" name="volume" placeholder="Volume (mL)" />
           </div>
 
           <div>
             <label for="prixG">Prix/g (€)</label>
-            <input
-              type="number"
-              id="prixG"
-              name="prixG"
-              placeholder="Prix/g (€)"
-            />
+            <input type="number" id="prixG" name="prixG" placeholder="Prix/g (€)" />
           </div>
 
           <input type="submit" value="+" />
@@ -369,42 +214,23 @@
         <form id="form-activation-purification">
           <div>
             <label for="activationNom">Recherche activation</label>
-            <input
-              list="datalist-activations"
-              id="activationNom"
-              name="activationNom"
-              placeholder="Recherche activations"
-            />
+            <input list="datalist-activations" autocomplete="off" id="activationNom" name="activationNom"
+              placeholder="Recherche activations" />
           </div>
 
           <div>
             <label for="activationDuree">Durée (min)</label>
-            <input
-              type="number"
-              id="activationDuree"
-              name="activationDuree"
-              placeholder="Durée (min)"
-            />
+            <input type="number" id="activationDuree" name="activationDuree" placeholder="Durée (min)" />
           </div>
 
           <div>
             <label for="activationPuissance">Puissance (W)</label>
-            <input
-              type="number"
-              id="activationPuissance"
-              name="activationPuissance"
-              placeholder="Puissance (W)"
-            />
+            <input type="number" id="activationPuissance" name="activationPuissance" placeholder="Puissance (W)" />
           </div>
 
           <div>
             <label for="prixEnergie"> Prix du kWh (€)</label>
-            <input
-              type="number"
-              name="prixEnergie"
-              id="prixEnergie"
-              step=".001"
-            />
+            <input type="number" name="prixEnergie" id="prixEnergie" step=".001" />
             <!-- <label for="activationEnergie">Énergie (kWh)</label>
             <input type="number" id="activationEnergie" name="activationEnergie" placeholder="Énergie (kWh)"> -->
           </div>
@@ -416,56 +242,29 @@
         <h3>Produit</h3>
         <form id="form-produit">
           <div>
-            <label for="coefStoechiometrique"
-              >Coefficient stœchiométrique</label
-            >
-            <input
-              type="number"
-              id="coefStoechiometrique"
-              name="coefStoechiometrique"
-              value="1"
-            />
+            <label for="coefStoechiometrique">Coefficient stœchiométrique</label>
+            <input type="number" id="coefStoechiometrique" name="coefStoechiometrique" value="1" />
           </div>
 
           <div>
             <label for="molecule">Molécule</label>
-            <input
-              list="datalist-molecules"
-              id="molecule"
-              name="molecule"
-              placeholder="Recherche réactif"
-            />
+            <input list="datalist-molecules" autocomplete="off" id="molecule" name="molecule"
+              placeholder="Recherche réactif" />
           </div>
 
           <div>
             <label for="purete">Pureté (%)</label>
-            <input
-              type="number"
-              id="purete"
-              name="purete"
-              placeholder="Pureté (%)"
-            />
+            <input type="number" id="purete" name="purete" placeholder="Pureté (%)" />
           </div>
 
           <div>
             <label for="volume">Volume (mL)</label>
-            <input
-              type="number"
-              id="volume"
-              name="volume"
-              placeholder="Volume (mL)"
-            />
+            <input type="number" id="volume" name="volume" placeholder="Volume (mL)" />
           </div>
 
           <div>
             <label for="prixG">Prix/g (€)</label>
-            <input
-              type="number"
-              id="prixG"
-              name="prixG"
-              placeholder="Prix/g (€)"
-              step=".001"
-            />
+            <input type="number" id="prixG" name="prixG" placeholder="Prix/g (€)" step=".001" />
           </div>
 
           <input type="submit" value="+" />

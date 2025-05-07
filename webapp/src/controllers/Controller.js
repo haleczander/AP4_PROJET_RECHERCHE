@@ -24,4 +24,8 @@ export default class Controller {
     const subscription = observable.subscribe();
     this.subscriptions.push(subscription);
   }
+
+  loading( bool ) {
+    this.container.classList.toggle("loading", bool);
+  }
 }

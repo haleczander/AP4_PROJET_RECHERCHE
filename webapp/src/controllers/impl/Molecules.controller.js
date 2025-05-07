@@ -6,16 +6,47 @@ import { round } from "../../utils/math.utils";
 
 
 import { getMasseMolaire, getNbCarbone } from "../../utils/molecules.utils";
+import { exportJson, importJson } from "../../utils/importExport.utils";
 export default class MoleculesController extends Controller {
   init() {
     this.dataService = services.dataService;
 
-    this.molecules = this.dataService.findAllMolecules();
+    this._initData();
     this.sortState = { key: null, direction: null };
     this._initTable();
     this._initSearchBar();
-    this._initExport();
-    this.updateData(this.molecules);
+  }
+
+  async _initData() {
+    this.loading(true);
+    this.dataService.ready().then(() => {
+      this.molecules = this.dataService.findAllMolecules();
+      this._initExport();
+      this._initImport();
+    })
+    .then( () => this.updateData(this.molecules) )
+    .then(() => this.loading(false));
+  }
+
+  _initImport() {
+    const btn = this.container.querySelector("#import-btn");
+    this.addListener(btn, "click", (e) => {
+      e.preventDefault();
+      const onload = (e) => {
+        try {
+          const data = JSON.parse(e.target.result);
+          if (!data || !data.data || !data.data.molecules || !data.data.activations) {
+            throw new Error("Invalid JSON structure");
+          }
+          this.dataService.importData(data.data.molecules, data.data.activations);
+          this.molecules = this.dataService.findAllMolecules();
+          this.updateData(this.molecules);
+        } catch (error) {
+          console.error("Error parsing JSON file:", error);
+        }
+      };
+      importJson(onload);
+    });
   }
 
   _initExport() {
@@ -30,15 +61,7 @@ export default class MoleculesController extends Controller {
           activations: this.dataService.findAllActivations(),
         },
       };
-      const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `export-molecules-${data.date}.json`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      setTimeout(() => URL.revokeObjectURL(url), 1000);
+      exportJson(data, `export-molecules-${data.date}`);
     });
   }
 
