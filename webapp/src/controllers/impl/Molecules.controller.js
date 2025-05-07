@@ -1,6 +1,8 @@
 import services from "../../services/services";
 import Controller from "../Controller";
 import { filterMolecule } from "../../utils/filters.utils";
+import { formatFormulaToSubscript } from "../../utils/html.utils";
+
 
 export default class MoleculesController extends Controller {
   init() {
@@ -54,7 +56,7 @@ export default class MoleculesController extends Controller {
 
     this.headers = [
       { label: "Nom", key: "nom" },
-      { label: "Formule Brute", key: "formule" },
+      { label: "Formule brute", key: "formule" },
       { label: "Masse molaire", key: "masseMolaire" },
       { label: "C", key: "nbCarbone" },
       { label: "Nocif", key: "nocif" },
@@ -112,7 +114,15 @@ export default class MoleculesController extends Controller {
     this.headers.forEach(({ key }) => {
       const td = document.createElement("td");
       const val = molecule[key];
-      td.textContent = typeof val === "boolean" ? (val ? "\u2713" : "") : val;
+
+      if (typeof val === "boolean") {
+        td.textContent = val ? "\u2713" : "";
+      } else if (key === "formule" && typeof val === "string") {
+        td.innerHTML = formatFormulaToSubscript(val);
+      } else {
+        td.textContent = val;
+      }
+
       tr.appendChild(td);
     });
     return tr;
