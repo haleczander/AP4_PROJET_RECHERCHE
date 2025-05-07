@@ -2,6 +2,7 @@ import Molecule from "../models/molecule.model";
 import MoleculeReaction from "../models/molecule.reaction.model";
 import Produit from "../models/molecule.produit.model";
 import { REGEX_FORMULA_PARSER } from "../constants";
+import TablePeriodiqueService from "../services/tablePeriodique.service";
 
 function getCoef(molecule, indicateursFn, purete = false) {
   const masseG = purete ? getMassePureteG(molecule) : getMasseG(molecule);
@@ -81,10 +82,21 @@ export function getIndicateursCMR(molecule) {
   };
 }
 
+export function getMasseMolaire(molecule) {
+  const atomes = moleculeFormulaParser(molecule);
+  return new TablePeriodiqueService().getMasseMoleculaire( atomes );
+}
+
+export function getNbCarbone(molecule) {
+  const atomes = moleculeFormulaParser(molecule);
+  return atomes["C"] || 0;
+}
+  
+
 export function getNParMmol(molecule) {
   const masseG = getMasseG(molecule);
   const purete = molecule.purete;
-  const masseMolaire = molecule.masseMolaire;
+  const masseMolaire = getMasseMolaire( molecule ); //#TODO mettre dans un service
 
   return (10 * masseG * purete) / masseMolaire;
 }

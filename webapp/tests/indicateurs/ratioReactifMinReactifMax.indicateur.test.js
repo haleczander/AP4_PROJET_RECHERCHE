@@ -11,7 +11,7 @@ describe("test RatioReactifMinReactifMax : Reaction de Biginelli", () => {
   });
 
   test("Réaction Principale", () => {
-    expect(indicateur.reactionPrincipale(reaction)).toBeCloseTo(0.658, 3);
+    expect(indicateur.reactionPrincipale(reaction)).toBeCloseTo(0.657, 3);
   });
 
   test("Réaction complète", () => {

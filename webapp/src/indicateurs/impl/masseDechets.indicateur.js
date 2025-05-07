@@ -1,12 +1,9 @@
-import ReactionService from "../../services/reaction.service";
 import Indicateur from "../indicateur";
 
 export class MasseDechetsIndicateur extends Indicateur {
-  reactionService;
 
   constructor() {
     super("Masse des déchets", "masseDechets");
-    this.reactionService = new ReactionService();
   }
 
   reactionPrincipale(reaction) {

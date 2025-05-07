@@ -1,12 +1,15 @@
 import services from "../../services/services";
 import Controller from "../Controller";
 import { filterMolecule } from "../../utils/filters.utils";
-import { formatFormulaToSubscript } from "../../utils/html.utils";
+import { htmlFormulaFormatter } from "../../utils/html.utils";
+import { round } from "../../utils/math.utils";
 
 
+import { getMasseMolaire, getNbCarbone } from "../../utils/molecules.utils";
 export default class MoleculesController extends Controller {
   init() {
     this.dataService = services.dataService;
+
     this.molecules = this.dataService.findAllMolecules();
     this.sortState = { key: null, direction: null };
     this._initTable();
@@ -109,22 +112,25 @@ export default class MoleculesController extends Controller {
     mols.forEach(m => this.moleculesTableData.appendChild(this._createRow(m)));
   }
 
+  _createTd( innerHtml ) {
+    const td = document.createElement("td");
+    td.innerHTML = innerHtml;
+    return td;
+  }
+
   _createRow(molecule) {
     const tr = document.createElement("tr");
-    this.headers.forEach(({ key }) => {
-      const td = document.createElement("td");
-      const val = molecule[key];
 
-      if (typeof val === "boolean") {
-        td.textContent = val ? "\u2713" : "";
-      } else if (key === "formule" && typeof val === "string") {
-        td.innerHTML = formatFormulaToSubscript(val);
-      } else {
-        td.textContent = val;
-      }
+    tr.appendChild(this._createTd(molecule.nom));
+    tr.appendChild(this._createTd(htmlFormulaFormatter(molecule.formule)));
+    tr.appendChild(this._createTd(round(getMasseMolaire(molecule), 2)));
+    tr.appendChild(this._createTd(getNbCarbone(molecule)));
+    tr.appendChild(this._createTd(molecule.nocif ? "\u2713" : ""));
+    tr.appendChild(this._createTd(molecule.irritant ? "\u2713" : ""));
+    tr.appendChild(this._createTd(molecule.explosible ? "\u2713" : ""));
+    tr.appendChild(this._createTd(molecule.toxique ? "\u2713" : ""));
+    tr.appendChild(this._createTd(molecule.extremementInflammable ? "\u2713" : ""));
 
-      tr.appendChild(td);
-    });
     return tr;
   }
 }

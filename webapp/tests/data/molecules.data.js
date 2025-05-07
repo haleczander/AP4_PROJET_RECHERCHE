@@ -146,7 +146,7 @@ export const EAU = createMolecule(
 
 export const PRODUIT_BIGINELLI = createMolecule(
   "Produit Biginelli",
-  "C13H16N2O3",
+  "C14H16N2O3",
   "5395-36-8",
   260.29,
   null,

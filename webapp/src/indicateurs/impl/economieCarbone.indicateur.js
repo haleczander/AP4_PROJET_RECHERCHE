@@ -1,10 +1,9 @@
-import ReactionService from "../../services/reaction.service";
+import { getNbCarbone } from "../../utils/molecules.utils";
 import Indicateur from "../indicateur";
 
 export class EconomieAtomesIndicateur extends Indicateur {
   constructor() {
     super("Économie de Carbone", "EC");
-    this.reactionService = new ReactionService();
   }
 
   reactionPrincipale(reaction) {
@@ -14,7 +13,7 @@ export class EconomieAtomesIndicateur extends Indicateur {
         SOMME(E6:E9) = somme nbCarbone Reactifs
         */
     const nbCarboneReactifs = this.reactionService.nbCarboneReactifs(reaction);
-    const nbcarboneProduit = reaction.produit.nbCarbone;
+    const nbcarboneProduit = getNbCarbone(reaction.produit);
     return nbcarboneProduit / nbCarboneReactifs;
   }
 

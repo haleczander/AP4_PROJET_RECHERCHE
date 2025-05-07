@@ -5,7 +5,6 @@ import FacteurStoechiometriqueIndicateur from "./facteurStoechiometrique.indicat
 export class FacteurStoechiometriqueInverseIndicateur extends Indicateur {
   constructor() {
     super("Facteur stoechiométrique Inverse", "1/FSt");
-    this.reactionService = new ReactionService();
     this.indicateurFSt = new FacteurStoechiometriqueIndicateur();
   }
 

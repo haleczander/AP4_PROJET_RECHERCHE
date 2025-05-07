@@ -5,7 +5,6 @@ import Indicateur from "../indicateur";
 export class RendementIndicateur extends Indicateur {
   constructor() {
     super("Rendement", "ρ");
-    this.reactionService = new ReactionService();
   }
 
   reactionPrincipale(reaction) {

@@ -1,4 +1,3 @@
-import { Resultat } from "../models/resultat.model";
 import { getPrixEnergie } from "../utils/activations.utils";
 import {
   atomesDiff,
@@ -8,18 +7,16 @@ import {
   getCoefDanger,
   getCoefToxicite,
   getMasseG,
-  getMassePureteG,
+  getMasseMolaire,
   getMasseRecycleeG,
   getMasseRecycleePureteG,
+  getNbCarbone,
   getPrixEuro,
   moleculeFormulaParser,
 } from "../utils/molecules.utils";
 import {
-  getSum,
-  getSumMasseG,
-  getSumMassePureteG,
+  getSum
 } from "../utils/reactions.utils";
-
 export default class ReactionService {
   constructor() {}
 
@@ -32,11 +29,11 @@ export default class ReactionService {
   }
 
   masseMolaireReactifs(reaction) {
-    return getSum(this.reactifs(reaction), (reactif) => reactif.masseMolaire);
+    return getSum(this.reactifs(reaction), getMasseMolaire );
   }
 
   nbCarboneReactifs(reaction) {
-    return getSum(this.reactifs(reaction), (reactif) => reactif.nbCarbone);
+    return getSum(this.reactifs(reaction), getNbCarbone);
   }
 
   coefDangerReactifs(reaction) {
@@ -297,7 +294,7 @@ export default class ReactionService {
     const produit = reaction.produit;
     const purete = produit.purete / 100;
     const massePure = purete * produit.masseG;
-    return massePure / produit.masseMolaire;
+    return massePure / getMasseMolaire(produit);
   }
 
   residuReaction(reaction) {

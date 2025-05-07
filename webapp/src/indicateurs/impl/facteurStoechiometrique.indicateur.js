@@ -7,7 +7,6 @@ import RendementIndicateur from "./rendement.indicateur";
 export class FacteurStoechiometriqueIndicateur extends Indicateur {
   constructor() {
     super("Facteur stoechiométrique", "FSt");
-    this.reactionService = new ReactionService();
     this.indicateurEconomieAtomes = new EconomieAtomesIndicateur();
     this.indicateurRendement = new RendementIndicateur();
     this.indicateurEmr = new EfficaciteMassiqueReactionIndicateur();

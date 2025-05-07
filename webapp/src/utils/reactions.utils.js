@@ -36,10 +36,6 @@ export function getSumPrixEuro(molecules) {
   return getSum(molecules, getPrixEuro);
 }
 
-export function getSumMasseMolaire(molecules) {
-  return getSum(molecules, (molecule) => molecule.masseMolaire);
-}
-
 export function getSumEnergieKWh(activations) {
   return getSum(activations, getEnergieKWh);
 }

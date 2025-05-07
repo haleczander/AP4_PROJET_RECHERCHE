@@ -27,7 +27,7 @@ describe("test molecules.utils : Ethanol", () => {
   });
 
   test("test getNParMmol Ethanol", () => {
-    expect(getNParMmol(TEST_ETHANOL)).toBeCloseTo(77.285, 3);
+    expect(getNParMmol(TEST_ETHANOL)).toBeCloseTo(77.283, 3);
   });
 
   test("test getPrixEuro Ethanol", () => {

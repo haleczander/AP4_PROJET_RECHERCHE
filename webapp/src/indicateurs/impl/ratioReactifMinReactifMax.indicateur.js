@@ -5,7 +5,6 @@ import Indicateur from "../indicateur";
 export class ratioNreactifsMinSurMaxIndicateur extends Indicateur {
   constructor() {
     super("nréactif min / nréactif max", "1/Fst,n");
-    this.reactionService = new ReactionService();
   }
 
   reactionPrincipale(reaction) {

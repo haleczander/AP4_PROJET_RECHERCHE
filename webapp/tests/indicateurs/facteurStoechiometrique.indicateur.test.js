@@ -11,7 +11,7 @@ describe("test FacteurStoechimetrique : Reaction de Biginelli", () => {
   });
 
   test("Réaction Principale", () => {
-    expect(indicateur.reactionPrincipale(reaction)).toBeCloseTo(1.239, 3);
+    expect(indicateur.reactionPrincipale(reaction)).toBeCloseTo(1.2395, 4);
   });
 
   test("Réaction complète", () => {

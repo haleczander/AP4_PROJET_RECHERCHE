@@ -9,7 +9,6 @@ import Indicateur from "../indicateur";
 export class CoefToxiciteIndicateur extends Indicateur {
   constructor() {
     super("Coefficient de Toxicité", "Tox");
-    this.reactionService = new ReactionService();
   }
 
   reactionPrincipale(reaction) {
