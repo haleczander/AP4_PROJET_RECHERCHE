@@ -1,4 +1,4 @@
-import { LocalDataService } from "../../../src/services/impl/local.data.service";
+import LocalDataService from "../../../src/services/impl/local.data.service";
 import {
   BENZALDEHYDE,
   UREE,
@@ -22,7 +22,7 @@ describe("LocalDataService", () => {
       ETHANOL,
       EAU,
     ];
-    service.molecules = mockMolecules;
+    service.importData(mockMolecules, []);
   });
 
   test("Vérifier le chargement des molécules définies", () => {

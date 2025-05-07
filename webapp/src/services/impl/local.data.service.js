@@ -3,9 +3,15 @@ import { filterMolecule } from "../../utils/filters.utils";
 import CASComparison from "../../comparisons/impl/CAS.comparison";
 import ContainsIgnoreCaseComparison from "../../comparisons/impl/ContainsIgnoreCase.comparison";
 
-export class LocalDataService extends DataService {
+export default class LocalDataService extends DataService {
   _molecules = [];
   _activations = [];
+
+
+  _readyPromise = null;
+  readyPromise = new Promise((resolve) => {
+    this._readyPromise = resolve;
+  });
 
   constructor() {
     super();
@@ -13,8 +19,18 @@ export class LocalDataService extends DataService {
     this.containsIgnoreCaseComp = new ContainsIgnoreCaseComparison();
   }
 
-  set molecules(molecules) {
+  async ready() {
+    await this.readyPromise;
+  }
+
+  importData(molecules, activations) {
+    if (!Array.isArray(molecules) || !Array.isArray(activations)) {
+      throw new Error("Invalid data format. Expected arrays.");
+    }
+
     this._molecules = molecules;
+    this._activations = activations;
+    this._readyPromise();
   }
 
   addMolecule( molecule ) {
@@ -23,10 +39,6 @@ export class LocalDataService extends DataService {
 
   addActivation( activation ) {
     this._activations.push( activation );
-  }
-
-  set activations(activations) {
-    this._activations = activations;
   }
 
   findAllMolecules() {
@@ -61,5 +73,3 @@ export class LocalDataService extends DataService {
     return [ ...this._activations ];
   }
 }
-
-export default LocalDataService;
