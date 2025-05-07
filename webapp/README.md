@@ -1,6 +1,10 @@
 # Calculateur des métriques de la chimie verte
 
 
+## Crédits 
+- Table périodique des éléments : [Bowserinator@github]("https://github.com/Bowserinator/Periodic-Table-JSON")
+
+
 ## Installation du projet ( dev )
 **S'assurer d'avoir node d'installé**
 ```cmd
@@ -14,6 +18,8 @@ npm i --save-dev
 ```cmd
 npm run build
 npm run watch
-npm un test
+npm run test
 ```
+
+Lancement du serveur : `npm run start`
 

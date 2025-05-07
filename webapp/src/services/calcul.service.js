@@ -1,13 +1,11 @@
 import { Resultat } from "../models/resultat.model";
 import { round } from "../utils/math.utils";
-import ReactionService from "./reaction.service";
 
 export class CalculService {
   indicateurs = [];
 
   constructor(precision = 3) {
     this.precision = precision;
-    this.reactionService = new ReactionService();
   }
 
   calculReactionPrincipale(reaction, ...indicateurs) {
@@ -47,7 +45,6 @@ export class CalculService {
     const resultats = new Resultat();
     resultats.complete = this.calculReactionComplete( reaction, ...indicateurs );
     resultats.principale = this.calculReactionPrincipale( reaction, ...indicateurs );
-    resultats.residu = this.reactionService.residuReaction( reaction );
     return resultats;
   }
 }

@@ -1,10 +1,9 @@
-import ReactionService from "../../services/reaction.service";
 import Indicateur from "../indicateur";
+import { getMasseMolaire } from "../../utils/molecules.utils";
 
 export class EconomieAtomesIndicateur extends Indicateur {
   constructor() {
     super("Économie d'atomes", "EA");
-    this.reactionService = new ReactionService();
   }
 
   reactionPrincipale(reaction) {
@@ -15,7 +14,7 @@ export class EconomieAtomesIndicateur extends Indicateur {
         */
     const masseMolaireReactifs =
       this.reactionService.masseMolaireReactifs(reaction);
-    const masseMolaireProduit = reaction.produit.masseMolaire;
+    const masseMolaireProduit =  getMasseMolaire( reaction.produit );
     return masseMolaireProduit / masseMolaireReactifs;
   }
 

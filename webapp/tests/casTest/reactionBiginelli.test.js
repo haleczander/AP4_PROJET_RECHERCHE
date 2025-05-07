@@ -34,8 +34,8 @@ describe("residuReaction", () => {
 
   test("calcule les résidus atomiques entre les réactifs et le produit", () => {
     const reactifs = { C: 14, H: 20, N: 2, O: 5 }; // C14H20N2O5
-    const produit = { C: 13, H: 16, N: 2, O: 3 }; // C13H16N2O3
-    const expectedDiff = { C: 1, H: 4, N: 0, O: 2 };
+    const produit = { C: 14, H: 16, N: 2, O: 3 }; // C14H16N2O3
+    const expectedDiff = { C: 0, H: 4, N: 0, O: 2 };
 
     expect(service.residuReaction(reaction)).toEqual(expectedDiff);
   });

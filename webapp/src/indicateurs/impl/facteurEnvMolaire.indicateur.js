@@ -1,10 +1,9 @@
-import ReactionService from "../../services/reaction.service";
+import { getMasseMolaire } from "../../utils/molecules.utils";
 import Indicateur from "../indicateur";
 
 export class FacteurEnvironnementalMolaireIndicateur extends Indicateur {
   constructor() {
     super("Facteur Environnemental Molaire", "EM");
-    this.reactionService = new ReactionService();
   }
 
   reactionPrincipale(reaction) {
@@ -15,7 +14,9 @@ export class FacteurEnvironnementalMolaireIndicateur extends Indicateur {
         */
     const masseMolaireReactifs =
       this.reactionService.masseMolaireReactifs(reaction);
-    const masseMolaireProduit = reaction.produit.masseMolaire;
+    const masseMolaireProduit = getMasseMolaire( reaction.produit );
+
+    console.log(reaction.produit, masseMolaireProduit, reaction.produit.masseMolaire)
 
     return (masseMolaireReactifs - masseMolaireProduit) / masseMolaireProduit;
   }

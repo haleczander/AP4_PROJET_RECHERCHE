@@ -9,7 +9,6 @@ import Indicateur from "../indicateur";
 export class CoefDangerIndicateur extends Indicateur {
   constructor() {
     super("Coefficient de Danger", "Danger");
-    this.reactionService = new ReactionService();
   }
 
   reactionPrincipale(reaction) {

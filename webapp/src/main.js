@@ -4,6 +4,7 @@ import Router from "./router.js";
 import LocalDataService from "./services/impl/local.data.service.js";
 import services from "./services/services.js";
 import CalculService from "./services/calcul.service.js";
+import TablePeriodiqueService from "./services/tablePeriodique.service.js";
 
 
 const dataService = new LocalDataService();
@@ -17,6 +18,7 @@ fetch("data/db.json")
 
 services["dataService"] = dataService;
 services["calculService"] = new CalculService();
+services["tablePeriodique"] = new TablePeriodiqueService()
 
 const navLinksContainer = document.getElementById("nav-links-container");
 

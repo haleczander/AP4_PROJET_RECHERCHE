@@ -5,7 +5,6 @@ import FacteurEnvironnementalMassiqueIndicateur from "./facteurEnvMassique.indic
 export class EfficaciteMassiqueReactionIndicateur extends Indicateur {
   constructor() {
     super("Efficacité Massique de la Réaction", "EMR");
-    this.reactionService = new ReactionService();
     this.indicateurEm = new FacteurEnvironnementalMassiqueIndicateur();
   }
 
