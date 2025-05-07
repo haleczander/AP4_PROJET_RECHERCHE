@@ -54,7 +54,7 @@ export default class MoleculesController extends Controller {
 
     this.headers = [
       { label: "Nom", key: "nom" },
-      { label: "Formule", key: "formule" },
+      { label: "Formule Brute", key: "formule" },
       { label: "Masse molaire", key: "masseMolaire" },
       { label: "C", key: "nbCarbone" },
       { label: "Nocif", key: "nocif" },
