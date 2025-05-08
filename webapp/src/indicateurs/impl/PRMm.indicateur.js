@@ -4,7 +4,6 @@ import Indicateur from "../indicateur";
 export class PRMmndicateur extends Indicateur {
   constructor() {
     super("PRMm", "PRMm");
-    this.reactionService = new ReactionService();
   }
 
   reactionPrincipale(reaction) {

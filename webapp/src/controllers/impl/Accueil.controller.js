@@ -7,19 +7,28 @@ import { createActivationReaction } from "../../utils/activations.utils";
 import Energie from "../../models/energie.model";
 import { Resultat } from "../../models/resultat.model";
 import { INDICATEURS } from "../../../src/settings"
+import CalculService from "../../services/calcul.service";
 
-export default class MoleculesController extends Controller {
+export default class AccueilController extends Controller {
   init() {
     this.dataService = services.dataService;
-    this.calculService = services.calculService;
-    this.molecules = this.dataService.findAllMolecules();
-    this.activations = this.dataService.findAllActivations();
+    this.calculService = new CalculService();
+    this._initData();
 
     this.reaction = new ReactionComplete();
     this.resultats = new Resultat();
 
-    this._initDataLists();
     this._initForms();
+  }
+
+  async _initData() {
+    this.loading(true);
+    this.dataService.ready().then(() => {
+      this.molecules = this.dataService.findAllMolecules(); 
+      this.activations = this.dataService.findAllActivations();
+    })
+    .then( () => this._initDataLists() )
+    .then( () => this.loading(false) );
   }
 
   _moleculeDisplay(molecule) {

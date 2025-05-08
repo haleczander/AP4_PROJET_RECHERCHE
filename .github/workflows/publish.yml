@@ -1,8 +1,10 @@
 name: Publish Executables
 on:
   push:
+    tags:
+      - "v*.*.*" 
     branches:
-      - "release/**"
+      - release/test*
 
 jobs:
   build-and-publish:
@@ -35,6 +37,14 @@ jobs:
           echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
           echo "Version: $VERSION"
 
+      # Définir le nom de l'application une fois en variable d'environnement
+      - name: Set application name
+        id: app_name
+        run: |
+          APP_NAME="metrique_chimie_verte"  # Utilisez le même nom partout
+          echo "APP_NAME=$APP_NAME" >> $GITHUB_OUTPUT
+          echo "Application name: $APP_NAME"
+
       - name: Build project
         working-directory: webapp
         run: npm run build
@@ -55,93 +65,19 @@ jobs:
         working-directory: webapp
         run: |
           VERSION="${{ steps.extract_version.outputs.VERSION }}"
-          APP_NAME="myapp" # Remplacez par le nom de votre application
+          APP_NAME="${{ steps.app_name.outputs.APP_NAME }}"
 
-          # Crée le répertoire pour les assets
           mkdir -p release_assets
 
-          # Pour Windows
-          if [ -f "./exe/server-win-x64.exe" ]; then
-            cp "./exe/server-win-x64.exe" "release_assets/${APP_NAME}-${VERSION}-windows-x64.exe"
-          fi
-
-          # Pour macOS Intel
-          if [ -f "./exe/server-macos-x64" ]; then
-            cp "./exe/server-macos-x64" "release_assets/${APP_NAME}-${VERSION}-macos-x64"
-          fi
-
-          # Pour macOS ARM
-          if [ -f "./exe/server-macos-arm64" ]; then
-            cp "./exe/server-macos-arm64" "release_assets/${APP_NAME}-${VERSION}-macos-arm64"
-          fi
-
-          # Pour Linux x64
-          if [ -f "./exe/server-linux-x64" ]; then
-            cp "./exe/server-linux-x64" "release_assets/${APP_NAME}-${VERSION}-linux-x64"
-          fi
-
-          # Pour Linux ARM64
-          if [ -f "./exe/server-linux-arm64" ]; then
-            cp "./exe/server-linux-arm64" "release_assets/${APP_NAME}-${VERSION}-linux-arm64"
-          fi
-
-          # Pour Alpine
-          if [ -f "./exe/server-alpine-x64" ]; then
-            cp "./exe/server-alpine-x64" "release_assets/${APP_NAME}-${VERSION}-alpine-x64"
-          fi
-
-          # Liste les fichiers préparés
-          echo "Release assets prepared:"
-          ls -la release_assets/
-
-      # Upload les artefacts individuels pour Actions
-      - name: Upload Windows x64 artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: app-windows-x64
-          path: ./webapp/exe/*win-x64*
-          if-no-files-found: ignore
-          retention-days: 90
-
-      - name: Upload macOS Intel artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: app-macos-x64
-          path: ./webapp/exe/*macos-x64*
-          if-no-files-found: ignore
-          retention-days: 90
-
-      - name: Upload macOS ARM artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: app-macos-arm64
-          path: ./webapp/exe/*macos-arm64*
-          if-no-files-found: ignore
-          retention-days: 90
-
-      - name: Upload Linux x64 artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: app-linux-x64
-          path: ./webapp/exe/*linux-x64*
-          if-no-files-found: ignore
-          retention-days: 90
-
-      - name: Upload Linux ARM64 artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: app-linux-arm64
-          path: ./webapp/exe/*linux-arm64*
-          if-no-files-found: ignore
-          retention-days: 90
-
-      - name: Upload Alpine Linux artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: app-alpine-x64
-          path: ./webapp/exe/*alpine-x64*
-          if-no-files-found: ignore
-          retention-days: 90
+          for file in ./exe/*; do
+            if [ -f "$file" ]; then
+              FILENAME=$(basename "$file")
+              SUFFIX=$(echo "$FILENAME" | awk -F'-' '{print "-"$(NF-1) "-"$NF}' | sed 's/\.exe$//')
+              cp "$file" "./$FILENAME"
+              zip -j "release_assets/${APP_NAME}-${VERSION}${SUFFIX}.zip" "./$FILENAME"
+              rm "./$FILENAME"
+            fi
+          done
 
       # Créer une release GitHub
       - name: Create GitHub Release
@@ -158,7 +94,7 @@ jobs:
           GITHUB_TOKEN:
             ${{ secrets.GITHUB_TOKEN }}
 
-            # Mettre à jour le README avec les liens de téléchargement - avec débogage
+      # Mettre à jour le README avec les liens de téléchargement
       - name: Update README with download links
         if: success()
         run: |
@@ -171,24 +107,23 @@ jobs:
           fi
 
           VERSION="${{ steps.extract_version.outputs.VERSION }}"
-          APP_NAME="myapp" # Remplacez par le nom de votre application
+          APP_NAME="${{ steps.app_name.outputs.APP_NAME }}"  # Utiliser la variable partagée
           REPO_URL="https://github.com/${{ github.repository }}"
 
           echo "Generating download section for version: $VERSION"
 
           # Créer une section de badges pour le README
           cat > download_section.md << EOL
-          ## Téléchargements
-
-          [![Windows x64](https://img.shields.io/badge/Windows%20x64-Télécharger-blue)](${REPO_URL}/releases/latest/download/${APP_NAME}-${VERSION}-windows-x64.exe)
-          [![macOS Intel](https://img.shields.io/badge/macOS%20Intel-Télécharger-blue)](${REPO_URL}/releases/latest/download/${APP_NAME}-${VERSION}-macos-x64)
-          [![macOS Apple Silicon](https://img.shields.io/badge/macOS%20Apple%20Silicon-Télécharger-blue)](${REPO_URL}/releases/latest/download/${APP_NAME}-${VERSION}-macos-arm64)
-          [![Linux x64](https://img.shields.io/badge/Linux%20x64-Télécharger-blue)](${REPO_URL}/releases/latest/download/${APP_NAME}-${VERSION}-linux-x64)
-          [![Linux ARM64](https://img.shields.io/badge/Linux%20ARM64-Télécharger-blue)](${REPO_URL}/releases/latest/download/${APP_NAME}-${VERSION}-linux-arm64)
-          [![Alpine Linux](https://img.shields.io/badge/Alpine-Télécharger-blue)](${REPO_URL}/releases/latest/download/${APP_NAME}-${VERSION}-alpine-x64)
+          ### Téléchargements
+          - [![Windows x64](https://img.shields.io/badge/Windows%20x64-Télécharger-blue)](${REPO_URL}/releases/download/${VERSION}/${APP_NAME}-${VERSION}-win-x64.zip)
+          - [![macOS Intel](https://img.shields.io/badge/macOS%20Intel-Télécharger-blue)](${REPO_URL}/releases/download/${VERSION}/${APP_NAME}-${VERSION}-macos-x64.zip)
+          - [![macOS Apple Silicon](https://img.shields.io/badge/macOS%20Apple%20Silicon-Télécharger-blue)](${REPO_URL}/releases/download/${VERSION}/${APP_NAME}-${VERSION}-macos-arm64.zip)
+          - [![Linux x64](https://img.shields.io/badge/Linux%20x64-Télécharger-blue)](${REPO_URL}/releases/download/${VERSION}/${APP_NAME}-${VERSION}-linux-x64.zip)
+          - [![Alpine Linux](https://img.shields.io/badge/Alpine-Télécharger-blue)](${REPO_URL}/releases/download/${VERSION}/${APP_NAME}-${VERSION}-alpine-x64.zip)
 
           Dernière version: [${VERSION}](${REPO_URL}/releases/tag/${VERSION})
           EOL
+
 
           # Vérifier si la section de téléchargement existe déjà
           if grep -q "## Téléchargements" README.md; then

@@ -1,72 +1,88 @@
 import services from "../../services/services";
 import Controller from "../Controller";
 import { filterMolecule } from "../../utils/filters.utils";
+import { htmlFormulaFormatter } from "../../utils/html.utils";
+import { round } from "../../utils/math.utils";
+
+
+import { getMasseMolaire, getNbCarbone } from "../../utils/molecules.utils";
+import { exportJson, importJson } from "../../utils/importExport.utils";
 export default class MoleculesController extends Controller {
   init() {
     this.dataService = services.dataService;
-    this.molecules = this.dataService.findAllMolecules();
+
+    this._initData();
+    this.sortState = { key: null, direction: null };
     this._initTable();
     this._initSearchBar();
-    this._initExport();
-    this.updateData(this.molecules);
   }
 
+  async _initData() {
+    this.loading(true);
+    this.dataService.ready().then(() => {
+      this.molecules = this.dataService.findAllMolecules();
+      this._initExport();
+      this._initImport();
+    })
+    .then( () => this.updateData(this.molecules) )
+    .then(() => this.loading(false));
+  }
+
+  _initImport() {
+    const btn = this.container.querySelector("#import-btn");
+    this.addListener(btn, "click", (e) => {
+      e.preventDefault();
+      const onload = (e) => {
+        try {
+          const data = JSON.parse(e.target.result);
+          if (!data || !data.data || !data.data.molecules || !data.data.activations) {
+            throw new Error("Invalid JSON structure");
+          }
+          this.dataService.importData(data.data.molecules, data.data.activations);
+          this.molecules = this.dataService.findAllMolecules();
+          this.updateData(this.molecules);
+        } catch (error) {
+          console.error("Error parsing JSON file:", error);
+        }
+      };
+      importJson(onload);
+    });
+  }
 
   _initExport() {
-    const exportBtn = this.container.querySelector("#export-btn");
-    const downloadFn = (event) => {
-      event.preventDefault();
-    
-
-      const now = new Date();
-      const dateStr = now.toISOString();
-    
-      const exportData = {
+    const btn = this.container.querySelector("#export-btn");
+    this.addListener(btn, "click", (e) => {
+      e.preventDefault();
+      const data = {
         version: "#.#",
-        date: dateStr,
+        date: new Date().toISOString(),
         data: {
           molecules: this.dataService.findAllMolecules(),
           activations: this.dataService.findAllActivations(),
         },
       };
-    
-      const json = JSON.stringify(exportData, null, 2);
-      const blob = new Blob([json], { type: "application/json" });
-      const url = URL.createObjectURL(blob);
-    
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `export-molecules-${dateStr}.json`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-    
-      setTimeout(() => URL.revokeObjectURL(url), 1000);
-    }
-
-    this.addListener( exportBtn, "click", downloadFn );
+      exportJson(data, `export-molecules-${data.date}`);
+    });
   }
 
   _initSearchBar() {
-    const searchInput = this.container.querySelector("#search-input");
-
-    const eventFn = () => {
-      const filtered = this.molecules.filter((molecule) =>
-        filterMolecule(searchInput.value, molecule),
+    const input = this.container.querySelector("#search-input");
+    this.addListener(input, "input", () => {
+      const filtered = this.molecules.filter(m =>
+        filterMolecule(input.value, m)
       );
       this.updateData(filtered);
-    };
-
-    this.addListener(searchInput, "input", eventFn);
+    });
   }
 
   _initTable() {
     this.moleculesTable = this.container.querySelector("#molecules-table");
-    const headerRow = document.createElement("tr");
+    const thead = document.createElement("thead");
+    const row = document.createElement("tr");
 
-    const headers = [
+    this.headers = [
       { label: "Nom", key: "nom" },
-      { label: "Formule", key: "formule" },
+      { label: "Formule brute", key: "formule" },
       { label: "Masse molaire", key: "masseMolaire" },
       { label: "C", key: "nbCarbone" },
       { label: "Nocif", key: "nocif" },
@@ -76,64 +92,67 @@ export default class MoleculesController extends Controller {
       { label: "Inflammable", key: "extremementInflammable" },
     ];
 
-    headers.forEach(({ label, key }) => {
+    this.headers.forEach(({ label, key }) => {
       const th = document.createElement("th");
       th.textContent = label;
-      headerRow.appendChild(th);
+      th.style.cursor = "pointer";
+      th.dataset.key = key;
+      th.addEventListener("click", () => this._toggleSort(key, th));
+      row.appendChild(th);
     });
 
-    this.moleculesTable.appendChild(headerRow);
-
+    thead.appendChild(row);
+    this.moleculesTable.appendChild(thead);
     this.moleculesTableData = document.createElement("tbody");
     this.moleculesTable.appendChild(this.moleculesTableData);
   }
 
-  updateData(molecules) {
+  _toggleSort(key, th) {
+    const state = this.sortState;
+    const ths = this.moleculesTable.querySelectorAll("th");
+
+    ths.forEach((h, i) => h.textContent = this.headers[i].label);
+
+    if (state.key === key) {
+      state.direction = state.direction === "asc" ? "desc" : "asc";
+    } else {
+      state.key = key;
+      state.direction = "asc";
+    }
+
+    const sorted = [...this.molecules].sort((a, b) => {
+      let va = a[key], vb = b[key];
+      if (typeof va === "boolean") va = va ? 1 : 0, vb = vb ? 1 : 0;
+      if (typeof va === "string") return state.direction === "asc" ? va.localeCompare(vb) : vb.localeCompare(va);
+      return state.direction === "asc" ? va - vb : vb - va;
+    });
+
+    this.updateData(sorted);
+  }
+
+  updateData(mols) {
     this.moleculesTableData.innerHTML = "";
-    molecules.forEach((molecule) =>
-      this.moleculesTableData.appendChild(this._createRow(molecule)),
-    );
+    mols.forEach(m => this.moleculesTableData.appendChild(this._createRow(m)));
+  }
+
+  _createTd( innerHtml ) {
+    const td = document.createElement("td");
+    td.innerHTML = innerHtml;
+    return td;
   }
 
   _createRow(molecule) {
     const tr = document.createElement("tr");
-    let td;
 
-    td = document.createElement("td");
-    td.textContent = molecule.nom;
-    tr.appendChild(td);
-
-    td = document.createElement("td");
-    td.textContent = molecule.formule;
-    tr.appendChild(td);
-
-    td = document.createElement("td");
-    td.textContent = molecule.masseMolaire;
-    tr.appendChild(td);
-
-    td = document.createElement("td");
-    td.textContent = molecule.nbCarbone;
-    tr.appendChild(td);
-
-    td = document.createElement("td");
-    td.textContent = molecule.nocif ? "\u2713" : "";
-    tr.appendChild(td);
-
-    td = document.createElement("td");
-    td.textContent = molecule.irritant ? "\u2713" : "";
-    tr.appendChild(td);
-
-    td = document.createElement("td");
-    td.textContent = molecule.explosible ? "\u2713" : "";
-    tr.appendChild(td);
-
-    td = document.createElement("td");
-    td.textContent = molecule.toxique ? "\u2713" : "";
-    tr.appendChild(td);
-
-    td = document.createElement("td");
-    td.textContent = molecule.extremementInflammable ? "\u2713" : "";
-    tr.appendChild(td);
+    tr.appendChild(this._createTd(molecule.nom));
+    tr.appendChild(this._createTd(htmlFormulaFormatter(molecule.formule)));
+    tr.appendChild(this._createTd(round(getMasseMolaire(molecule), 2)));
+    tr.appendChild(this._createTd(getNbCarbone(molecule)));
+    tr.appendChild(this._createTd(molecule.nocif ? "\u2713" : ""));
+    tr.appendChild(this._createTd(molecule.irritant ? "\u2713" : ""));
+    tr.appendChild(this._createTd(molecule.explosible ? "\u2713" : ""));
+    tr.appendChild(this._createTd(molecule.toxique ? "\u2713" : ""));
+    tr.appendChild(this._createTd(molecule.extremementInflammable ? "\u2713" : ""));
 
     return tr;
   }

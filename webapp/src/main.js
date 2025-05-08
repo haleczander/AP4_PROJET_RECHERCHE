@@ -3,7 +3,6 @@ import AssetService from "./services/asset.service.js";
 import Router from "./router.js";
 import LocalDataService from "./services/impl/local.data.service.js";
 import services from "./services/services.js";
-import CalculService from "./services/calcul.service.js";
 
 
 const dataService = new LocalDataService();
@@ -11,12 +10,11 @@ fetch("data/db.json")
   .then((response) => response.json())
   .then((data) => data.data)
   .then(({ molecules, activations }) => {
-    dataService.molecules = molecules;
-    dataService.activations = activations;
+    dataService.importData(molecules, activations);
   });
 
 services["dataService"] = dataService;
-services["calculService"] = new CalculService();
+
 
 const navLinksContainer = document.getElementById("nav-links-container");
 

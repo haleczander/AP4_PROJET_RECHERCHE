@@ -1,4 +1,4 @@
-import { LocalDataService } from "../../../../src/services/impl/local.data.service";
+import LocalDataService from "../../../../src/services/impl/local.data.service";
 import {
   BENZALDEHYDE,
   UREE,
@@ -13,14 +13,14 @@ describe("LocalDataService - findMoleculesByName", () => {
 
   beforeAll(() => {
     service = new LocalDataService();
-    service.molecules = [
+    service.importData([
       BENZALDEHYDE,
       UREE,
       ACETOACETATE_ETHYLE,
       ACIDE_CHLORHYDRIQUE,
       ETHANOL,
       EAU,
-    ];
+    ], []);
   });
 
   test("Doit retourner la molécule correspondant à 'Urée'", () => {
