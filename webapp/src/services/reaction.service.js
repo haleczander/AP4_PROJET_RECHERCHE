@@ -202,27 +202,12 @@ export default class ReactionService {
     );
   }
 
-  masseRecyclableReactionPrincipale(reaction) {
-    return (
-      this.masseSolvantsRecyclable(reaction) +
-      this.masseCatalyseursRecyclable(reaction)
-    );
-  }
-
   masseRecyclable(reaction) {
     return (
       this.masseRecyclableReactionPrincipale(reaction) +
       this.massePostTraitementRecyclable(reaction) +
       this.massePurificationRecyclable(reaction)
     );
-  }
-
-  moleculesReactionPrincipale(reaction) {
-    return [
-      ...this.reactifs(reaction),
-      ...this.solvants(reaction),
-      ...this.catalyseurs(reaction),
-    ];
   }
 
   moleculesReactionPrincipale(reaction) {
