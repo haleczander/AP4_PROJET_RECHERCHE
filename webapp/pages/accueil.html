@@ -1,10 +1,11 @@
 <div id="main-calculs">
-  <h2 id="h2-reaction">Réaction</h2>
-  <div class="section-box">
-    <datalist id="datalist-molecules"></datalist>
-    <datalist id="datalist-activations"></datalist>
+  <section>
+    <h2>Réaction</h2>
+    <div class="section-box">
+      <datalist id="datalist-molecules"></datalist>
+      <datalist id="datalist-activations"></datalist>
 
-    <div class="schema-reaction">[...]</div>
+      <div class="schema-reaction">[...]</div>
 
     <div class="forms-container">
       <div id="container-reaction-principale">
@@ -37,8 +38,8 @@
             <input type="number" id="prixG" name="prixG" placeholder="Prix/g (€)" />
           </div>
 
-          <input type="submit" value="+" />
-        </form>
+            <input type="submit" value="Ajouter" />
+          </form>
 
         <!-- Catalyseur -->
         <form id="form-catalyseur-reaction-principale">
@@ -63,8 +64,8 @@
             <input type="number" id="catalyseurPrixG" name="catalyseurPrixG" placeholder="Prix/g (€)" />
           </div>
 
-          <input type="submit" value="+" />
-        </form>
+            <input type="submit" value="Ajouter" />
+          </form>
 
         <!-- Solvant -->
         <form id="form-solvant-reaction-principale">
@@ -89,8 +90,8 @@
             <input type="number" id="solvantPrixG" name="solvantPrixG" placeholder="Prix/g (€)" />
           </div>
 
-          <input type="submit" value="+" />
-        </form>
+            <input type="submit" value="Ajouter" />
+          </form>
 
         <!-- Activation -->
         <form id="form-activation-reaction-principale">
@@ -112,12 +113,12 @@
 
           <div>
             <label for="prixEnergie"> Prix du kWh (€)</label>
-            <input type="number" name="prixEnergie" id="prixEnergie" step=".001" />
+            <input type="number" name="prixEnergie" id="prixEnergie" step=".001" placeholder="Énergie (kWh)"/>
             <!-- <label for="activationEnergie">Énergie (kWh)</label>
             <input type="number" id="activationEnergie" name="activationEnergie" placeholder="Énergie (kWh)"> -->
-          </div>
+            </div>
 
-          <input type="submit" value="+" />
+          <input type="submit" value="Ajouter" />
         </form>
       </div>
       <div id="container-post-traitement">
@@ -149,8 +150,8 @@
             <input type="number" id="prixG" name="prixG" placeholder="Prix/g (€)" step=".001" />
           </div>
 
-          <input type="submit" value="+" />
-        </form>
+            <input type="submit" value="Ajouter" />
+          </form>
 
         <form id="form-activation-post-traitement">
           <div>
@@ -171,12 +172,12 @@
 
           <div>
             <label for="prixEnergie"> Prix du kWh (€)</label>
-            <input type="number" name="prixEnergie" id="prixEnergie" step=".001" />
+            <input type="number" name="prixEnergie" id="prixEnergie" step=".001" placeholder="Énergie (kWh)"/>
             <!-- <label for="activationEnergie">Énergie (kWh)</label>
             <input type="number" id="activationEnergie" name="activationEnergie" placeholder="Énergie (kWh)"> -->
-          </div>
+            </div>
 
-          <input type="submit" value="+" />
+          <input type="submit" value="Ajouter" />
         </form>
       </div>
       <div id="container-purification">
@@ -208,8 +209,8 @@
             <input type="number" id="prixG" name="prixG" placeholder="Prix/g (€)" />
           </div>
 
-          <input type="submit" value="+" />
-        </form>
+            <input type="submit" value="Ajouter" />
+          </form>
 
         <form id="form-activation-purification">
           <div>
@@ -230,12 +231,12 @@
 
           <div>
             <label for="prixEnergie"> Prix du kWh (€)</label>
-            <input type="number" name="prixEnergie" id="prixEnergie" step=".001" />
+            <input type="number" name="prixEnergie" id="prixEnergie" step=".001" placeholder="Énergie (kWh)"/>
             <!-- <label for="activationEnergie">Énergie (kWh)</label>
             <input type="number" id="activationEnergie" name="activationEnergie" placeholder="Énergie (kWh)"> -->
-          </div>
+            </div>
 
-          <input type="submit" value="+" />
+          <input type="submit" value="Ajouter" />
         </form>
       </div>
       <div id="container-produit">
@@ -267,41 +268,18 @@
             <input type="number" id="prixG" name="prixG" placeholder="Prix/g (€)" step=".001" />
           </div>
 
-          <input type="submit" value="+" />
-        </form>
+            <input type="submit" value="Ajouter" />
+          </form>
+        </div>
       </div>
+      <form id="form-reaction">
+        <input type="submit" value="Calculer" />
+      </form>
     </div>
-    <form id="form-reaction">
-      <input type="submit" value="Calculer" />
-    </form>
-  </div>
-
-  <h2 id="h2-resultat">Résultat</h2>
-  <div class="section-box">
-    <!-- ici les graphs, bilans, etc. -->
-  </div>
+  </section>
+  <section>
+    <h1 id="h2-resultat">Résultat</h1>
+    <div class="section-box">
+    </div>
+  </section>
 </div>
-
-<style>
-  .section-box {
-    background-color: var(--black-purple);
-    border: 0.2vh solid var(--purple);
-    border-radius: 1.5vh;
-    padding: 2vh 1vw 2vh 1vw;
-    margin-bottom: 0.8vh;
-    box-shadow: 0 0.4vh 1vh var(--box-shadow);
-  }
-
-  .schema-reaction {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: var(--white);
-    padding: 6.5vh 2vw;
-    border-radius: 1.5vh;
-    box-shadow: 0 0.4vh 1vh var(--box-shadow);
-    margin-bottom: 1.8vh;
-    gap: 2vw;
-    position: relative;
-  }
-</style>
