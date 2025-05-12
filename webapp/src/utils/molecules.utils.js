@@ -72,13 +72,14 @@ export function getIndicateursToxicite(molecule) {
   };
 }
 export function getIndicateursCMR(molecule) {
-  const isR40_R45_R49 = molecule.r40 || molecule.r45 || molecule.r49;
-  const isR60_R61_R62_R63 =
-    molecule.r60 || molecule.r61 || molecule.r62 || molecule.r63;
+  const cancerigene = molecule.r40 || molecule.r45 || molecule.r49;
+  const mutagene = molecule.r46;
+  const reprotoxique = molecule.r60 || molecule.r61 || molecule.r62 || molecule.r63;
+
   return {
-    R40_R45_R49: { valeur: isR40_R45_R49 ? 1 : 0, coef: 1 },
-    R46: { valeur: molecule.r46 ? 1 : 0, coef: 1 },
-    R60_R61_R62_R63: { valeur: isR60_R61_R62_R63 ? 1 : 0, coef: 1 },
+    R40_R45_R49: { valeur: cancerigene ? 1 : 0, coef: 1 },
+    R46: { valeur: mutagene ? 1 : 0, coef: 1 },
+    R60_R61_R62_R63: { valeur: reprotoxique ? 1 : 0, coef: 1 },
   };
 }
 
@@ -193,6 +194,7 @@ export function createMolecule(
   r61,
   r62,
   r63,
+  danger
 ) {
   const molecule = new Molecule();
 
@@ -218,64 +220,17 @@ export function createMolecule(
   molecule.r61 = r61;
   molecule.r62 = r62;
   molecule.r63 = r63;
-
+  molecule.danger = danger;
   return molecule;
 }
 
 export function createMoleculeReaction(molecule) {
   const moleculeReaction = new MoleculeReaction();
-
-  moleculeReaction.nom = molecule.nom;
-  moleculeReaction.formule = molecule.formule;
-  moleculeReaction.cas = molecule.cas;
-  moleculeReaction.masseMolaire = molecule.masseMolaire;
-  moleculeReaction.densite = molecule.densite;
-  moleculeReaction.nbCarbone = molecule.nbCarbone;
-  moleculeReaction.nocif = molecule.nocif;
-  moleculeReaction.irritant = molecule.irritant;
-  moleculeReaction.explosible = molecule.explosible;
-  moleculeReaction.dangereuxPourEnvironnement =
-    molecule.dangereuxPourEnvironnement;
-  moleculeReaction.toxique = molecule.toxique;
-  moleculeReaction.tresToxique = molecule.tresToxique;
-  moleculeReaction.facilementInflammable = molecule.facilementInflammable;
-  moleculeReaction.extremementInflammable = molecule.extremementInflammable;
-  moleculeReaction.r40 = molecule.r40;
-  moleculeReaction.r45 = molecule.r45;
-  moleculeReaction.r49 = molecule.r49;
-  moleculeReaction.r46 = molecule.r46;
-  moleculeReaction.r60 = molecule.r60;
-  moleculeReaction.r61 = molecule.r61;
-  moleculeReaction.r62 = molecule.r62;
-  moleculeReaction.r63 = molecule.r63;
-
-  return moleculeReaction;
+  return { ...moleculeReaction, ...molecule };
 }
 
 export function createProduit(molecule) {
   const produit = new Produit();
+  return { ...produit, ...molecule };
 
-  produit.nom = molecule.nom;
-  produit.formule = molecule.formule;
-  produit.cas = molecule.cas;
-  produit.masseMolaire = molecule.masseMolaire;
-  produit.nbCarbone = molecule.nbCarbone;
-  produit.nocif = molecule.nocif;
-  produit.irritant = molecule.irritant;
-  produit.explosible = molecule.explosible;
-  produit.dangereuxPourEnvironnement = molecule.dangereuxPourEnvironnement;
-  produit.toxique = molecule.toxique;
-  produit.tresToxique = molecule.tresToxique;
-  produit.facilementInflammable = molecule.facilementInflammable;
-  produit.extremementInflammable = molecule.extremementInflammable;
-  produit.r40 = molecule.r40;
-  produit.r45 = molecule.r45;
-  produit.r49 = molecule.r49;
-  produit.r46 = molecule.r46;
-  produit.r60 = molecule.r60;
-  produit.r61 = molecule.r61;
-  produit.r62 = molecule.r62;
-  produit.r63 = molecule.r63;
-
-  return produit;
 }

@@ -524,3 +524,9 @@ input.error,.error-message {
   width: clamp(300px, 100%, 800px);
 
 }
+
+.pictogram {
+  height: 3em;
+  aspect-ratio: 1/1;
+  margin-right: var(--space-xs);
+}

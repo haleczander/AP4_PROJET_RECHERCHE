@@ -1,8 +1,14 @@
 export class AssetService {
   path = "/assets/";
 
-  icon(asset) {
-    return `${this.path}/icon/${asset}`;
+  buildPath(asset) {
+    return `${this.path}icon/${asset}`;
+  }
+
+  icon(iconName) {
+    const imgElement = document.createElement("img");
+    imgElement.src = this.buildPath(iconName);
+    return imgElement;
   }
 }
 

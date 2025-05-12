@@ -30,9 +30,7 @@ function generateNavLink(route) {
   linkElement.href = route.chemin;
   linkElement.classList.add("sidebar-link");
 
-  const imgElement = document.createElement("img");
-  imgElement.src = new AssetService().icon(route.icone);
-
+  const imgElement = new AssetService().icon(route.icone);
   const textNode = document.createTextNode(route.nom);
 
   linkElement.appendChild(imgElement);
