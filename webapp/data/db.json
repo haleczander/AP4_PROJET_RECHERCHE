@@ -921,44 +921,24 @@
     ],
     "activations": [
       {
-        "serial": 1,
-        "nom": "Activation thermique"
+        "nom": "Chauffage",
+        "symbole": "Δ"
       },
       {
-        "serial": 2,
-        "nom": "Activation par lumière"
+        "nom": "Ultra son",
+        "symbole": ")))"
       },
       {
-        "serial": 3,
-        "nom": "Activation par lumière visible"
+        "nom": "Micro-ondes",
+        "symbole": "MW"
       },
       {
-        "serial": 4,
-        "nom": "Activation électrochimique"
+        "nom": "Mécanochimie",
+        "symbole": "Méca."
       },
       {
-        "serial": 5,
-        "nom": "Activation catalytique"
-      },
-      {
-        "serial": 6,
-        "nom": "Activation mécanique"
-      },
-      {
-        "serial": 7,
-        "nom": "Activation micro-ondes"
-      },
-      {
-        "serial": 8,
-        "nom": "Activation plasma"
-      },
-      {
-        "serial": 9,
-        "nom": "Activation par pression"
-      },
-      {
-        "serial": 10,
-        "nom": "Activation sonochimique"
+        "nom": "Photochimie",
+        "symbole": "h.ν"
       }
     ]
   }

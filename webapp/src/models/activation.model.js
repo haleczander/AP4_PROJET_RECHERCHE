@@ -1,10 +1,10 @@
 export class Activation {
-  id = null;
   nom = null;
+  symbole = null;
 
-  constructor(id = null, nom = null) {
-    this.id = id;
+  constructor(nom = null, symbole = null) {
     this.nom = nom;
+    this.symbole = symbole;
   }
 }
 
