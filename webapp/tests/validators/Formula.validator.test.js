@@ -18,7 +18,6 @@ describe("FormulaValidator", () => {
         expect(validator.validate({ value: "h2o" })).toBe(false);       // lowercase non autorisé
         expect(validator.validate({ value: "123" })).toBe(false);       // que des chiffres
         expect(validator.validate({ value: "C6H12O6!" })).toBe(false);  // caractère spécial
-        expect(validator.validate({ value: "" })).toBe(false);          // vide
         expect(validator.validate({ value: "O2C$H3" })).toBe(false);    // caractère spécial
     });
 

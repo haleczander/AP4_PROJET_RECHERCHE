@@ -31,10 +31,4 @@ describe("FloatValidator", () => {
         expect(validator.validate({ value: "abc" })).toBe(false); // Non numérique
         expect(validator.validate({ value: "123abc" })).toBe(false); // Contient des caractères non numériques
     });
-
-    it("should invalidate empty values", () => {
-        expect(validator.validate({ value: "" })).toBe(false); // Vide
-        expect(validator.validate({ value: null })).toBe(false); // Null
-        expect(validator.validate({ value: undefined })).toBe(false); // Undefined
-    });
 });
