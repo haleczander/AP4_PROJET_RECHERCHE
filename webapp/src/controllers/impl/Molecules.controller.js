@@ -90,7 +90,8 @@ export default class MoleculesController extends Controller {
       { label: "CAS", key: "cas", valuefn: (m) => m.cas },
       { label: "Masse molaire", key: "masseMolaire", valuefn: (m) => round(getMasseMolaire(m), 2) },
       { label: "Densité", key: "densite", valuefn: (m) => m.densite },
-      { label: "Danger", key: "danger", valuefn: (m) => this._createPictograms(m).outerHTML },
+      { label: "", key: "danger", valuefn: (m) => this._createPictograms(m), dom:true },
+      { label: "", key: "delete", valuefn: (m) => this._createDeleteButton(m), dom:true}
     ];
 
     this.columns.forEach(({ label, key }) => {
@@ -131,21 +132,40 @@ export default class MoleculesController extends Controller {
     this.updateData(sorted);
   }
 
+  _createDeleteButton( molecule ) {
+    const deleteButton = document.createElement("button");
+    deleteButton.title = "Supprimer cette molécule";
+    deleteButton.classList.add("delete-btn");
+    deleteButton.innerText = "\u274C";
+    const deleteFn = () => {
+      if (confirm(`Supprimer définitivement la molécule "${molecule.nom}" ?`)) {
+        this.dataService.deleteMolecule(molecule); // <- appel avec objet complet
+        this._initData();
+      }
+    };
+    this.addListener( deleteButton, "click", deleteFn );
+    return deleteButton;
+  }
+
   updateData(mols) {
     this.moleculesTableData.innerHTML = "";
     mols.forEach(m => this.moleculesTableData.appendChild(this._createRow(m)));
   }
 
-  _createTd(innerHtml) {
+  _createTd(innerHtml, isDom=false) {
     const td = document.createElement("td");
+    if (isDom) {
+      td.appendChild(innerHtml);
+    } else {
     td.innerHTML = innerHtml;
+    }
     return td;
   }
 
   _createRow(molecule) {
     const tr = document.createElement("tr");
-    this.columns.forEach(({ key, valuefn }) => {
-      const td = this._createTd(valuefn(molecule));
+    this.columns.forEach(({ key, valuefn, dom }) => {
+      const td = this._createTd(valuefn(molecule), dom);
       tr.appendChild(td);
     });
     return tr;
