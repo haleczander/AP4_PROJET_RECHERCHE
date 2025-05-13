@@ -84,12 +84,8 @@ export default class MoleculesController extends Controller {
       { label: "Nom", key: "nom" },
       { label: "Formule brute", key: "formule" },
       { label: "Masse molaire", key: "masseMolaire" },
-      { label: "C", key: "nbCarbone" },
-      { label: "Nocif", key: "nocif" },
-      { label: "Irritant", key: "irritant" },
-      { label: "Explosible", key: "explosible" },
-      { label: "Toxique", key: "toxique" },
-      { label: "Inflammable", key: "extremementInflammable" },
+      { label: "Densité", key: "densite"},
+      { label: "CAS", key: "cas"},
     ];
 
     this.headers.forEach(({ label, key }) => {
@@ -147,12 +143,8 @@ export default class MoleculesController extends Controller {
     tr.appendChild(this._createTd(molecule.nom));
     tr.appendChild(this._createTd(htmlFormulaFormatter(molecule.formule)));
     tr.appendChild(this._createTd(round(getMasseMolaire(molecule), 2)));
-    tr.appendChild(this._createTd(getNbCarbone(molecule)));
-    tr.appendChild(this._createTd(molecule.nocif ? "\u2713" : ""));
-    tr.appendChild(this._createTd(molecule.irritant ? "\u2713" : ""));
-    tr.appendChild(this._createTd(molecule.explosible ? "\u2713" : ""));
-    tr.appendChild(this._createTd(molecule.toxique ? "\u2713" : ""));
-    tr.appendChild(this._createTd(molecule.extremementInflammable ? "\u2713" : ""));
+    tr.appendChild(this._createTd(molecule.densite));
+    tr.appendChild(this._createTd(molecule.cas));
 
     return tr;
   }

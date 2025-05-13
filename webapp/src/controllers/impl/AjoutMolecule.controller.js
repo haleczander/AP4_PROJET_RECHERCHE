@@ -27,10 +27,7 @@ export default class AjoutMoleculeController extends Controller {
     this.addValidator(nom, requiredValidator);
 
     const cas = this.form.querySelector("#cas");
-    this.addValidator(cas, requiredValidator, new CASValidator());
-
-    const masseMolaire = this.form.querySelector("#masseMolaire");
-    this.addValidator(masseMolaire, requiredValidator, new FloatValidator());
+    this.addValidator(cas, new CASValidator());
 
     const formule = this.form.querySelector("#formule");
     this.addValidator(formule, requiredValidator, new FormulaValidator());
@@ -53,7 +50,6 @@ export default class AjoutMoleculeController extends Controller {
     molecule.nom = fields.nom.value;
     molecule.cas = fields.cas.value;
     molecule.formule = fields.formule.value;
-    molecule.masseMolaire = parseFloat(fields.masseMolaire.value) || 0;
 
     molecule.nocif = fields["stat-nocif"].checked;
     molecule.irritant = fields["stat-irritant"].checked;

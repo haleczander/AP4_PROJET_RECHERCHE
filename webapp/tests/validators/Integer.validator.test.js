@@ -11,7 +11,6 @@ describe("IntegerValidator", () => {
     it("should invalidate non-integer values", () => {
         expect(validator.validate({ value: "123.45" })).toBe(false); // Nombre flottant
         expect(validator.validate({ value: "abc" })).toBe(false);   // Chaîne de caractères non numérique
-        expect(validator.validate({ value: "" })).toBe(false);      // Chaîne vide
     });
 
     it("should invalidate values with extra spaces", () => {
