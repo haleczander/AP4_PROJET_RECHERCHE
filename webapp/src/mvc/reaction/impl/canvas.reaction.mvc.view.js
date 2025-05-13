@@ -224,7 +224,7 @@ rpActivations(activations) {
 
     // Créer les textes complets des activations avec toutes les infos
     const activationTexts = activations.map(activation =>
-        `${activation.nom} (${activation.dureeM} min, ${activation.puissanceW} W)`
+        `${activation.symbole} (${activation.dureeM}min, ${activation.puissance}W)`
     );
 
     // Mesurer la largeur totale pour centrage
@@ -288,7 +288,7 @@ ptActivations(activations) {
 
     activations.forEach((activation, index) => {
         // Construction du texte avec nom, durée et puissance
-        const activationText = `${activation.nom} (${activation.dureeM} min, ${activation.puissanceW} W)`;
+        const activationText = `${activation.symbole} (${activation.dureeM}min, ${activation.puissance}W)`
 
         let w = this.writeText(activationText, x, y);
 
@@ -345,7 +345,7 @@ ptActivations(activations) {
 
     activations.forEach((activation, index) => {
         // Construction du texte avec nom, durée et puissance
-        const activationText = `${activation.nom} (${activation.dureeM} min, ${activation.puissanceW} W)`;
+        const activationText =  `${activation.symbole} (${activation.dureeM}min, ${activation.puissance}W)`
 
         let w = this.writeText(activationText, x, y);
 

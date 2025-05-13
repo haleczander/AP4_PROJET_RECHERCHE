@@ -126,9 +126,15 @@ export default class AccueilController extends Controller {
         this.reaction.traitementPostReactionnel.reactifs,
       ),
     );
-    this.addListener(form("#form-activation-post-traitement"), "submit", (e) =>
-      this._addFormActivation(e, this.reaction.traitementPostReactionnel.activations)
-    );
+    const ptActivationForm = postTraitementContainer.querySelector(
+          "#form-activation-post-traitement",
+        );
+        this.addListener(ptActivationForm, "submit", (event) =>
+          this._addFormActivation(
+            event,
+            this.reaction.traitementPostReactionnel.activations,
+          ),
+        );
 
     const purificationContainer = this.container.querySelector(
       "#container-purification",
@@ -140,9 +146,12 @@ export default class AccueilController extends Controller {
     this.addListener(purifReactifForm, "submit", (event) =>
       this._addFormMolecule(event, this.reaction.purification.reactifs),
     );
-    this.addListener(form("#form-activation-purification"), "submit", (e) =>
-      this._addFormActivation(e, this.reaction.purification.activations)
-    );
+    const purifActivationForm = purificationContainer.querySelector(
+        "#form-activation-purification",
+      );
+      this.addListener(purifActivationForm, "submit", (event) =>
+        this._addFormActivation(event, this.reaction.purification.activations),
+      );
 
     const produitContainer = this.container.querySelector("#container-produit");
 
