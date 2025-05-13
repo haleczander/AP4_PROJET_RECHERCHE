@@ -84,6 +84,8 @@ export default class MoleculesController extends Controller {
       { label: "Nom", key: "nom" },
       { label: "Formule brute", key: "formule" },
       { label: "Masse molaire", key: "masseMolaire" },
+      { label: "Densité", key: "densite"},
+      { label: "CAS", key: "cas"},
     ];
 
     this.headers.forEach(({ label, key }) => {
@@ -141,6 +143,8 @@ export default class MoleculesController extends Controller {
     tr.appendChild(this._createTd(molecule.nom));
     tr.appendChild(this._createTd(htmlFormulaFormatter(molecule.formule)));
     tr.appendChild(this._createTd(round(getMasseMolaire(molecule), 2)));
+    tr.appendChild(this._createTd(molecule.densite));
+    tr.appendChild(this._createTd(molecule.cas));
 
     return tr;
   }
