@@ -7,6 +7,7 @@ import {
   getMassePureteG,
   getPrixEuro,
 } from "./molecules.utils";
+import _ from "lodash";
 
 export function getSum(elements, fn) {
   return elements.reduce((sum, element) => sum + fn(element), 0);
@@ -45,4 +46,11 @@ export function getSumMasseRecyclee(molecules) {
     molecules,
     (molecule) => molecule.recyclabilite * getMasseG(molecule),
   );
+}
+
+export function moleculeExists(molecule, molecules) {
+  const existing = _.find(molecules, (item) =>
+    _.isEqual(_.omit(item, ['volume']), _.omit(molecule, ['volume']))
+  );
+  return existing;
 }
