@@ -10,6 +10,6 @@ export default class RegexValidator extends Validator {
     }
     
 
-    rule = ( value ) => this.regex.test( value );
+    rule = ( value ) => !value || this.regex.test( value );
 
 }
