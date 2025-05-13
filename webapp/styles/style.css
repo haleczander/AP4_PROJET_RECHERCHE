@@ -530,3 +530,7 @@ input.error,.error-message {
   aspect-ratio: 1/1;
   margin-right: var(--space-xs);
 }
+
+.delete-btn {
+  cursor: pointer; background: none; border: none; color: red; font-weight: bold;
+}

@@ -2,6 +2,7 @@ import DataService from "../data.service";
 import { filterMolecule } from "../../utils/filters.utils";
 import CASComparison from "../../comparisons/impl/CAS.comparison";
 import ContainsIgnoreCaseComparison from "../../comparisons/impl/ContainsIgnoreCase.comparison";
+import _ from "lodash";
 
 export default class LocalDataService extends DataService {
   _molecules = [];
@@ -35,6 +36,13 @@ export default class LocalDataService extends DataService {
 
   addMolecule( molecule ) {
     this._molecules.push( molecule );
+  }
+
+  deleteMolecule(molecule) {
+    const index = this._molecules.findIndex(m => _.isEqual(m, molecule));
+    if (index !== -1) {
+      this._molecules.splice(index, 1);
+    }
   }
 
   addActivation( activation ) {
