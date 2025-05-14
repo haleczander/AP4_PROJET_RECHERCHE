@@ -16,8 +16,8 @@ export class PRMmIndicateur extends Indicateur {
         */
     const masseSolvants = this.reactionService.masseSolvants(reaction);
     const masseCatalyseurs = this.reactionService.masseCatalyseurs(reaction);
-    const masseRecycleeReactionPrincipale =
-      this.reactionService.masseRecyclableReactionPrincipale(reaction);
+    const masseRecycleeReactionPrincipale = this.reactionService.masseRecyclableReactionPrincipale(reaction);
+    if ( (masseCatalyseurs+ masseSolvants) == 0) {return 0;}
     return masseRecycleeReactionPrincipale / (masseSolvants + masseCatalyseurs);
   }
 
@@ -28,11 +28,10 @@ export class PRMmIndicateur extends Indicateur {
         D55 = somme masse g reaction complete
         J10 = somme masse g reactifs
         */
-    const masseReactionComplete =
-      this.reactionService.masseReactionComplete(reaction);
+    const masseReactionComplete = this.reactionService.masseReactionComplete(reaction);
     const masseReactifs = this.reactionService.masseReactifs(reaction);
-    const masseRecycleeReactionComplete =
-      this.reactionService.masseRecyclable(reaction);
+    const masseRecycleeReactionComplete = this.reactionService.masseRecyclable(reaction);
+    if ( (masseReactionComplete - masseReactifs) == 0 ) { return 0;}
     return (
       masseRecycleeReactionComplete / (masseReactionComplete - masseReactifs)
     );

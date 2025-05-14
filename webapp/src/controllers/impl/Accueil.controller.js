@@ -6,46 +6,16 @@ import { ReactionComplete } from "../../models/reaction.model";
 import { createActivationReaction } from "../../utils/activations.utils";
 import Energie from "../../models/energie.model";
 import { Resultat } from "../../models/resultat.model";
-import { INDICATEURS, RADAR_STYLES } from "../../settings";
-import {
-  Chart,
-  RadarController,
-  RadialLinearScale,
-  PointElement,
-  LineElement,
-  Filler,
-  Tooltip,
-  Legend,
-  Title,
-  BarController,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-} from "chart.js";
-
-Chart.register(
-  RadarController,
-  RadialLinearScale,
-  PointElement,
-  LineElement,
-  Filler,
-  Tooltip,
-  Legend,
-  Title,
-  BarController,
-  CategoryScale,
-  LinearScale,
-  BarElement
-);
-
-import BIGINELLI from "../../../tests/data/reactions/biginelli.reaction";
-import RadarResultatMVCView from "../../mvc/resultat/impl/radar.resultat.mvc.view";
-import ResultatMVCController from "../../mvc/resultat/resultat.mvc.controller";
-import BarResultatMVCView from "../../mvc/resultat/impl/bar.resultat.mvc.view";
-import TableResultatMVCView from "../../mvc/resultat/impl/table.resultat.mvc.view";
+import { INDICATEURS } from "../../../src/settings"
+import ReactionMVCController from "../../mvc/reaction/reaction.mvc.controller";
+import CanvasReactionMVCView from "../../mvc/reaction/impl/canvas.reaction.mvc.view";
+import BIGINELLI  from "../../../tests/data/reactions/biginelli.reaction"
 import CalculService from "../../services/calcul.service";
 import { moleculeExists } from "../../utils/reactions.utils";
-
+import ResultatMVCController from "../../mvc/resultat/resultat.mvc.controller";
+import RadarResultatMVCView from "../../mvc/resultat/impl/radar.resultat.mvc.view";
+import BarResultatMVCView from "../../mvc/resultat/impl/bar.resultat.mvc.view";
+import TableResultatMVCView from "../../mvc/resultat/impl/table.resultat.mvc.view";
 
 
 export default class AccueilController extends Controller {
@@ -58,7 +28,9 @@ export default class AccueilController extends Controller {
 
     this.reaction = BIGINELLI; //new ReactionComplete();
     this.resultats = new Resultat();
+
     this._initForms();
+    this._initReactionMVC();
     this._initResultatsMVC();
   }
 
@@ -70,6 +42,12 @@ export default class AccueilController extends Controller {
     })
     .then( () => this._initDataLists() )
     .then( () => this.loading(false) );
+  }
+
+  _initReactionMVC() {
+    this.mvcReactionController = new ReactionMVCController(this.reaction);
+    const canvasView = new CanvasReactionMVCView(this.mvcReactionController, this.container.querySelector("#canvas-reaction"));
+    this.mvcReactionController.addView(canvasView);
   }
 
 
@@ -195,6 +173,7 @@ export default class AccueilController extends Controller {
     } else {
       existing.volume += molecule.volume;
     }
+    this.mvcReactionController.updateViews();
     event.target.reset();
   }
 
@@ -219,6 +198,7 @@ export default class AccueilController extends Controller {
       new FormData(event.target)
     );
       list.push(activation);
+      this.mvcReactionController.updateViews();
       event.target.reset();
   }
 
@@ -226,6 +206,7 @@ export default class AccueilController extends Controller {
     event.preventDefault();
     const produit = this._createMoleculeReaction(new FormData(event.target));
     reaction.produit = produit;
+    this.mvcReactionController.updateViews();
   }
 
 }
