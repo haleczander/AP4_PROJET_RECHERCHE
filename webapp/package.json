@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/haleczander/AP4_PROJET_RECHERCHE#readme",
   "dependencies": {
+    "chart.js": "^4.4.8",
     "lodash": "^4.17.21"
   },
   "pkg": {

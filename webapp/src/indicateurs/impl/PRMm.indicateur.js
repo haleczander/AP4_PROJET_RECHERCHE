@@ -1,7 +1,7 @@
 import ReactionService from "../../services/reaction.service";
 import Indicateur from "../indicateur";
 
-export class PRMmndicateur extends Indicateur {
+export class PRMmIndicateur extends Indicateur {
   constructor() {
     super("PRMm", "PRMm");
   }
@@ -39,4 +39,4 @@ export class PRMmndicateur extends Indicateur {
   }
 }
 
-export default PRMmndicateur;
+export default PRMmIndicateur;

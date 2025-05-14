@@ -43,4 +43,4 @@ generateNavLinks( routes );
 const router = new Router( routes, document.getElementById('main-container') );
 services[ "router" ] = router;
 
-console.log("Je suis bien chargé");
+console.log("mains.js initialisé");

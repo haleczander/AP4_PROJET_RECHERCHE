@@ -1,7 +1,8 @@
 import { getNbCarbone } from "../../utils/molecules.utils";
 import Indicateur from "../indicateur";
+import EconomieAtomesIndicateur from "./economieAtomes.indicateur";
 
-export class EconomieAtomesIndicateur extends Indicateur {
+export class EconomieCarboneIndicateur extends Indicateur {
   constructor() {
     super("Économie de Carbone", "EC");
   }
@@ -22,4 +23,4 @@ export class EconomieAtomesIndicateur extends Indicateur {
   }
 }
 
-export default EconomieAtomesIndicateur;
+export default EconomieCarboneIndicateur;
