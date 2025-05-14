@@ -153,6 +153,7 @@ export default class AccueilController extends Controller {
   }
 
   _createMoleculeReaction(formData) {
+    console.log(formData)
     const molecule = this._moleculeByDisplay(formData.get("molecule"));
     if (!molecule)
       return console.error("Molécule introuvable:", formData.get("molecule"));
@@ -162,12 +163,14 @@ export default class AccueilController extends Controller {
       purete: parseFloat(formData.get("purete")),
       volume: parseFloat(formData.get("volume")),
       prixG: parseFloat(formData.get("prixG")),
+      recyclabilite: parseFloat(formData.get("recyclabilite"))
     };
   }
 
   _addFormMolecule(event, list) {
     event.preventDefault();
     const molecule = this._createMoleculeReaction(new FormData(event.target));
+    console.log(molecule)
     const existing = moleculeExists( molecule, list );
     if (!existing) {
       list.push(molecule);
