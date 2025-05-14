@@ -16,9 +16,6 @@ export class CalculService {
         indicateur.reactionPrincipale(reaction),
         this.precision,
       );
-            if ( Number.isNaN(resultat)){
-        console.log(reaction, indicateur)
-      }
       results[indicateur.code] = resultat;
     });
     return results;
@@ -31,9 +28,6 @@ export class CalculService {
         indicateur.reactionComplete(reaction),
         this.precision,
       );
-      if ( Number.isNaN(resultat)){
-        console.log(reaction, indicateur)
-      }
       if (null !== resultat) {
         results[indicateur.code] = resultat;
       }

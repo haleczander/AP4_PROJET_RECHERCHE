@@ -42,6 +42,7 @@ export default class AjoutMoleculeController extends Controller {
     };
 
     this.addListener(this.form, "submit", submitFn);
+    this.submitBtn.disabled = !this.valid;
   }
 
   _mapMolecule(fields) {
