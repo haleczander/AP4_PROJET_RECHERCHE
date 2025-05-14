@@ -297,7 +297,7 @@
       </form>
     </div>
   </section>
-  <section>
+  <section id="section-resultat">
     <h1 id="h2-resultat">Résultat</h1>
     <div class="section-box">
       <div class="layout-container" id="capture-zone">
@@ -412,45 +412,28 @@
     background-color: #f0eaff;
   }
 
-  /* === IMPRESSION === */
-  @media print {
-    .print-page-break {
-      page-break-before: always;
-      break-before: page;
-    }
-
-    body * {
-      visibility: hidden;
-    }
-
-    #main-calculs,
-    #main-calculs * {
-      visibility: visible;
-    }
-
-    #main-calculs {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      padding: 0;
-      margin: 0;
-      background: white;
-    }
-
-    #imprimer-btn,
-    #export-donnees-btn {
-      display: none !important;
-    }
-
-    .section-box,
-    .schema-reaction,
-    .bloc-traitement,
-    .bloc-purification,
-    #tableau-reaction {
-      box-shadow: none !important;
-    }
+/* === IMPRESSION === */
+@media print {
+  body * {
+    display: none !important;
   }
+  .schema-reaction,
+  #section-resultat {
+    display: block !important;
+    position: static !important;
+  }
+  .schema-reaction {
+    page-break-after: always;
+  }
+  #section-resultat * {
+    display: block !important;
+    position: static !important;
+  }
+  #imprimer-btn,
+  #export-donnees-btn {
+    display: none !important;
+  }
+}
 
   /* === RESPONSIVE POUR PETITS ÉCRANS === */
   @media (max-width: 900px) {
