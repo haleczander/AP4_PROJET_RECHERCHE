@@ -28,14 +28,7 @@
         "r62": false,
         "r63": true,
         "danger": [
-          "H301",
-          "H311",
-          "H314",
-          "H317",
-          "H331",
-          "H335",
-          "H350",
-          "EUH071"
+          "H301", "H331", "H311", "H314", "H317", "H335", "H341", "H350", "H370"
         ]
       },
       {
@@ -65,8 +58,7 @@
         "r63": true,
         "danger": [
           "H225",
-          "H319",
-          "EUH066"
+          "H319"
         ]
       },
       {
@@ -99,8 +91,7 @@
           "H301",
           "H311",
           "H331",
-          "H370",
-          "EUH066"
+          "H370"
         ]
       },
       {
@@ -132,8 +123,7 @@
         "danger": [
           "H290",
           "H314",
-          "H335",
-          "EUH071"
+          "H335"
         ]
       },
       {
@@ -220,8 +210,7 @@
         "danger": [
           "H225",
           "H319",
-          "H336",
-          "EUH066"
+          "H336"
         ]
       },
       {
@@ -250,14 +239,7 @@
         "r62": false,
         "r63": true,
         "danger": [
-          "H225",
-          "H304",
-          "H315",
-          "H336",
-          "H361",
-          "H373",
-          "H411",
-          "EUH066"
+          "H225", "H315", "H361d", "H336", "H373", "H304", "H412"
         ]
       },
       {
@@ -287,8 +269,7 @@
         "r63": false,
         "danger": [
           "H220",
-          "H280",
-          "EUH071"
+          "H280"
         ]
       },
       {
@@ -317,7 +298,7 @@
         "r62": false,
         "r63": false,
         "danger": [
-          "H270"
+          "H270", "H280"
         ]
       },
       {
@@ -375,13 +356,7 @@
         "r62": false,
         "r63": false,
         "danger": [
-          "H224",
-          "H302",
-          "H319",
-          "H331",
-          "H335",
-          "H350",
-          "EUH071"
+          "H224", "H319", "H335", "H341", "H350"
         ]
       },
       {
@@ -410,12 +385,7 @@
         "r62": false,
         "r63": false,
         "danger": [
-          "H224",
-          "H300",
-          "H310",
-          "H330",
-          "H400",
-          "EUH071"
+          "H224", "H300", "H310", "H330", "H372", "H400", "H410"
         ]
       },
       {
@@ -444,10 +414,7 @@
         "r62": false,
         "r63": false,
         "danger": [
-          "H226",
-          "H314",
-          "H335",
-          "EUH071"
+          "H226", "H314", "H318"
         ]
       },
       {
@@ -476,11 +443,7 @@
         "r62": false,
         "r63": false,
         "danger": [
-          "H221",
-          "H314",
-          "H331",
-          "H400",
-          "EUH071"
+          "H221", "H280", "H331", "H314", "H318", "H400", "H411"
         ]
       },
       {
@@ -509,9 +472,8 @@
         "r62": false,
         "r63": false,
         "danger": [
-          "H315",
-          "H319",
-          "H335"
+          "H314",
+          "H318"
         ]
       },
       {
@@ -540,10 +502,7 @@
         "r62": false,
         "r63": false,
         "danger": [
-          "H302",
-          "H319",
-          "H335",
-          "H317"
+          "H302", "H332"
         ]
       },
       {
@@ -571,7 +530,13 @@
         "r61": false,
         "r62": false,
         "r63": false,
-        "danger": []
+        "danger": ["H302",
+                    "H317",
+                    "H318",
+                    "H341",
+                    "H351",
+                    "H410"
+]
       },
       {
         "cas": "100-52-7",
@@ -599,11 +564,11 @@
         "r62": false,
         "r63": false,
         "danger": [
-          "H302",
-          "H312",
+          "H302+H332",
           "H315",
           "H319",
-          "H332"
+          "H335",
+          "H412"
         ]
       },
       {
@@ -632,7 +597,7 @@
         "r62": false,
         "r63": false,
         "danger": [
-          "H410"
+          "H400","H410"
         ]
       },
       {
@@ -688,11 +653,7 @@
         "r62": false,
         "r63": false,
         "danger": [
-          "H225",
-          "H302",
-          "H319",
-          "H335",
-          "EUH019"
+          "H225", "H302", "H319", "H335", "H336", "H351"
         ]
       },
       {
@@ -722,10 +683,7 @@
         "r62": false,
         "r63": false,
         "danger": [
-          "H272",
-          "H302",
-          "H314",
-          "H410"
+          "H272", "H302", "H314", "H318", "H361d", "H373", "H400", "H410"
         ]
       },
       {
@@ -755,9 +713,7 @@
         "r62": false,
         "r63": false,
         "danger": [
-          "H290",
-          "H314",
-          "H335"
+          "H280", "H331", "H314", "H318"
         ]
       },
       {
@@ -786,21 +742,20 @@
         "r62": false,
         "r63": false,
         "danger": [
-          "H317"
+          "H319"
         ]
       },
       {
-        "cas": "104-55-2",
+        "cas": "116-26-7",
         "nom": "Safranal",
-        "formule": "C10H14O",
-        "densite": 0.973,
-        "masseMolaire": 150.22,
-        "nbCarbone": 10,
-        "nocif": true,
-        "irritant": true,
-        "corrosif": false,
+        "formule": "C7H8O",
+        "densite": 0.99,
+        "masseMolaire": 108.14,
+        "nbCarbone": 7,
+        "nocif": false,
+        "irritant": false,
         "explosible": false,
-        "dangereuxPourEnvironnement": true,
+        "dangereuxPourEnvironnement": false,
         "toxique": false,
         "tresToxique": false,
         "facilementInflammable": false,
@@ -816,9 +771,10 @@
         "r62": false,
         "r63": false,
         "danger": [
-          "H227",
-          "H317",
-          "H319",
+          "H302", 
+          "H315", 
+          "H317", 
+          "H319", 
           "H411"
         ]
       },
@@ -849,8 +805,36 @@
         "r62": false,
         "r63": false,
         "danger": [
-          "H317",
-          "H400"
+        ]
+      },
+      {
+        "cas": "499-44-5",
+        "nom": "Hinokitiol",
+        "formule": "C10H12O2",
+        "densite": 1.0041,
+        "masseMolaire": 164.2,
+        "nbCarbone": 10,
+        "nocif": false,
+        "irritant": false,
+        "corrosif": false,
+        "explosible": false,
+        "dangereuxPourEnvironnement": true,
+        "toxique": false,
+        "tresToxique": false,
+        "facilementInflammable": false,
+        "inflammable": false,
+        "extremementInflammable": false,
+        "sensibilisant": true,
+        "r40": false,
+        "r45": false,
+        "r49": false,
+        "r46": false,
+        "r60": false,
+        "r61": false,
+        "r62": false,
+        "r63": false,
+        "danger": [
+          "H302"
         ]
       },
       {
@@ -880,8 +864,11 @@
         "r62": false,
         "r63": false,
         "danger": [
-          "H226",
-          "H314"
+          "H302",
+          "H317",
+          "H319",
+          "H410"
+
         ]
       },
       {
@@ -912,7 +899,9 @@
         "r63": false,
         "danger": [
           "H290",
-          "H314"
+          "H302",
+          "H314",
+          "H318"
         ]
       },
       {
@@ -944,8 +933,7 @@
         "danger": [
           "H290",
           "H314",
-          "H335",
-          "H411"
+          "H318"
         ]
       }
     ],
