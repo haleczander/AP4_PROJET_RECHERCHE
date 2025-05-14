@@ -16,6 +16,8 @@ import ResultatMVCController from "../../mvc/resultat/resultat.mvc.controller";
 import RadarResultatMVCView from "../../mvc/resultat/impl/radar.resultat.mvc.view";
 import BarResultatMVCView from "../../mvc/resultat/impl/bar.resultat.mvc.view";
 import TableResultatMVCView from "../../mvc/resultat/impl/table.resultat.mvc.view";
+import { exportJson } from "../../utils/importExport.utils";
+
 
 
 export default class AccueilController extends Controller {
@@ -23,6 +25,8 @@ export default class AccueilController extends Controller {
     this.dataService = services.dataService;
     this.calculService = new CalculService();
     this._initData();
+    this._initExportPDF();
+    this._initExportData();
 
     this.indicateurs = INDICATEURS.map((i) => new i());
 
@@ -213,4 +217,45 @@ export default class AccueilController extends Controller {
     this.mvcReactionController.updateViews();
   }
 
+  _initExportData() {
+  const exportBtn = document.getElementById("export-donnees-btn");
+  if (!exportBtn) {
+    console.error("Le bouton d'export avec l'ID 'export-donnees-btn' est introuvable.");
+    return;
+  }
+  const downloadFn = (event) => {
+    event.preventDefault();
+
+    // Récupère les données actuelles depuis le contrôleur ou le modèle
+    const bilanPrincipale = this.resultats?.bilanPrincipale;
+    const bilanComplete = this.resultats?.bilanComplete;
+    const reactionPrincipale = this.resultats?.principale;
+    const reactionComplete = this.resultats?.complete;
+
+    const now = new Date();
+    const dateStr = now.toISOString();
+
+    const exportData = {
+      date: dateStr,
+      data: {
+        reaction:this.reaction,
+        resultats:this.resultats,
+      },
+    };
+
+    exportJson(exportData, `export-reactions-${dateStr}`);
+  };
+
+  this.addListener(exportBtn, "click", downloadFn);
+}
+
+  _initExportPDF() {
+  const exportBtn = document.getElementById("imprimer-btn");
+  if (!exportBtn) return;
+
+  this.addListener(exportBtn, "click", (event) => {
+    event.preventDefault();
+    window.print();
+  });
+}
 }
