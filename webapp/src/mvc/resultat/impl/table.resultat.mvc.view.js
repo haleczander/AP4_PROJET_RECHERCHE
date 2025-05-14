@@ -66,12 +66,5 @@ export default class TableResultatMVCView {
 
     tableContainer.appendChild(table);
     this.container.appendChild(tableContainer);
-
-    const printButton = document.getElementById("imprimer-btn");
-    if (printButton) {
-      printButton.addEventListener("click", () => {
-        window.print();
-      });
-    }
   }
 }

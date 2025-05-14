@@ -6,19 +6,17 @@ import { ReactionComplete } from "../../models/reaction.model";
 import { createActivationReaction } from "../../utils/activations.utils";
 import Energie from "../../models/energie.model";
 import { Resultat } from "../../models/resultat.model";
-import { INDICATEURS } from "../../../src/settings"
+import { INDICATEURS } from "../../../src/settings";
 import ReactionMVCController from "../../mvc/reaction/reaction.mvc.controller";
 import CanvasReactionMVCView from "../../mvc/reaction/impl/canvas.reaction.mvc.view";
-import BIGINELLI  from "../../../tests/data/reactions/biginelli.reaction"
+import BIGINELLI from "../../../tests/data/reactions/biginelli.reaction";
 import CalculService from "../../services/calcul.service";
 import { moleculeExists } from "../../utils/reactions.utils";
 import ResultatMVCController from "../../mvc/resultat/resultat.mvc.controller";
 import RadarResultatMVCView from "../../mvc/resultat/impl/radar.resultat.mvc.view";
 import BarResultatMVCView from "../../mvc/resultat/impl/bar.resultat.mvc.view";
 import TableResultatMVCView from "../../mvc/resultat/impl/table.resultat.mvc.view";
-import { exportJson } from "../../utils/importExport.utils";
-
-
+import { createReactionStepsTable, exportJson, exportResultsPDF } from "../../utils/importExport.utils";
 
 export default class AccueilController extends Controller {
   init() {
@@ -38,24 +36,27 @@ export default class AccueilController extends Controller {
     this._initResultatsMVC();
   }
 
-    async _initData() {
+  async _initData() {
     this.loading(true);
-    this.dataService.ready().then(() => {
-      this.molecules = this.dataService.findAllMolecules(); 
-      this.activations = this.dataService.findAllActivations();
-    })
-    .then( () => this._initDataLists() )
-    .then( () => this.loading(false) );
+    this.dataService
+      .ready()
+      .then(() => {
+        this.molecules = this.dataService.findAllMolecules();
+        this.activations = this.dataService.findAllActivations();
+      })
+      .then(() => this._initDataLists())
+      .then(() => this.loading(false));
   }
 
   _initReactionMVC() {
     this.mvcReactionController = new ReactionMVCController(this.reaction);
-    const canvasView = new CanvasReactionMVCView(this.mvcReactionController, this.container.querySelector("#canvas-reaction"));
+    const canvasView = new CanvasReactionMVCView(
+      this.mvcReactionController,
+      this.container.querySelector("#canvas-reaction")
+    );
     this.mvcReactionController.addView(canvasView);
     this.mvcReactionController.updateViews();
   }
-
-
 
   _initResultatsMVC() {
     this.mvcResultatController = new ResultatMVCController();
@@ -68,19 +69,22 @@ export default class AccueilController extends Controller {
     const barView = new BarResultatMVCView(
       this.mvcResultatController,
       this.container.querySelector("#bar-chart-principale"),
-      this.container.querySelector("#bar-chart-complete"),  
-      );
-      this.mvcResultatController.addView(barView);
-      const tableView = new TableResultatMVCView(
-        this.mvcResultatController,
-        this.container.querySelector("#tableau-reaction")
-      );
-      this.mvcResultatController.addView(tableView);
+      this.container.querySelector("#bar-chart-complete")
+    );
+    this.mvcResultatController.addView(barView);
+    const tableView = new TableResultatMVCView(
+      this.mvcResultatController,
+      this.container.querySelector("#tableau-reaction")
+    );
+    this.mvcResultatController.addView(tableView);
   }
 
   _reactionSubmit(event) {
     event.preventDefault();
-    this.resultats = this.calculService.resultats( this.reaction, this.indicateurs)
+    this.resultats = this.calculService.resultats(
+      this.reaction,
+      this.indicateurs
+    );
     this.mvcResultatController.updateResults(this.resultats);
     return;
   }
@@ -118,8 +122,10 @@ export default class AccueilController extends Controller {
     this.addListener(getBySelector("#form-reaction"), "submit", (e) =>
       this._reactionSubmit(e)
     );
-    this.addListener(getBySelector("#form-reactif-reaction-principale"), "submit", (e) =>
-      this._addFormMolecule(e, this.reaction.reactionPrincipale.reactifs)
+    this.addListener(
+      getBySelector("#form-reactif-reaction-principale"),
+      "submit",
+      (e) => this._addFormMolecule(e, this.reaction.reactionPrincipale.reactifs)
     );
     this.addListener(
       getBySelector("#form-catalyseur-reaction-principale"),
@@ -127,8 +133,10 @@ export default class AccueilController extends Controller {
       (e) =>
         this._addFormMolecule(e, this.reaction.reactionPrincipale.catalyseurs)
     );
-    this.addListener(getBySelector("#form-solvant-reaction-principale"), "submit", (e) =>
-      this._addFormMolecule(e, this.reaction.reactionPrincipale.solvants)
+    this.addListener(
+      getBySelector("#form-solvant-reaction-principale"),
+      "submit",
+      (e) => this._addFormMolecule(e, this.reaction.reactionPrincipale.solvants)
     );
     this.addListener(
       getBySelector("#form-activation-reaction-principale"),
@@ -136,20 +144,33 @@ export default class AccueilController extends Controller {
       (e) =>
         this._addFormActivation(e, this.reaction.reactionPrincipale.activations)
     );
-    this.addListener(getBySelector("#form-reactif-post-traitement"), "submit", (e) =>
-      this._addFormMolecule(e, this.reaction.traitementPostReactionnel.reactifs)
+    this.addListener(
+      getBySelector("#form-reactif-post-traitement"),
+      "submit",
+      (e) =>
+        this._addFormMolecule(
+          e,
+          this.reaction.traitementPostReactionnel.reactifs
+        )
     );
-    this.addListener(getBySelector("#form-activation-post-traitement"), "submit", (e) =>
-      this._addFormActivation(
-        e,
-        this.reaction.traitementPostReactionnel.activations
-      )
+    this.addListener(
+      getBySelector("#form-activation-post-traitement"),
+      "submit",
+      (e) =>
+        this._addFormActivation(
+          e,
+          this.reaction.traitementPostReactionnel.activations
+        )
     );
-    this.addListener(getBySelector("#form-reactif-purification"), "submit", (e) =>
-      this._addFormMolecule(e, this.reaction.purification.reactifs)
+    this.addListener(
+      getBySelector("#form-reactif-purification"),
+      "submit",
+      (e) => this._addFormMolecule(e, this.reaction.purification.reactifs)
     );
-    this.addListener(getBySelector("#form-activation-purification"), "submit", (e) =>
-      this._addFormActivation(e, this.reaction.purification.activations)
+    this.addListener(
+      getBySelector("#form-activation-purification"),
+      "submit",
+      (e) => this._addFormActivation(e, this.reaction.purification.activations)
     );
     this.addListener(getBySelector("#form-produit"), "submit", (e) =>
       this._addProduit(e, this.reaction)
@@ -174,8 +195,7 @@ export default class AccueilController extends Controller {
   _addFormMolecule(event, list) {
     event.preventDefault();
     const molecule = this._createMoleculeReaction(new FormData(event.target));
-    console.log(molecule)
-    const existing = moleculeExists( molecule, list );
+    const existing = moleculeExists(molecule, list);
     if (!existing) {
       list.push(molecule);
     } else {
@@ -205,9 +225,9 @@ export default class AccueilController extends Controller {
     const activation = this._createActivationReaction(
       new FormData(event.target)
     );
-      list.push(activation);
-      this.mvcReactionController.updateViews();
-      event.target.reset();
+    list.push(activation);
+    this.mvcReactionController.updateViews();
+    event.target.reset();
   }
 
   _addProduit(event, reaction) {
@@ -218,44 +238,39 @@ export default class AccueilController extends Controller {
   }
 
   _initExportData() {
-  const exportBtn = document.getElementById("export-donnees-btn");
-  if (!exportBtn) {
-    console.error("Le bouton d'export avec l'ID 'export-donnees-btn' est introuvable.");
-    return;
-  }
-  const downloadFn = (event) => {
-    event.preventDefault();
+    const exportBtn = document.getElementById("export-donnees-btn");
+    if (!exportBtn) {
+      console.error(
+        "Le bouton d'export avec l'ID 'export-donnees-btn' est introuvable."
+      );
+      return;
+    }
+    const downloadFn = (event) => {
+      event.preventDefault();
 
-    // Récupère les données actuelles depuis le contrôleur ou le modèle
-    const bilanPrincipale = this.resultats?.bilanPrincipale;
-    const bilanComplete = this.resultats?.bilanComplete;
-    const reactionPrincipale = this.resultats?.principale;
-    const reactionComplete = this.resultats?.complete;
 
-    const now = new Date();
-    const dateStr = now.toISOString();
+      const now = new Date();
+      const dateStr = now.toISOString();
 
-    const exportData = {
-      date: dateStr,
-      data: {
-        reaction:this.reaction,
-        resultats:this.resultats,
-      },
+      const exportData = {
+        date: dateStr,
+        data: {
+          reaction: this.reaction,
+          resultats: this.resultats,
+        },
+      };
+
+      exportJson(exportData, `export-reactions-${dateStr}`);
     };
 
-    exportJson(exportData, `export-reactions-${dateStr}`);
-  };
+    this.addListener(exportBtn, "click", downloadFn);
+  }
 
-  this.addListener(exportBtn, "click", downloadFn);
-}
 
   _initExportPDF() {
-  const exportBtn = document.getElementById("imprimer-btn");
-  if (!exportBtn) return;
+    const exportBtn = document.getElementById("imprimer-btn");
+    if (!exportBtn) return;
 
-  this.addListener(exportBtn, "click", (event) => {
-    event.preventDefault();
-    window.print();
-  });
-}
+    this.addListener(exportBtn, "click", (event) => exportResultsPDF(event, this.reaction));
+  }
 }
