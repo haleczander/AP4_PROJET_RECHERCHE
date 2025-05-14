@@ -320,35 +320,21 @@
           </div>
         </div>
       </div>
-
-      <button id="imprimer-btn">Imprimer les résultats en pdf</button>
-      <button id="export-donnees-btn">Sauvegarder les données en JSON</button>
+      <div id="export-btns">
+      <button id="imprimer-btn" class="add-btn">Imprimer les résultats en pdf</button>
+      <button id="export-donnees-btn" class="add-btn">Sauvegarder les données en JSON</button></div>
     </div>
   </section>
 </div>
 
 <style>
-  .section-box {
-    background-color: var(--black-purple);
-    border: 0.2vh solid var(--purple);
-    border-radius: 1.5vh;
-    padding: 2vh 1vw 2vh 1vw;
-    margin-bottom: 0.8vh;
-    box-shadow: 0 0.4vh 1vh var(--box-shadow);
+  #export-btns {
+    padding: 2em;
+    display: flex;
+    width: 100;
+    justify-content: space-around;
   }
 
-  .schema-reaction {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: var(--white);
-    padding: 6.5vh 2vw;
-    border-radius: 1.5vh;
-    box-shadow: 0 0.4vh 1vh var(--box-shadow);
-    margin-bottom: 1.8vh;
-    gap: 2vw;
-    position: relative;
-  }
 
   /* === TABLEAU & GRAPHIQUES === */
   .layout-container {
@@ -417,21 +403,12 @@
   body * {
     display: none !important;
   }
-  .schema-reaction,
-  #section-resultat {
+  #export-print-zone, #export-print-zone * {
     display: block !important;
     position: static !important;
-  }
-  .schema-reaction {
-    page-break-after: always;
-  }
-  #section-resultat * {
-    display: block !important;
-    position: static !important;
-  }
-  #imprimer-btn,
-  #export-donnees-btn {
-    display: none !important;
+    color: #000 !important;
+    background: #fff !important;
+    box-shadow: none !important;
   }
 }
 
