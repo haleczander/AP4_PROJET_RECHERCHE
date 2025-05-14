@@ -125,14 +125,14 @@ export default class CanvasReactionMVCView extends ReactionMVCView {
     drawArrow(x, y, length = 100, height = 10, lineWidth = 3) {
         const ctx = this.ctx;
         const headLength = 10; // longueur de la tête de flèche
-    
+
         // Ligne principale
         ctx.beginPath();
         ctx.lineWidth = lineWidth;
         ctx.moveTo(x, y);
         ctx.lineTo(x + length - headLength, y);
         ctx.stroke();
-    
+
         // Tête de flèche (triangle plein)
         ctx.beginPath();
         ctx.moveTo(x + length - headLength, y - height);
@@ -163,22 +163,22 @@ export default class CanvasReactionMVCView extends ReactionMVCView {
                 y += lineSpacing;
                 x = startX;
             }
-    
+
             if (x !== startX && separatorChar) {
                 x += this.writeText(separatorChar, x, y, true);
                 x += spacing;
             }
-    
+
             // Coefficient
             let wCoef = this.writeText(reactif.coefStoechiometrique, x, y, true);
             x += wCoef;
-            
+
             // Formule avec zone cliquable
             const callback = (event) => {
                 const toAdd = event.button === 0 ? 1 : -1;
                 this.controller.updateCoef(reactif, toAdd, reactifs);
             };
-            
+
             let wFormule = this.createClickableText(reactif.formule, x, y, false, callback);
             x += wFormule + spacing;
         });
@@ -193,10 +193,10 @@ export default class CanvasReactionMVCView extends ReactionMVCView {
     renderInlineElements(elements, centerX, y, getTextFunc, removeCallback = null) {
         const spacing = CanvasReactionMVCView.LAYOUT.SPACING;
         const h = this.fontHeight / 2;
-        
+
         // Préparer les textes et calculer la largeur totale
         const texts = elements.map(getTextFunc);
-        
+
         let totalWidth = 0;
         texts.forEach((text, index) => {
             totalWidth += this.ctx.measureText(text).width;
@@ -204,47 +204,47 @@ export default class CanvasReactionMVCView extends ReactionMVCView {
                 totalWidth += this.ctx.measureText(", ").width;
             }
         });
-        
+
         // Centrer horizontalement
         let x = centerX - totalWidth / 2;
-        
+
         texts.forEach((text, index) => {
-            const callback = removeCallback ? 
+            const callback = removeCallback ?
                 (event) => removeCallback(elements[index], elements) :
                 null;
-                
-            const w = callback ? 
+
+            const w = callback ?
                 this.createClickableText(text, x, y, false, callback) :
                 this.writeText(text, x, y);
-                
+
             x += w;
-            
+
             if (index < texts.length - 1) {
                 x += this.writeText(", ", x, y, true);
             }
         });
-        
+
         return { finalX: x };
     }
 
     // Méthode générique pour les activations (utilisée par toutes les méthodes d'activation)
     renderActivations(activations, startX, startY, vertical = true) {
         if (activations.length === 0) return;
-        
+
         let x = startX;
         let y = startY;
         const spacing = CanvasReactionMVCView.LAYOUT.SPACING;
         const lineHeight = this.fontHeight;
-        
+
         activations.forEach((activation, index) => {
             const text = this.activationText(activation);
-            
+
             const callback = (event) => {
                 this.controller.removeElement(activation, activations);
             };
-            
+
             const w = this.createClickableText(text, x, y, false, callback);
-            
+
             if (vertical) {
                 // Mode vertical: passage à la ligne suivante
                 y += lineHeight;
@@ -261,21 +261,21 @@ export default class CanvasReactionMVCView extends ReactionMVCView {
     // Implémentation des méthodes spécifiques utilisant les méthodes génériques
     rpReactifs(reactifs) {
         const layout = CanvasReactionMVCView.LAYOUT.REACTION_PRINCIPALE;
-        
+
         this.writeText("Réaction principale :", layout.TITLE_X, layout.TITLE_Y, true);
-        
+
         const result = this.renderReactifs(
-            reactifs, 
-            layout.REACTIFS_START_X, 
-            layout.REACTIFS_Y, 
+            reactifs,
+            layout.REACTIFS_START_X,
+            layout.REACTIFS_Y,
             layout.MAX_REACTIFS_PER_LINE
         );
-        
+
         // Calcul de la position verticale de la flèche en fonction du nombre de lignes
         const arrowY = result.baseY + ((result.totalLines - 1) * (this.fontHeight + CanvasReactionMVCView.LAYOUT.LINE_SPACING)) / 2;
-        
+
         this.drawArrow(layout.ARROW_X, arrowY, layout.ARROW_LENGTH);
-        
+
         // Sauvegarder la position de la flèche pour les autres éléments
         this.lastArrowX = layout.ARROW_X;
         this.lastArrowY = arrowY;
@@ -284,10 +284,10 @@ export default class CanvasReactionMVCView extends ReactionMVCView {
 
     rpSolvants(solvants) {
         if (!this.lastArrowX || !this.arrowLength) return;
-        
+
         const centerX = this.lastArrowX + this.arrowLength / 2;
         const y = this.lastArrowY + CanvasReactionMVCView.LAYOUT.REACTION_PRINCIPALE.SOLVANTS_OFFSET_Y;
-        
+
         this.renderInlineElements(
             solvants,
             centerX,
@@ -299,10 +299,10 @@ export default class CanvasReactionMVCView extends ReactionMVCView {
 
     rpCatalyseurs(catalyseurs) {
         if (!this.lastArrowX || !this.arrowLength) return;
-        
+
         const centerX = this.lastArrowX + this.arrowLength / 2;
         const y = this.lastArrowY + CanvasReactionMVCView.LAYOUT.REACTION_PRINCIPALE.CATALYSEURS_OFFSET_Y;
-        
+
         this.renderInlineElements(
             catalyseurs,
             centerX,
@@ -314,10 +314,10 @@ export default class CanvasReactionMVCView extends ReactionMVCView {
 
     rpActivations(activations) {
         if (!this.lastArrowX || !this.arrowLength) return;
-        
+
         const centerX = this.lastArrowX + this.arrowLength / 2;
         const y = this.lastArrowY + CanvasReactionMVCView.LAYOUT.REACTION_PRINCIPALE.ACTIVATIONS_OFFSET_Y;
-        
+
         this.renderInlineElements(
             activations,
             centerX,
@@ -329,9 +329,9 @@ export default class CanvasReactionMVCView extends ReactionMVCView {
 
     ptReactifs(reactifs) {
         const layout = CanvasReactionMVCView.LAYOUT.POST_TRAITEMENT;
-        
+
         this.writeText(" Traitement post-réactionnel :", layout.TITLE_X, layout.TITLE_Y, true);
-        
+
         this.renderReactifs(
             reactifs,
             layout.REACTIFS_START_X,
@@ -341,7 +341,7 @@ export default class CanvasReactionMVCView extends ReactionMVCView {
 
     ptActivations(activations) {
         const layout = CanvasReactionMVCView.LAYOUT.POST_TRAITEMENT;
-        
+
         this.renderActivations(
             activations,
             layout.ACTIVATIONS_START_X,
@@ -352,9 +352,9 @@ export default class CanvasReactionMVCView extends ReactionMVCView {
 
     purifReactifs(reactifs) {
         const layout = CanvasReactionMVCView.LAYOUT.PURIFICATION;
-        
+
         this.writeText(" Purification :", layout.TITLE_X, layout.TITLE_Y, true);
-        
+
         this.renderReactifs(
             reactifs,
             layout.REACTIFS_START_X,
@@ -364,7 +364,7 @@ export default class CanvasReactionMVCView extends ReactionMVCView {
 
     purifActivations(activations) {
         const layout = CanvasReactionMVCView.LAYOUT.PURIFICATION;
-        
+
         this.renderActivations(
             activations,
             layout.ACTIVATIONS_START_X,
@@ -373,20 +373,26 @@ export default class CanvasReactionMVCView extends ReactionMVCView {
         );
     }
 
-    produit(produits) {
-        if (!Array.isArray(produits)) {
-            produits = [produits];
-        }
-        
+    produit(produit) {
+        if ( !produit ) return ;
         if (!this.lastArrowY) return;
-        
+
         const layout = CanvasReactionMVCView.LAYOUT.PRODUIT;
-        
-        this.renderReactifs(
-            produits,
-            layout.START_X,
-            this.lastArrowY,
-            layout.MAX_PER_LINE
-        );
+
+        // Formule avec son coefficient stœchiométrique
+        let x = layout.START_X;
+        let y = this.lastArrowY;
+
+        // Afficher le coefficient
+        let wCoef = this.writeText(produit.coefStoechiometrique, x, y, true);
+        x += wCoef;
+
+        // Formule avec zone cliquable
+        const callback = (event) => {
+            const toAdd = event.button === 0 ? 1 : -1;
+            this.controller.updateProduit(produit, toAdd);
+        };
+
+        this.createClickableText(produit.formule, x, y, false, callback);
     }
 }

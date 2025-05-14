@@ -8,7 +8,6 @@ export default class ReactionMVCController {
 
     addView( view ) {
         this.views.push( view );
-        view.reactionComplete( this.reactionComplete );
     }
 
     updateViews() {
@@ -39,6 +38,14 @@ export default class ReactionMVCController {
         const index = elements.indexOf( element );
         if ( index > -1 ) {
             elements.splice( index, 1 );
+        }
+        this.updateViews();
+    }
+
+    updateProduit( produit, stoechimetrie ) {
+        produit.coefStoechiometrique += stoechimetrie;
+        if ( produit.coefStoechiometrique <= 0 ){
+            this.reactionComplete.produit = null;
         }
         this.updateViews();
     }
