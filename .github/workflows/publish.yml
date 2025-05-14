@@ -1,10 +1,8 @@
 name: Publish Executables
 on:
   push:
-    tags:
-      - "v*.*.*" 
     branches:
-      - release/test*
+      - release*
 
 jobs:
   build-and-publish:
