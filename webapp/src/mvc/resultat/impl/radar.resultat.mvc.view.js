@@ -2,6 +2,7 @@ import { Chart } from "chart.js";
 import { RADAR_STYLES } from "../../../settings";
 import ResultatMVCView from "../resultat.mvc.view";
 import { radarResults } from "../../../utils/calcul.utils";
+import ChartService from "../../../services/chart.service";
 
 export default class RadarResultatMVCView extends ResultatMVCView {
   chartComplete = null;
@@ -10,6 +11,7 @@ export default class RadarResultatMVCView extends ResultatMVCView {
     super(controller);
     this.canvasReactionPrincipale = canvasReactionPrincipale;
     this.canvasReactionComplete = canvasReactionComplete;
+    this.chartService = new ChartService();
   }
 
 
@@ -20,8 +22,9 @@ export default class RadarResultatMVCView extends ResultatMVCView {
     if (this.chartPrincipale) {
       this.chartPrincipale.destroy();
     }
-    this.chartPrincipale = this._createRadarChart(
+    this.chartPrincipale = this.chartService.createRadarChart(
       this.canvasReactionPrincipale,
+      "Réaction et traitement post-réactionnel",
       "Réaction principale",
       labels,
       data
@@ -35,55 +38,13 @@ export default class RadarResultatMVCView extends ResultatMVCView {
     if (this.chartComplete) {
       this.chartComplete.destroy();
     }
-    this.chartComplete = this._createRadarChart(
+    this.chartComplete = this.chartService.createRadarChart(
       this.canvasReactionComplete,
+      "Réaction et traitement post-réactionnel",
       "Réaction complète",
       labels,
       data
     );
   }
 
-  _createRadarChart(element, label, labels, data) {
-    return new Chart(element, {
-      type: "radar",
-      data: {
-        labels,
-        datasets: [{ label, data, ...RADAR_STYLES }],
-      },
-      options: {
-        responsive: false,
-        plugins: {
-          title: {
-            display: true,
-            text: "Réaction et traitement post-réactionnel",
-          },
-        },
-      },
-    });
-  }
-
-  createBarChart(canvasId, title, labels, data) {
-    new Chart(document.getElementById(canvasId), {
-      type: "bar",
-      data: {
-        labels,
-        datasets: [{ label: title.split("–")[0], data, ...RADAR_STYLES }],
-      },
-      options: {
-        responsive: false,
-        plugins: {
-          title: {
-            display: true,
-            text: title,
-          },
-        },
-        scales: {
-          y: {
-            beginAtZero: true,
-            max: 1,
-          },
-        },
-      },
-    });
-  }
 }

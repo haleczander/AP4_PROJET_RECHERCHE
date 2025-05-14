@@ -12,7 +12,10 @@ import CanvasReactionMVCView from "../../mvc/reaction/impl/canvas.reaction.mvc.v
 import BIGINELLI  from "../../../tests/data/reactions/biginelli.reaction"
 import CalculService from "../../services/calcul.service";
 import { moleculeExists } from "../../utils/reactions.utils";
-
+import ResultatMVCController from "../../mvc/resultat/resultat.mvc.controller";
+import RadarResultatMVCView from "../../mvc/resultat/impl/radar.resultat.mvc.view";
+import BarResultatMVCView from "../../mvc/resultat/impl/bar.resultat.mvc.view";
+import TableResultatMVCView from "../../mvc/resultat/impl/table.resultat.mvc.view";
 
 
 export default class AccueilController extends Controller {
@@ -42,9 +45,9 @@ export default class AccueilController extends Controller {
   }
 
   _initReactionMVC() {
-    this.mvcController = new ReactionMVCController(this.reaction);
-    const canvasView = new CanvasReactionMVCView(this.mvcController, this.container.querySelector("#canvas-reaction"));
-    this.mvcController.addView(canvasView);
+    this.mvcReactionController = new ReactionMVCController(this.reaction);
+    const canvasView = new CanvasReactionMVCView(this.mvcReactionController, this.container.querySelector("#canvas-reaction"));
+    this.mvcReactionController.addView(canvasView);
   }
 
 
@@ -170,7 +173,7 @@ export default class AccueilController extends Controller {
     } else {
       existing.volume += molecule.volume;
     }
-    this.mvcController.updateViews();
+    this.mvcReactionController.updateViews();
     event.target.reset();
   }
 
@@ -195,16 +198,15 @@ export default class AccueilController extends Controller {
       new FormData(event.target)
     );
       list.push(activation);
-      this.mvcController.updateViews();
+      this.mvcReactionController.updateViews();
       event.target.reset();
   }
 
   _addProduit(event, reaction) {
     event.preventDefault();
     const produit = this._createMoleculeReaction(new FormData(event.target));
-    if (produit) reaction.produit = produit;
-    this.mvcController.updateViews();
-
+    reaction.produit = produit;
+    this.mvcReactionController.updateViews();
   }
 
 }
