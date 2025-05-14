@@ -8,6 +8,7 @@ import Energie from "../../models/energie.model";
 import { Resultat } from "../../models/resultat.model";
 import { INDICATEURS } from "../../../src/settings"
 import CalculService from "../../services/calcul.service";
+import { moleculeExists } from "../../utils/reactions.utils";
 
 export default class AccueilController extends Controller {
   init() {
@@ -186,7 +187,13 @@ export default class AccueilController extends Controller {
   _addFormMolecule(event, list) {
     event.preventDefault();
     const molecule = this._createMoleculeReaction(new FormData(event.target));
-    list.push(molecule);
+    const existing = moleculeExists( molecule, list );
+    if (!existing) {
+      list.push(molecule);
+    } else {
+      existing.volume += molecule.volume;
+    }
+    event.target.reset();
   }
 
   _createActivationReaction(formData) {
@@ -218,13 +225,14 @@ export default class AccueilController extends Controller {
     const activation = this._createActivationReaction(
       new FormData(event.target),
     );
-    list.push(activation);
+    event.target.reset();
   }
 
   _addProduit(event, reaction) {
     event.preventDefault();
     const produit = this._createMoleculeReaction(new FormData(event.target));
     reaction.produit = produit;
+    event.target.reset();
   }
 
 }

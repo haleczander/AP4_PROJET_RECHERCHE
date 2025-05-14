@@ -1,5 +1,5 @@
 import Activation from "../../src/models/activation.model";
 
-export const PLAQUE_CHAUFFANTE = new Activation(null, "Plaque chauffante");
+export const PLAQUE_CHAUFFANTE = new Activation("Chauffage", 'Δ' );
 
-export const ETUVE = new Activation(null, "Étuve");
+export const ETUVE = new Activation("Etuve", 'Δ' );

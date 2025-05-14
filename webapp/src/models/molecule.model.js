@@ -22,6 +22,7 @@ export class Molecule {
   r61 = false;
   r62 = false;
   r63 = false;
+  danger = [];
 
   constructor() {}
 }

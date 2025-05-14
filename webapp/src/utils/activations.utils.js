@@ -16,6 +16,6 @@ export function getPrixEnergie(activation) {
 }
 
 export function createActivationReaction(activation) {
-  const activationReaction = new ActivationReaction(null, activation.nom);
-  return activationReaction;
+  const activationReaction = new ActivationReaction();
+  return {...activationReaction, ...activation };
 }

@@ -3,13 +3,17 @@ import Controller from "../Controller";
 import { filterMolecule } from "../../utils/filters.utils";
 import { htmlFormulaFormatter } from "../../utils/html.utils";
 import { round } from "../../utils/math.utils";
+import DangerService from "../../services/danger.service";
 
 
 import { getMasseMolaire, getNbCarbone } from "../../utils/molecules.utils";
 import { exportJson, importJson } from "../../utils/importExport.utils";
+import AssetService from "../../services/asset.service";
 export default class MoleculesController extends Controller {
   init() {
     this.dataService = services.dataService;
+    this.dangerService = new DangerService();
+    this.assetService = new AssetService();
 
     this._initData();
     this.sortState = { key: null, direction: null };
@@ -24,8 +28,8 @@ export default class MoleculesController extends Controller {
       this._initExport();
       this._initImport();
     })
-    .then( () => this.updateData(this.molecules) )
-    .then(() => this.loading(false));
+      .then(() => this.updateData(this.molecules))
+      .then(() => this.loading(false));
   }
 
   _initImport() {
@@ -80,19 +84,17 @@ export default class MoleculesController extends Controller {
     const thead = document.createElement("thead");
     const row = document.createElement("tr");
 
-    this.headers = [
-      { label: "Nom", key: "nom" },
-      { label: "Formule brute", key: "formule" },
-      { label: "Masse molaire", key: "masseMolaire" },
-      { label: "C", key: "nbCarbone" },
-      { label: "Nocif", key: "nocif" },
-      { label: "Irritant", key: "irritant" },
-      { label: "Explosible", key: "explosible" },
-      { label: "Toxique", key: "toxique" },
-      { label: "Inflammable", key: "extremementInflammable" },
+    this.columns = [
+      { label: "Nom", key: "nom", valuefn: (m) => m.nom },
+      { label: "Formule brute", key: "formule", valuefn: (m) => htmlFormulaFormatter(m.formule) },
+      { label: "CAS", key: "cas", valuefn: (m) => m.cas },
+      { label: "Masse molaire", key: "masseMolaire", valuefn: (m) => round(getMasseMolaire(m), 2) },
+      { label: "Densité", key: "densite", valuefn: (m) => m.densite },
+      { label: "", key: "danger", valuefn: (m) => this._createPictograms(m), dom:true },
+      { label: "", key: "delete", valuefn: (m) => this._createDeleteButton(m), dom:true}
     ];
 
-    this.headers.forEach(({ label, key }) => {
+    this.columns.forEach(({ label, key }) => {
       const th = document.createElement("th");
       th.textContent = label;
       th.style.cursor = "pointer";
@@ -111,7 +113,7 @@ export default class MoleculesController extends Controller {
     const state = this.sortState;
     const ths = this.moleculesTable.querySelectorAll("th");
 
-    ths.forEach((h, i) => h.textContent = this.headers[i].label);
+    ths.forEach((h, i) => h.textContent = this.columns[i].label);
 
     if (state.key === key) {
       state.direction = state.direction === "asc" ? "desc" : "asc";
@@ -130,30 +132,58 @@ export default class MoleculesController extends Controller {
     this.updateData(sorted);
   }
 
+  _createDeleteButton( molecule ) {
+    const deleteButton = document.createElement("button");
+    deleteButton.title = "Supprimer cette molécule";
+    deleteButton.classList.add("delete-btn");
+    deleteButton.innerText = "\u274C";
+    const deleteFn = () => {
+      if (confirm(`Supprimer définitivement la molécule "${molecule.nom}" ?`)) {
+        this.dataService.deleteMolecule(molecule); // <- appel avec objet complet
+        this._initData();
+      }
+    };
+    this.addListener( deleteButton, "click", deleteFn );
+    return deleteButton;
+  }
+
   updateData(mols) {
     this.moleculesTableData.innerHTML = "";
     mols.forEach(m => this.moleculesTableData.appendChild(this._createRow(m)));
   }
 
-  _createTd( innerHtml ) {
+  _createTd(innerHtml, isDom=false) {
     const td = document.createElement("td");
+    if (isDom) {
+      td.appendChild(innerHtml);
+    } else {
     td.innerHTML = innerHtml;
+    }
     return td;
   }
 
   _createRow(molecule) {
     const tr = document.createElement("tr");
-
-    tr.appendChild(this._createTd(molecule.nom));
-    tr.appendChild(this._createTd(htmlFormulaFormatter(molecule.formule)));
-    tr.appendChild(this._createTd(round(getMasseMolaire(molecule), 2)));
-    tr.appendChild(this._createTd(getNbCarbone(molecule)));
-    tr.appendChild(this._createTd(molecule.nocif ? "\u2713" : ""));
-    tr.appendChild(this._createTd(molecule.irritant ? "\u2713" : ""));
-    tr.appendChild(this._createTd(molecule.explosible ? "\u2713" : ""));
-    tr.appendChild(this._createTd(molecule.toxique ? "\u2713" : ""));
-    tr.appendChild(this._createTd(molecule.extremementInflammable ? "\u2713" : ""));
-
+    this.columns.forEach(({ key, valuefn, dom }) => {
+      const td = this._createTd(valuefn(molecule), dom);
+      tr.appendChild(td);
+    });
     return tr;
+  }
+
+  _createPictograms(molecule) {
+    const pictograms = document.createElement("div");
+    pictograms.classList.add("pictograms");
+    this.dangerService.getMoleculePictogrammes(molecule)
+      .map( GHS => this._createPictogram(GHS))
+      .forEach( pictogram => pictograms.appendChild(pictogram));
+    return pictograms;
+  }
+
+  _createPictogram(GHS) {
+    const pictogram = this.assetService.icon(`${GHS}.svg`);
+    pictogram.alt = `${GHS}`;
+    pictogram.classList.add("pictogram");
+    return pictogram;
   }
 }
