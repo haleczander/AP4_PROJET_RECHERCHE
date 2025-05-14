@@ -48,6 +48,7 @@ export default class AccueilController extends Controller {
     this.mvcReactionController = new ReactionMVCController(this.reaction);
     const canvasView = new CanvasReactionMVCView(this.mvcReactionController, this.container.querySelector("#canvas-reaction"));
     this.mvcReactionController.addView(canvasView);
+    this.mvcReactionController.updateViews();
   }
 
 
