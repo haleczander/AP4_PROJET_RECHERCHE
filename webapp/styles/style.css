@@ -406,6 +406,14 @@ input.error,.error-message {
   box-shadow:var(--shadow-purple-md)
 }
 
+.add-btn:disabled,.add-btn:disabled:hover {
+  filter: grayscale(100%);
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+
+
 #molecules-table {
   width:100%;
   border-collapse:separate;
