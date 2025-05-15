@@ -16,13 +16,14 @@ import ResultatMVCController from "../../mvc/resultat/resultat.mvc.controller";
 import RadarResultatMVCView from "../../mvc/resultat/impl/radar.resultat.mvc.view";
 import BarResultatMVCView from "../../mvc/resultat/impl/bar.resultat.mvc.view";
 import TableResultatMVCView from "../../mvc/resultat/impl/table.resultat.mvc.view";
-import { createReactionStepsTable, exportJson, exportResultsPDF } from "../../utils/importExport.utils";
+import { createReactionStepsTable, exportJson, exportResultsPDF, importJson } from "../../utils/importExport.utils";
 
 export default class AccueilController extends Controller {
   init() {
     this.dataService = services.dataService;
     this.calculService = new CalculService();
     this._initData();
+    this._initImport();
     this._initExportPDF();
     this._initExportData();
 
@@ -34,6 +35,33 @@ export default class AccueilController extends Controller {
     this._initForms();
     this._initReactionMVC();
     this._initResultatsMVC();
+  }
+
+  _initImport() {
+    const btn = this.container.querySelector("#import-btn");
+    this.addListener(btn, "click", (e) => {
+      e.preventDefault();
+      const onload = (e) => {
+        try {
+          const data = JSON.parse(e.target.result);
+
+          if (!data || !data.data || !data.data.reaction) {
+            throw new Error("Invalid JSON structure");
+          }
+
+          Object.assign(this.reaction, data.data.reaction);
+          Object.assign(this.resultats, data.data.resultats);
+
+          this.mvcReactionController.updateViews();
+          this.mvcResultatController.updateResults( this.resultats );
+
+        } catch (error) {
+          console.error("Error parsing JSON file:", error);
+        }
+
+      };
+      importJson(onload);
+    });
   }
 
   async _initData() {
@@ -183,10 +211,10 @@ export default class AccueilController extends Controller {
       return console.error("Molécule introuvable:", formData.get("molecule"));
     return {
       ...createMoleculeReaction(molecule),
-      coefStoechiometrique: parseFloat(formData.get("coefStoechiometrique")|| 1),
+      coefStoechiometrique: parseFloat(formData.get("coefStoechiometrique") || 1),
       purete: parseFloat(formData.get("purete") || 0),
       volume: parseFloat(formData.get("volume") || 0),
-      prixG: parseFloat(formData.get("prixG") || 0 ),
+      prixG: parseFloat(formData.get("prixG") || 0),
       recyclabilite: parseFloat(formData.get("recyclabilite") || 0)
     };
   }
