@@ -6,6 +6,7 @@ import CASValidator from "../../validators/impl/CAS.validator";
 import FloatValidator from "../../validators/impl/Float.validator";
 import FormulaValidator from "../../validators/impl/Formula.validator";
 import { updateErrors } from "../../utils/errors.utils";
+import DangersHValidator from "../../validators/impl/DangersH.validator";
 
 export default class AjoutMoleculeController extends Controller {
   init() {
@@ -35,6 +36,9 @@ export default class AjoutMoleculeController extends Controller {
     const densite = this.form.querySelector("#densite");
     this.addValidator(densite, requiredValidator, new FloatValidator());
 
+    const dangerH = this.form.querySelector("#dangerH");
+    this.addValidator(dangerH, new DangersHValidator());
+
     const submitFn = (event) => {
       event.preventDefault();
       if (this.valid) {
@@ -48,6 +52,10 @@ export default class AjoutMoleculeController extends Controller {
     this.submitBtn.disabled = !this.valid;
   }
 
+  _parseDangersH( input ){
+    return input.split(" ");
+  }
+
   _mapMolecule(fields) {
     const molecule = new Molecule();
 
@@ -55,6 +63,8 @@ export default class AjoutMoleculeController extends Controller {
     molecule.cas = fields.cas.value;
     molecule.formule = fields.formule.value;
     molecule.densite = fields.densite.value
+
+    molecule.danger = this._parseDangersH(fields.dangerH.value);
 
     molecule.nocif = fields["stat-nocif"].checked;
     molecule.irritant = fields["stat-irritant"].checked;
