@@ -32,6 +32,9 @@ export default class AjoutMoleculeController extends Controller {
     const formule = this.form.querySelector("#formule");
     this.addValidator(formule, requiredValidator, new FormulaValidator());
 
+    const densite = this.form.querySelector("#densite");
+    this.addValidator(densite, requiredValidator, new FloatValidator());
+
     const submitFn = (event) => {
       event.preventDefault();
       if (this.valid) {
@@ -51,6 +54,7 @@ export default class AjoutMoleculeController extends Controller {
     molecule.nom = fields.nom.value;
     molecule.cas = fields.cas.value;
     molecule.formule = fields.formule.value;
+    molecule.densite = fields.densite.value
 
     molecule.nocif = fields["stat-nocif"].checked;
     molecule.irritant = fields["stat-irritant"].checked;
