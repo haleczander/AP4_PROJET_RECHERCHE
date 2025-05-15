@@ -273,7 +273,7 @@ input.error,.error-message {
   box-sizing:border-box
 }
 
-#nommage-form {
+#nommage-form, #danger-h-form {
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
   gap:var(--space-md);
@@ -286,19 +286,19 @@ input.error,.error-message {
   box-sizing:border-box
 }
 
-#nommage-form>div {
+#nommage-form>div, #danger-h-form>div {
   display:flex;
   flex-direction:column
 }
 
-#nommage-form label {
+#nommage-form label, #danger-h-form label {
   margin-bottom:var(--space-xs);
   font-size:var(--text-sm);
   color:var(--dark-purple);
   font-weight:600
 }
 
-#nommage-form input {
+#nommage-form input, #danger-h-form input {
   padding:var(--space-sm) var(--space-md);
   border:1px solid var(--light-purple);
   border-radius:var(--radius-md);
@@ -307,7 +307,7 @@ input.error,.error-message {
   transition:border-color var(--transition-normal)
 }
 
-#nommage-form input:focus {
+#nommage-form input:focus, #danger-h-form input:focus {
   border-color:var(--purple);
   box-shadow:0 0 0 2px rgba(119,93,166,0.2)
 }
