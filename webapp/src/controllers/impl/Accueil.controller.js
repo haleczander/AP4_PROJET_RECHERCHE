@@ -29,7 +29,7 @@ export default class AccueilController extends Controller {
 
     this.indicateurs = INDICATEURS.map((i) => new i());
 
-    this.reaction = BIGINELLI; //new ReactionComplete();
+    this.reaction = new ReactionComplete();
     this.resultats = new Resultat();
 
     this._initForms();
