@@ -178,17 +178,16 @@ export default class AccueilController extends Controller {
   }
 
   _createMoleculeReaction(formData) {
-    console.log(formData)
     const molecule = this._moleculeByDisplay(formData.get("molecule"));
     if (!molecule)
       return console.error("Molécule introuvable:", formData.get("molecule"));
     return {
       ...createMoleculeReaction(molecule),
-      coefStoechiometrique: parseFloat(formData.get("coefStoechiometrique")),
-      purete: parseFloat(formData.get("purete")),
-      volume: parseFloat(formData.get("volume")),
-      prixG: parseFloat(formData.get("prixG")),
-      recyclabilite: parseFloat(formData.get("recyclabilite"))
+      coefStoechiometrique: parseFloat(formData.get("coefStoechiometrique")|| 1),
+      purete: parseFloat(formData.get("purete") || 0),
+      volume: parseFloat(formData.get("volume") || 0),
+      prixG: parseFloat(formData.get("prixG") || 0 ),
+      recyclabilite: parseFloat(formData.get("recyclabilite") || 0)
     };
   }
 
@@ -214,9 +213,9 @@ export default class AccueilController extends Controller {
 
     return {
       ...createActivationReaction(activation),
-      dureeM: parseFloat(formData.get("activationDuree")),
-      puissance: parseFloat(formData.get("activationPuissance")),
-      energie: new Energie("", parseFloat(formData.get("prixEnergie"))),
+      dureeM: parseFloat(formData.get("activationDuree") || 0),
+      puissance: parseFloat(formData.get("activationPuissance") || 0),
+      energie: new Energie("", parseFloat(formData.get("prixEnergie") || 0)),
     };
   }
 
