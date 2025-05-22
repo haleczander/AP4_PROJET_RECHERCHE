@@ -80,11 +80,12 @@ Les **modules critiques**, en particulier le moteur de calcul, sont testés auto
 - Développement itératif de l’interface utilisateur  
 - Mise en place de tests utilisateurs dès les premières versions  
 - Intégration continue des retours (enseignants, chercheurs, étudiants)
-### Téléchargements
-- [![Windows x64](https://img.shields.io/badge/Windows%20x64-Télécharger-blue)](https://github.com/haleczander/AP4_PROJET_RECHERCHE/releases/download/20250515-051738a/metrique_chimie_verte-20250515-051738a-win-x64.zip)
-- [![macOS Intel](https://img.shields.io/badge/macOS%20Intel-Télécharger-blue)](https://github.com/haleczander/AP4_PROJET_RECHERCHE/releases/download/20250515-051738a/metrique_chimie_verte-20250515-051738a-macos-x64.zip)
-- [![macOS Apple Silicon](https://img.shields.io/badge/macOS%20Apple%20Silicon-Télécharger-blue)](https://github.com/haleczander/AP4_PROJET_RECHERCHE/releases/download/20250515-051738a/metrique_chimie_verte-20250515-051738a-macos-arm64.zip)
-- [![Linux x64](https://img.shields.io/badge/Linux%20x64-Télécharger-blue)](https://github.com/haleczander/AP4_PROJET_RECHERCHE/releases/download/20250515-051738a/metrique_chimie_verte-20250515-051738a-linux-x64.zip)
-- [![Alpine Linux](https://img.shields.io/badge/Alpine-Télécharger-blue)](https://github.com/haleczander/AP4_PROJET_RECHERCHE/releases/download/20250515-051738a/metrique_chimie_verte-20250515-051738a-alpine-x64.zip)
 
-Dernière version: [20250515-051738a](https://github.com/haleczander/AP4_PROJET_RECHERCHE/releases/tag/20250515-051738a)
+### Téléchargements
+- [![Windows x64](https://img.shields.io/badge/Windows%20x64-Télécharger-blue)](https://github.com/haleczander/AP4_PROJET_RECHERCHE/releases/download/20250522-e386679/metrique_chimie_verte-20250522-e386679-win-x64.zip)
+- [![macOS Intel](https://img.shields.io/badge/macOS%20Intel-Télécharger-blue)](https://github.com/haleczander/AP4_PROJET_RECHERCHE/releases/download/20250522-e386679/metrique_chimie_verte-20250522-e386679-macos-x64.zip)
+- [![macOS Apple Silicon](https://img.shields.io/badge/macOS%20Apple%20Silicon-Télécharger-blue)](https://github.com/haleczander/AP4_PROJET_RECHERCHE/releases/download/20250522-e386679/metrique_chimie_verte-20250522-e386679-macos-arm64.zip)
+- [![Linux x64](https://img.shields.io/badge/Linux%20x64-Télécharger-blue)](https://github.com/haleczander/AP4_PROJET_RECHERCHE/releases/download/20250522-e386679/metrique_chimie_verte-20250522-e386679-linux-x64.zip)
+- [![Alpine Linux](https://img.shields.io/badge/Alpine-Télécharger-blue)](https://github.com/haleczander/AP4_PROJET_RECHERCHE/releases/download/20250522-e386679/metrique_chimie_verte-20250522-e386679-alpine-x64.zip)
+
+Dernière version: [20250522-e386679](https://github.com/haleczander/AP4_PROJET_RECHERCHE/releases/tag/20250522-e386679)
