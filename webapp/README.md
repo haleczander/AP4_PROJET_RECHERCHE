@@ -68,34 +68,17 @@ webapp/
 
 ## Configuration et Déploiement
 
-### Variables d'Environnement
-```javascript
-// .env
-NODE_ENV=development
-PORT=3000
-DB_CONNECTION=...
-```
-
-
-### Scripts NPM Disponibles
-```json
-{
-  "dev": "Démarre le serveur de développement",
-  "build": "Compile pour la production",
-  "test": "Lance les tests",
-  "lint": "Vérifie le code"
-}
-```
-<!-- ALEXANDRE --> 
 ## Installation du projet ( dev )
 **S'assurer d'avoir node d'installé**
 ```cmd
 npm i --save-dev
 ```
-<!-- ALEXANDRE --> 
 ### Commandes utiles
+**Attention à bien se placer dans le dossier `webapp`**
+
 `build` et `watch` pour respectivement "compiler" une fois ou en "permanence" les fichiers js vers le bundle.
-`test` pour lancer la banque de tests (jest).
+`test` pour lancer la banque de tests (jest). 
+`pretty` lance le linter.
 
 ```cmd
 npm run build
@@ -105,10 +88,12 @@ npm run test
 
 Lancement du serveur : `npm run start`
 
+### Création des exécutables
+L'utilitaire `pkg` est configuré pour créer les exécutables avec la commande `npm run pkg`. C'est cette dernière qui est utilisée pour générer les exécutables publiés sur la page principale.
+
 
 ## Guide de Développement
 
-<!-- ALEXANDRE --> 
 ### 1. Setup Initial
 ```bash
 git clone [repository]
@@ -161,25 +146,13 @@ npm install
 - Protection contre les injections
 - Gestion des sessions
 
-## Documentation API
 
-La documentation détaillée de l'API est disponible dans `/doc/api/`.
-
-## Support et Contact
-
-Pour toute question technique :
-1. Consulter la documentation dans `/doc/`
-2. Vérifier les issues GitHub
-3. Contacter l'équipe technique
 
 ## Roadmap Technique
 
 1. Optimisation des performances
 2. Nouvelles fonctionnalités planifiées
 3. Dette technique à traiter
-
-
-# Calculateur des métriques de la chimie verte
 
 
 ## Crédits 
